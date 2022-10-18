@@ -1,0 +1,23 @@
+{
+  "name": "today-in-science-fs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaimeGSandoval/today-in-science-fs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JaimeGSandoval/today-in-science-fs/issues"
+  },
+  "homepage": "https://github.com/JaimeGSandoval/today-in-science-fs#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}
