@@ -1,4 +1,4 @@
-const usersModel = require('../models/users/users.model');
+const usersModel = require('../models/users.model');
 const AppError = require('../utils/app-error');
 
 module.exports = {

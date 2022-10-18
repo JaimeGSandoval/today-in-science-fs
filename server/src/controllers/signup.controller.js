@@ -1,6 +1,6 @@
 const { encryptPassword } = require('../utils/bcrypt.utils');
 const AppError = require('../utils/app-error');
-const signupModel = require('../models/sign-up/signup.modal');
+const signupModel = require('../models/signup.modal');
 
 const httpSignupUser = async (req, res, next) => {
   const { userName, email, password, passwordConfirm, role } = req.body;

@@ -4,15 +4,14 @@ const cors = require('cors');
 const xss = require('xss-clean');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-// const passport = require('passport');
+const passport = require('passport');
 const methodOverride = require('method-override');
 // const flash = require('express-flash');
 const logger = require('morgan');
 const signupRouter = require('./routes/signup.router');
 const usersRouter = require('./routes/users.router');
+const authRouter = require('./routes/auth.router');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
-// const mainRoutes = require('./routes/main');
-// const postRoutes = require('./routes/posts');
 
 const app = express();
 
@@ -28,7 +27,7 @@ app.use(
 app.use(cookieParser());
 
 // Passport config
-// require('./config/passport')(passport);
+require('./config/passport')(passport);
 
 // Body Parsing
 app.use(express.urlencoded({ extended: false }));
@@ -57,19 +56,20 @@ app.use(
 );
 
 // Passport middleware
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Use flash messages for errors, info, ect...
 // app.use(flash());
 
-app.get('/health-check', (req, res) => res.status(200).send('Health check passed'));
-app.use('/signup', signupRouter);
-app.use('/users', usersRouter);
+app.get('/health-check', (req, res) => {
+  console.log('req.user', req.user);
+  res.status(200).send('Health check passed');
+});
 
-// Setup Routes For Which The Server Is Listening
-// app.use('/', mainRoutes);
-// app.use('/post', postRoutes);
+app.use('/signup', signupRouter);
+app.use('/auth', authRouter);
+app.use('/users', usersRouter);
 
 app.use(errorResponder);
 app.use(invalidPathHandler);
