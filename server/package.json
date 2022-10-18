@@ -7,8 +7,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:build": "npm test -- build",
-    "start": "node src/server.js",
     "watch": "nodemon src/server.js",
+    "start": "node src/server.js",
     "start:production": "NODE_ENV=production node src/server.js"
   },
   "keywords": [],
