@@ -4,23 +4,28 @@ const { comparePasswords } = require('../utils/bcrypt.utils');
 
 module.exports = (passport) => {
   passport.use(
-    new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-      try {
-        const authenticatedUser = await usersModel.getUserByEmail(email);
+    new LocalStrategy(
+      { usernameField: 'email', passReqToCallback: true },
+      async (req, email, password, done) => {
+        try {
+          const authenticatedUser = await usersModel.getUserByEmail(email);
 
-        if (!authenticatedUser.rows.length) return done(null, false);
+          if (!authenticatedUser.rows.length) {
+            return done(null, false, { message: 'No user found' });
+          }
 
-        const storedPassword = authenticatedUser.rows[0].password;
+          const storedPassword = authenticatedUser.rows[0].password;
 
-        if (await comparePasswords(password, storedPassword)) {
-          done(null, authenticatedUser.rows[0]);
-        } else {
-          done(null, false);
+          if (await comparePasswords(password, storedPassword)) {
+            done(null, authenticatedUser.rows[0]);
+          } else {
+            done(null, false, { message: 'Incorrect password' });
+          }
+        } catch (e) {
+          done(e);
         }
-      } catch (e) {
-        done(e);
       }
-    })
+    )
   );
 
   passport.serializeUser((user, done) => {
