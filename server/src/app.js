@@ -14,6 +14,7 @@ const signupRouter = require('./routes/signup.router');
 const authRouter = require('./routes/auth.router');
 const usersRouter = require('./routes/users.router');
 const articlesRouter = require('./routes/articles.router');
+const settingsRouter = require('./routes/settings.router');
 const { isAuthenticated } = require('./middleware/auth');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
 
@@ -81,6 +82,7 @@ app.use('/auth', authRouter);
 app.use(isAuthenticated);
 app.use('/users', usersRouter);
 app.use('/articles', articlesRouter);
+app.use('/settings', settingsRouter);
 
 app.use(errorResponder);
 app.use(invalidPathHandler);
