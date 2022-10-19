@@ -89,11 +89,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/health-check', (req, res) => {
-  console.log(req.user);
-  console.log(req.session.passport.user.user_name);
-  res.status(200).send('Health check passed');
-});
+app.get('/health-check', (req, res) => res.status(200).send('Health check passed'));
 
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
