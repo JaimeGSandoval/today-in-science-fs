@@ -7,11 +7,6 @@ module.exports = {
     return user;
   },
 
-  getUsername: async (userName) => {
-    const user = await db.query(queries.getUsernameQuery, [userName]);
-    return user;
-  },
-
   signupUser: async (userName, email, password, role = 'user') => {
     const newUser = await db.query(queries.signupUserQuery, [userName, email, password, role]);
     return newUser;

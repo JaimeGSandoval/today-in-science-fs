@@ -14,6 +14,7 @@ const signupRouter = require('./routes/signup.router');
 const authRouter = require('./routes/auth.router');
 const usersRouter = require('./routes/users.router');
 const articlesRouter = require('./routes/articles.router');
+const settingsRouter = require('./routes/settings.router');
 const { isAuthenticated } = require('./middleware/auth');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
 
@@ -51,6 +52,21 @@ app.use(logger('dev'));
 app.use(methodOverride('_method'));
 
 // Setup Sessions - stored in Postgres
+// app.use(
+//   session({
+//     store: new PgSession({
+//       pool: pgPool,
+//       createTableIfMissing: true,
+//     }),
+//     secret: String(process.env.SESSION_SECRET),
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       maxAge: Number(process.env.SESSION_MAX_AGE),
+//     },
+//   })
+// );
+
 app.use(
   session({
     store: new PgSession({
@@ -62,6 +78,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: Number(process.env.SESSION_MAX_AGE),
+      path: '/',
+      httpOnly: true,
+      secure: false,
     },
   })
 );
@@ -70,10 +89,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/health-check', (req, res) => {
-  console.log(req.user);
-  res.status(200).send('Health check passed');
-});
+app.get('/health-check', (req, res) => res.status(200).send('Health check passed'));
 
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
@@ -81,6 +97,7 @@ app.use('/auth', authRouter);
 app.use(isAuthenticated);
 app.use('/users', usersRouter);
 app.use('/articles', articlesRouter);
+app.use('/settings', settingsRouter);
 
 app.use(errorResponder);
 app.use(invalidPathHandler);

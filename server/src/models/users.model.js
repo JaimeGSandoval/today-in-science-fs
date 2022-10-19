@@ -21,4 +21,9 @@ module.exports = {
     const user = await db.query(queries.getUserByIdQuery, [userId]);
     return user;
   },
+
+  getUsername: async (username) => {
+    const user = await db.query(queries.getUsernameQuery, [username]);
+    return user;
+  },
 };

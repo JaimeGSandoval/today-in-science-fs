@@ -1,6 +1,7 @@
 const { encryptPassword } = require('../utils/bcrypt.utils');
 const AppError = require('../utils/app-error');
 const signupModel = require('../models/signup.modal');
+const usersModel = require('../models/users.model');
 
 const httpSignupUser = async (req, res, next) => {
   const { userName, email, password, passwordConfirm, role } = req.body;
@@ -16,7 +17,7 @@ const httpSignupUser = async (req, res, next) => {
       return next(new AppError('You have already registered. Would you like to login?', 409));
     }
 
-    const userNameUnavailable = await signupModel.getUsername(userName);
+    const userNameUnavailable = await usersModel.getUsername(userName);
 
     if (userNameUnavailable.rows.length) {
       return next(new AppError('That user name is already taken.', 409));
