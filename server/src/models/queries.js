@@ -3,7 +3,7 @@ exports.getUsernameQuery = 'SELECT user_name FROM users.users WHERE user_name = 
 exports.getAllUsersQuery = 'SELECT user_id, user_name, email, role FROM users.users';
 exports.getUserPasswordQuery = 'SELECT password FROM users.users WHERE email = $1';
 exports.getUserByEmailQuery =
-  'SELECT user_id, user_name, email, role, password FROM users.users WHERE email = $1';
+  'SELECT user_id, user_name, email, role FROM users.users WHERE email = $1';
 exports.getUserByIdQuery =
   'SELECT user_id, user_name, email, role FROM users.users WHERE user_id = $1';
 
