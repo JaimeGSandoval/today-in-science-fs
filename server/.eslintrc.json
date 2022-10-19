@@ -16,6 +16,8 @@
     "max-len": 0,
     "arrow-body-style": 0,
     "object-curly-newline": 0,
-    "consistent-return": 0
+    "consistent-return": 0,
+    "indent": 0,
+    "implicit-arrow-linebreak": 0
   }
 }
