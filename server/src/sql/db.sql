@@ -51,8 +51,6 @@ INSERT INTO refresh_tokens (user_id, token) VALUES ($1, $2);
 
 SELECT token FROM users.refresh_tokens WHERE users.refresh_tokens.user_id = $1
 
-SELECT user_id, user_name, email FROM users.users;
-
 SELECT user_id, user_name, email, role FROM users.users;
 
 SELECT user_id, user_name, email FROM users.users WHERE user_id = $1;

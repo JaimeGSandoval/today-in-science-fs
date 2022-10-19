@@ -13,6 +13,7 @@ const pgPool = require('./config/database');
 const signupRouter = require('./routes/signup.router');
 const usersRouter = require('./routes/users.router');
 const authRouter = require('./routes/auth.router');
+const { isAuthenticated } = require('./middleware/auth');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
 
 const app = express();
@@ -72,6 +73,8 @@ app.use(passport.session());
 
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
+
+app.use(isAuthenticated);
 app.use('/users', usersRouter);
 
 app.use(errorResponder);
