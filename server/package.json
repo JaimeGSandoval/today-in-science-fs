@@ -24,6 +24,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
+    "connect-pg-simple": "^7.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
@@ -36,7 +37,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
-    "passport": "^0.6.0",
+    "passport": "^0.5.3",
     "passport-local": "^1.0.0",
     "pg": "^8.8.0",
     "xss-clean": "^0.1.1"

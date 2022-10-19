@@ -8,6 +8,8 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const logger = require('morgan');
+const PgSession = require('connect-pg-simple')(session);
+const pgPool = require('./config/database');
 const signupRouter = require('./routes/signup.router');
 const usersRouter = require('./routes/users.router');
 const authRouter = require('./routes/auth.router');
@@ -46,9 +48,13 @@ app.use(logger('dev'));
 // Use forms for put / delete
 app.use(methodOverride('_method'));
 
-// Setup Sessions - stored in MongoDB
+// Setup Sessions - stored in Postgres
 app.use(
   session({
+    store: new PgSession({
+      pool: pgPool,
+      createTableIfMissing: true,
+    }),
     secret: String(process.env.SESSION_SECRET),
     resave: false,
     saveUninitialized: false,

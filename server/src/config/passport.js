@@ -6,18 +6,19 @@ module.exports = (passport) => {
   passport.use(
     new LocalStrategy(
       { usernameField: 'email', passReqToCallback: true },
-      async (req, email, password, done) => {
+      async (req, email, candidatePassword, done) => {
         try {
-          const authenticatedUser = await usersModel.getUserByEmail(email);
+          const storedPassword = await usersModel.getUserPassword(email);
 
-          if (!authenticatedUser.rows.length) {
+          if (!storedPassword.rows.length) {
             return done(null, false, { message: 'No user found' });
           }
 
-          const storedPassword = authenticatedUser.rows[0].password;
+          const { password } = storedPassword.rows[0];
 
-          if (await comparePasswords(password, storedPassword)) {
-            done(null, authenticatedUser.rows[0]);
+          if (await comparePasswords(candidatePassword, password)) {
+            const user = await usersModel.getUserByEmail(email);
+            done(null, user.rows[0]);
           } else {
             done(null, false, { message: 'Incorrect password' });
           }
@@ -28,16 +29,9 @@ module.exports = (passport) => {
     )
   );
 
-  passport.serializeUser((user, done) => {
-    done(null, user.user_id);
-  });
+  // attach to session
+  passport.serializeUser((user, done) => done(null, user));
 
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await usersModel.getUserById(id);
-      done(null, user.rows[0]);
-    } catch (e) {
-      done(e);
-    }
-  });
+  // attach to req.user
+  passport.deserializeUser((user, done) => done(null, user));
 };

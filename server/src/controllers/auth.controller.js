@@ -2,7 +2,7 @@ const passport = require('passport');
 const AppError = require('../utils/app-error');
 
 exports.login = (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) {
       return next(err);
     }
@@ -13,10 +13,36 @@ exports.login = (req, res, next) => {
           return next(new AppError('There was an error logging in. Please try again.'), 500);
         }
 
-        res.status(200).send(`User ${req.user.user_name} logged in successfully`);
+        return res.status(200).json({
+          status: 'Success',
+          message: `User ${req.user.user_name} logged in successfully`,
+          data: {
+            user,
+          },
+        });
       });
     } else {
       res.status(400).json(info);
     }
   })(req, res, next);
+};
+
+exports.logout = async (req, res, next) => {
+  if (!req.user) {
+    return res.status(400).send('User in not logged in');
+  }
+
+  req.logOut((err) => {
+    if (err) {
+      return next(new AppError(err, 500));
+    }
+  });
+
+  req.session.destroy((err) => {
+    if (err) {
+      return next(new AppError('Error : Failed to destroy the session during logout.', err));
+    }
+
+    res.sendStatus(204);
+  });
 };
