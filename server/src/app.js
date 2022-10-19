@@ -5,8 +5,8 @@ const xss = require('xss-clean');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const flash = require('connect-flash');
 const methodOverride = require('method-override');
-// const flash = require('express-flash');
 const logger = require('morgan');
 const signupRouter = require('./routes/signup.router');
 const usersRouter = require('./routes/users.router');
@@ -24,8 +24,6 @@ app.use(
   })
 );
 
-app.use(cookieParser());
-
 // Passport config
 require('./config/passport')(passport);
 
@@ -36,6 +34,11 @@ app.use(
     limit: '10kb',
   })
 );
+
+app.use(cookieParser());
+
+// Use flash messages for errors, info, ect...
+app.use(flash());
 
 // Logging
 app.use(logger('dev'));
@@ -55,17 +58,11 @@ app.use(
   })
 );
 
+app.get('/health-check', (req, res) => res.status(200).send('Health check passed'));
+
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Use flash messages for errors, info, ect...
-// app.use(flash());
-
-app.get('/health-check', (req, res) => {
-  console.log('req.user', req.user);
-  res.status(200).send('Health check passed');
-});
 
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
