@@ -30,7 +30,10 @@ module.exports = (passport) => {
   );
 
   // attach to session
-  passport.serializeUser((user, done) => done(null, user));
+  passport.serializeUser((user, done) => {
+    console.log('session update');
+    done(null, user);
+  });
 
   // attach to req.user
   passport.deserializeUser((user, done) => done(null, user));

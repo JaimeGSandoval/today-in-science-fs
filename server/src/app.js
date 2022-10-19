@@ -52,6 +52,21 @@ app.use(logger('dev'));
 app.use(methodOverride('_method'));
 
 // Setup Sessions - stored in Postgres
+// app.use(
+//   session({
+//     store: new PgSession({
+//       pool: pgPool,
+//       createTableIfMissing: true,
+//     }),
+//     secret: String(process.env.SESSION_SECRET),
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       maxAge: Number(process.env.SESSION_MAX_AGE),
+//     },
+//   })
+// );
+
 app.use(
   session({
     store: new PgSession({
@@ -63,6 +78,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: Number(process.env.SESSION_MAX_AGE),
+      path: '/',
+      httpOnly: true,
+      secure: false,
     },
   })
 );
@@ -73,6 +91,7 @@ app.use(passport.session());
 
 app.get('/health-check', (req, res) => {
   console.log(req.user);
+  console.log(req.session.passport.user.user_name);
   res.status(200).send('Health check passed');
 });
 
