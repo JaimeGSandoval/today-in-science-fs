@@ -11,8 +11,9 @@ const logger = require('morgan');
 const PgSession = require('connect-pg-simple')(session);
 const pgPool = require('./config/database');
 const signupRouter = require('./routes/signup.router');
-const usersRouter = require('./routes/users.router');
 const authRouter = require('./routes/auth.router');
+const usersRouter = require('./routes/users.router');
+const articlesRouter = require('./routes/articles.router');
 const { isAuthenticated } = require('./middleware/auth');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
 
@@ -65,17 +66,21 @@ app.use(
   })
 );
 
-app.get('/health-check', (req, res) => res.status(200).send('Health check passed'));
-
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.get('/health-check', (req, res) => {
+  console.log(req.user);
+  res.status(200).send('Health check passed');
+});
 
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
 
 app.use(isAuthenticated);
 app.use('/users', usersRouter);
+app.use('/articles', articlesRouter);
 
 app.use(errorResponder);
 app.use(invalidPathHandler);
