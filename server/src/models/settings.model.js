@@ -13,4 +13,10 @@ module.exports = {
 
     return updateResult;
   },
+
+  updateUserEmail: async (userId, email) => {
+    const updateResult = await db.query(queries.updateUserEmailQuery, [email, userId]);
+
+    return updateResult;
+  },
 };

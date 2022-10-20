@@ -1,7 +1,11 @@
 const passport = require('passport');
 const AppError = require('../utils/app-error');
 
-exports.login = (req, res, next) => {
+exports.getLogin = (req, res) => {
+  res.redirect('/auth/login');
+};
+
+exports.postLogin = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) {
       return next(err);
