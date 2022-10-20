@@ -1,7 +1,7 @@
-const settingsModel = require('../models/setttings.modal');
+const settingsModel = require('../models/settings.model');
 const usersModel = require('../models/users.model');
 const AppError = require('../utils/app-error');
-const { signJWT } = require('../utils/jwt.utils');
+const { signJWT, verifyJWT } = require('../utils/jwt.utils');
 const { sendEmail } = require('../utils/email');
 
 const httpUpdateUsername = async (req, res, next) => {
@@ -49,7 +49,7 @@ const httpUpdateEmailRequest = async (req, res, next) => {
       newEmail,
     };
 
-    const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 260);
+    const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
 
     const updateEmailUrl = `${req.protocol}://${req.get('host')}/settings/update-email/${token}`;
 
@@ -76,7 +76,31 @@ const httpUpdateEmailRequest = async (req, res, next) => {
   }
 };
 
+const httpUpdateUserEmail = async (req, res, next) => {
+  const { token } = req.params;
+
+  const { decoded } = verifyJWT(token, process.env.ACCESS_TOKEN_SECRET);
+
+  if (!decoded) {
+    return next(new AppError('Unauthorized. Invalid token.', 401));
+  }
+
+  const { newEmail, userId } = decoded;
+
+  try {
+    await settingsModel.updateUserEmail(parseInt(userId, 10), newEmail);
+
+    // how to destroy or delete session in DB? Can I get sessionID somehow and put it in the token too?
+
+    // res.redirect('/auth/login');
+    res.send('User email updated. A new login is required. Redirecting to login page.');
+  } catch (e) {
+    return next(new AppError(e.message, 500));
+  }
+};
+
 module.exports = {
   httpUpdateUsername,
   httpUpdateEmailRequest,
+  httpUpdateUserEmail,
 };

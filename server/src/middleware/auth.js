@@ -1,4 +1,4 @@
-const isAuthenticated = (req, res, next) => {
+const checkAuth = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return res
       .status(401)
@@ -21,6 +21,6 @@ const verifyRoles =
   };
 
 module.exports = {
-  isAuthenticated,
+  checkAuth,
   verifyRoles,
 };

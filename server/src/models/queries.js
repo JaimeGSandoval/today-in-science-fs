@@ -40,3 +40,5 @@ exports.deleteFavoriteUrlQuery =
 // SETTINGS QUERIES
 exports.updateUsernameQuery =
   'UPDATE users SET user_name = $1 WHERE user_id = $2 RETURNING user_name';
+
+exports.updateUserEmailQuery = 'UPDATE users SET email = $1 WHERE user_id = $2 RETURNING email';
