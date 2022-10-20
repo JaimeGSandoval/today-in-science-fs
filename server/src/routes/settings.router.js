@@ -11,4 +11,6 @@ router.patch(
   settingsController.httpUpdateUsername
 );
 
+router.patch('/request-email-update/:userId', settingsController.httpUpdateEmailRequest);
+
 module.exports = router;
