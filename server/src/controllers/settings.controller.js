@@ -62,6 +62,7 @@ const httpUpdateEmailRequest = async (req, res, next) => {
     const emailOptions = {
       newEmail,
       updateEmailHtml,
+      subject: 'Request for email update',
     };
 
     await sendEmail(emailOptions);
@@ -99,19 +100,20 @@ const httpUpdateUserEmail = async (req, res, next) => {
 
 const httpUpdatePasswordRequest = async (req, res, next) => {
   const { userId } = req.params;
-  const { userEmail, newPassword } = req.body;
+  const { userEmail, newPassword, updateType } = req.body;
 
   try {
-    const emailExists = await usersModel.getUserByEmail(userEmail);
+    const user = await usersModel.getUserByEmail(userEmail);
 
-    if (!emailExists.rows.length) {
+    if (!user.rows.length) {
       return next(new AppError('There is no account with that email.', 409));
     }
 
     const updateData = {
-      userId: Number(userId),
+      userId: userId ? Number(userId) : user.rows[0].user_id,
       userEmail,
-      newPassword,
+      newPassword: newPassword || null,
+      updateType,
     };
 
     const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
@@ -128,6 +130,7 @@ const httpUpdatePasswordRequest = async (req, res, next) => {
     const emailOptions = {
       userEmail,
       updatePasswordHtml,
+      subject: 'Request for password change',
     };
 
     await sendEmail(emailOptions);
@@ -149,7 +152,11 @@ const httpUpdateUserPassword = async (req, res, next) => {
     return next(new AppError('Unauthorized. Invalid token.', 401));
   }
 
-  const { newPassword, userId } = decoded;
+  const { newPassword, userId, updateType } = decoded;
+
+  if (updateType === 'forgot') {
+    return res.send('Token validated. Redirect user to FE update password form');
+  }
 
   try {
     const encryptedPassword = await encryptPassword(newPassword);
