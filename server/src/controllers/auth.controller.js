@@ -26,7 +26,7 @@ exports.postLogin = (req, res, next) => {
         });
       });
     } else {
-      res.status(400).json(info);
+      return res.status(400).json(info);
     }
   })(req, res, next);
 };
