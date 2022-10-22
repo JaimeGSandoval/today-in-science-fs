@@ -19,4 +19,10 @@ module.exports = {
 
     return updateResult;
   },
+
+  updateUserPassword: async (password, userId) => {
+    const updateResult = await db.query(queries.updateUserPasswordQuery, [password, userId]);
+
+    return updateResult;
+  },
 };
