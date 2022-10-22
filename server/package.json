@@ -22,6 +22,7 @@
     "supertest": "^6.2.4"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
     "connect-pg-simple": "^7.0.0",

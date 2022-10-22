@@ -53,20 +53,12 @@ const httpUpdateEmailRequest = async (req, res, next) => {
 
     const updateEmailUrl = `${req.protocol}://${req.get('host')}/settings/update-email/${token}`;
 
-    const emailHtml = `
-    <p>Thank for for verifying this new email. Please click the link below to complete the update process.\nIf you didn't forget your password please ignore this email.</p>\n<br/>
-    <a href="${updateEmailUrl}" target="_blank">Click me</a>
-    `;
-
     const emailOptions = {
-      email: newEmail,
-      subject: 'Request for email change',
-      emailHtml,
+      newEmail,
+      updateEmailUrl,
     };
 
     await sendEmail(emailOptions);
-
-    // res.clearCookie('jwt', { httpOnly: true, sameSite: 'none' });
 
     return res.status(200).json({
       status: 'Success',

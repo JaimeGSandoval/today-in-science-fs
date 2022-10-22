@@ -22,11 +22,12 @@ const updateUsernameSchema = [
     .withMessage('User name must be between 5 and 20 characters long'),
 ];
 
-// const updateEmailSchema = [
-//   body('newEmail').isEmail().withMessage('Email must contain a valid email address'),
-// ];
+const updateEmailSchema = [
+  body('newEmail').isEmail().withMessage('Email must contain a valid email address'),
+];
 
 module.exports = {
   signupSchema,
   updateUsernameSchema,
+  updateEmailSchema,
 };
