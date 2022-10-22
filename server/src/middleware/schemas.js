@@ -26,8 +26,17 @@ const updateEmailSchema = [
   body('newEmail').isEmail().withMessage('Email must contain a valid email address'),
 ];
 
+const updatePasswordSchema = [
+  body('newPassword')
+    .trim()
+    .custom((value) => !/\s/.test(value))
+    .isLength({ min: 6, max: Number(process.env.MAX_PASSWORD_LENGTH) })
+    .withMessage('Password must be at least 6 characters long'),
+];
+
 module.exports = {
   signupSchema,
   updateUsernameSchema,
   updateEmailSchema,
+  updatePasswordSchema,
 };

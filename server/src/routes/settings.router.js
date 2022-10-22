@@ -1,6 +1,10 @@
 const express = require('express');
 const settingsController = require('../controllers/settings.controller');
-const { updateUsernameSchema, updateEmailSchema } = require('../middleware/schemas');
+const {
+  updateUsernameSchema,
+  updateEmailSchema,
+  updatePasswordSchema,
+} = require('../middleware/schemas');
 const { validateSchema } = require('../middleware/validate-schema');
 const { checkAuth } = require('../middleware/auth');
 
@@ -15,13 +19,21 @@ router.patch(
 );
 
 router.patch(
-  '/request-email-update/:userId',
+  '/update-email-request/:userId',
   checkAuth,
   updateEmailSchema,
   validateSchema,
   settingsController.httpUpdateEmailRequest
 );
 
+router.patch(
+  '/update-password-request/:userId',
+  updatePasswordSchema,
+  validateSchema,
+  settingsController.httpUpdatePasswordRequest
+);
+
 router.get('/update-email/:token', settingsController.httpUpdateUserEmail);
+router.get('/update-password/:token', settingsController.httpUpdateUserPassword);
 
 module.exports = router;
