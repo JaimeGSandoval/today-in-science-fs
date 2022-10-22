@@ -28,11 +28,13 @@ router.patch(
 
 router.patch(
   '/update-password-request/:userId',
+  checkAuth,
   updatePasswordSchema,
   validateSchema,
   settingsController.httpUpdatePasswordRequest
 );
 
+router.get('/forgot-password', settingsController.httpUpdatePasswordRequest);
 router.get('/update-email/:token', settingsController.httpUpdateUserEmail);
 router.get('/update-password/:token', settingsController.httpUpdateUserPassword);
 

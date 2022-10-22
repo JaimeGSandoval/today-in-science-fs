@@ -17,7 +17,7 @@ const sendEmail = async (options) => {
   // const msg = {
   //   to: options.newEmail ? options.newEmail : options.userEmail, // Change to your recipient
   //   from: 'jaime.devs@gmail.com', // Change to your verified sender
-  //   subject: 'Request for email change',
+  //   subject: options.subject,
   //   html: options.updateEmailHtml ? options.updateEmailHtml : options.updatePasswordHtml,
   // };
 
@@ -26,7 +26,7 @@ const sendEmail = async (options) => {
     await transporter.sendMail({
       from: 'tissupport@email.com', // sender address
       to: options.newEmail ? options.newEmail : options.userEmail, // list of receivers
-      subject: 'Request for password change', // Subject line
+      subject: options.subject, // Subject line
       html: options.updateEmailHtml ? options.updateEmailHtml : options.updatePasswordHtml, // message and link
     });
     // await sgMail.send(msg);
