@@ -27,7 +27,7 @@ const updateEmailSchema = [
 ];
 
 const updatePasswordSchema = [
-  body('password')
+  body('newPassword')
     .trim()
     .custom((value) => !/\s/.test(value))
     .isLength({ min: 6, max: Number(process.env.MAX_PASSWORD_LENGTH) })
