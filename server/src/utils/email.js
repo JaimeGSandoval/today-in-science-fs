@@ -14,9 +14,10 @@ const sendEmail = async (options) => {
   });
   // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+  // options.newEmail ? options.newEmail : options.userEmail
   // const msg = {
   //   to: options.newEmail ? options.newEmail : options.userEmail, // Change to your recipient
-  //   from: 'jaime.devs@gmail.com', // Change to your verified sender
+  //   from: 'jsdev.projects@gmail.com', // Change to your verified sender
   //   subject: options.subject,
   //   html: options.updateEmailHtml ? options.updateEmailHtml : options.updatePasswordHtml,
   // };
