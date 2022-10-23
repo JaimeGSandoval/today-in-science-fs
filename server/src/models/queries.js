@@ -13,6 +13,8 @@ exports.getUserByEmailQuery =
 exports.getUserByIdQuery =
   'SELECT user_id, user_name, email, role FROM users.users WHERE user_id = $1';
 
+exports.deleteUserByIdQuery = 'DELETE FROM users.users WHERE user_id = $1';
+
 // SIGN UP QUERY
 exports.signupUserQuery =
   'INSERT INTO users.users (user_name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING user_id, user_name, email, role';

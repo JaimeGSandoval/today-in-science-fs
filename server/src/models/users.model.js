@@ -26,4 +26,8 @@ module.exports = {
     const user = await db.query(queries.getUsernameQuery, [username]);
     return user;
   },
+
+  deleteUserById: async (userId) => {
+    await db.query(queries.deleteUserByIdQuery, [userId]);
+  },
 };

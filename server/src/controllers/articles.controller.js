@@ -34,14 +34,14 @@ module.exports = {
   },
 
   httpGetFavoriteArticles: async (req, res, next) => {
-    const { user_id } = req.user;
+    const { userId } = req.params;
 
-    if (!user_id) {
+    if (!userId) {
       next(new AppError('User ID is required.', 400));
     }
 
     try {
-      const favoriteArticles = await articlesModel.getFavoriteArticles(user_id);
+      const favoriteArticles = await articlesModel.getFavoriteArticles(userId);
 
       return res.status(200).json({
         status: 'Success',
@@ -55,14 +55,14 @@ module.exports = {
   },
 
   httpGetReadLaterArticles: async (req, res, next) => {
-    const { user_id } = req.user;
+    const { userId } = req.params;
 
-    if (!user_id) {
+    if (!userId) {
       next(new AppError('User ID is required.', 400));
     }
 
     try {
-      const readLaterArticles = await articlesModel.getReadLaterArticles(parseInt(user_id, 10));
+      const readLaterArticles = await articlesModel.getReadLaterArticles(parseInt(userId, 10));
 
       return res.status(200).json({
         status: 'Success',
