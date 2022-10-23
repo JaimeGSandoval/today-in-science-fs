@@ -41,4 +41,24 @@ module.exports = {
       return next(new AppError('There was an error retrieving the user. Please try again.', 500));
     }
   },
+
+  httpDeleteUser: async (req, res, next) => {
+    const { userId } = req.params;
+
+    try {
+      const user = await usersModel.getUserById(userId);
+
+      if (!user.rows.length) {
+        return next(new AppError('User has already been deleted', 400));
+      }
+
+      await usersModel.deleteUserById(userId);
+
+      return res
+        .status(200)
+        .send('user account deleted. FE would redirect to home page after getting 204 status code');
+    } catch (e) {
+      return next(new AppError('There was an error deleting your account. Please try again.', 500));
+    }
+  },
 };
