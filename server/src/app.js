@@ -24,7 +24,7 @@ app.use(xss());
 
 app.use(
   cors({
-    origin: 'http://localhost:8000',
+    origin: 'http://localhost:3000',
   })
 );
 
@@ -73,7 +73,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/health-check', (req, res) => res.status(200).send('Health check passed'));
+app.get('/health-check', (req, res) => res.status(200).json('Health check passed'));
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
 app.use('/settings', settingsRouter);
