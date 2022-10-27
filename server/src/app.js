@@ -15,7 +15,9 @@ const authRouter = require('./routes/auth.router');
 const usersRouter = require('./routes/users.router');
 const articlesRouter = require('./routes/articles.router');
 const settingsRouter = require('./routes/settings.router');
+const rssRouter = require('./routes/rss.router');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
+// const { fetchRssFeed } = require('./utils/rss-feed');
 
 const app = express();
 
@@ -76,9 +78,10 @@ app.use(passport.session());
 app.get('/health-check', (req, res) => res.status(200).json('Health check passed'));
 app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
+app.use('/news', rssRouter);
 app.use('/settings', settingsRouter);
-app.use('/users', usersRouter);
 app.use('/articles', articlesRouter);
+app.use('/users', usersRouter);
 
 app.use(errorResponder);
 app.use(invalidPathHandler);

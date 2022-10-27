@@ -1,10 +1,11 @@
 import './sass/App.scss';
 import { Test } from './components/styleTest';
-import { httpHealthCheck } from './api/requests';
+import { httpHealthCheck, httpFeed } from './api/requests';
 
 function App() {
-  const healthCheck = async () => await httpHealthCheck();
-  healthCheck();
+  // httpHealthCheck();
+
+  httpFeed();
   return (
     <div className='App'>
       <Test />
