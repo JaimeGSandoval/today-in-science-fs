@@ -1,0 +1,70 @@
+@import '../../sass/variables';
+
+header {
+  font-family: $primaryFont;
+}
+
+.headerTop {
+  border-bottom: 1px solid white;
+  padding: 0.4rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container {
+  width: 94vw;
+  margin: auto;
+}
+
+.authBtnsBox {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.authBtn {
+  text-decoration: none;
+  color: $primaryFontColor;
+  display: inline-block;
+}
+
+.pipe {
+  padding: 0rem 0.5rem;
+  font-size: 1.3rem;
+  color: $primaryFontColor;
+}
+
+.navBtn {
+  text-decoration: none;
+  color: $primaryFontColor;
+}
+
+.headerBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.logoBox {
+  display: inline;
+}
+
+.logoText {
+  text-decoration: none;
+  color: $primaryFontColor;
+  font-weight: bold;
+}
+
+.navIconBar {
+  display: block;
+  width: 1.2rem;
+  background-color: white;
+  border-radius: 1px;
+  height: 0.12rem;
+}
+
+.navBtnBox span:nth-of-type(2) {
+  margin: 0.25rem 0;
+}
