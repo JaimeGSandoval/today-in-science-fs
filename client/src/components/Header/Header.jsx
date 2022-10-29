@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './_header.module.scss';
 import { Link } from 'react-router-dom';
+import MobileNav from '../MobileNav/MobileNav';
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header>
       <div className={styles.container}>
@@ -29,15 +32,16 @@ export const Header = () => {
             </a>
           </div>
 
-          <a href='/' className={styles.navBtn}>
+          <span className={styles.navBtn} onClick={() => setIsOpen(true)}>
             <span className={styles.navBtnBox}>
               <span className={styles.navIconBar}></span>
               <span className={styles.navIconBar}></span>
               <span className={styles.navIconBar}></span>
             </span>
-          </a>
+          </span>
         </div>
       </div>
+      <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 };
