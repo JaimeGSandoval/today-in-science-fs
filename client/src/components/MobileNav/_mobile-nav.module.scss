@@ -1,0 +1,67 @@
+@import '../../sass//variables';
+
+.modalContainer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  background: white;
+  transition: 0.5s;
+  margin: auto;
+  overflow: scroll;
+}
+
+.innerContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileClose {
+  font-size: 1.5rem;
+  margin: 1.2rem;
+  align-self: flex-end;
+  color: #222;
+}
+
+.logo {
+  font-family: $primaryFont;
+  font-weight: bold;
+  display: block;
+  align-self: flex-end;
+  margin: 1rem 1.2rem 0 0;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  color: #222;
+
+  @media screen and (orientation: landscape) {
+    margin-top: 0;
+  }
+}
+
+.mobileNav {
+  margin-top: 1rem;
+  align-self: flex-end;
+  margin-right: 1.2rem;
+}
+
+.navItem {
+  color: #222;
+  font-family: $primaryFont;
+  text-decoration: none;
+  margin: 0.8rem 0;
+  display: block;
+  width: 100%;
+}
+
+.modalOpen {
+  right: 0;
+}
+
+.subjectsList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
