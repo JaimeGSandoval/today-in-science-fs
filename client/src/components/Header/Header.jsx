@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './_header.module.scss';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   return (
@@ -8,15 +9,15 @@ export const Header = () => {
         <div className={styles.headerTop}>
           <ul className={styles.authBtnsBox}>
             <li>
-              <a href='/' className={styles.authBtn}>
+              <Link to='/signup' className={styles.authBtn}>
                 Sign Up
-              </a>
+              </Link>
             </li>
             <span className={styles.pipe}>|</span>
             <li>
-              <a href='/' className={styles.authBtn}>
+              <Link to='/login' className={styles.authBtn}>
                 Login
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
