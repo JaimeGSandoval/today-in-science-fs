@@ -1,4 +1,6 @@
 @import '../../sass//variables';
+@import '../../sass//media-queries';
+
 .heroContainer,
 .heroImg {
   height: 100vh;
@@ -40,16 +42,24 @@
 .heroHeadline {
   background: rgba(128, 128, 128, 0.3);
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.6rem 0.9rem;
   font-size: 1rem;
   border-radius: 0.7rem;
   font-weight: 400;
   color: white;
   text-decoration: none;
+
+  @include mobileLg {
+    font-size: 1.2rem;
+  }
 }
 
 .titleContainer {
   padding: 1.5rem 0;
+
+  @include mobileLg {
+    padding: 2.2rem 0;
+  }
 }
 
 .heroArticleTitle {
@@ -58,11 +68,20 @@
   display: inline-block;
   font-size: 1.5rem;
   line-height: 2.2rem;
+
+  @include mobileLg {
+    font-size: 1.8rem;
+    line-height: 2.9rem;
+  }
 }
 
 .readArticleLink {
   color: rgb(255, 255, 255, 0.7);
   text-decoration: none;
+
+  @include mobileLg {
+    font-size: 1.2rem;
+  }
 }
 
 .greaterThan {
@@ -70,4 +89,9 @@
   top: 0.2rem;
   left: 0.5rem;
   font-size: 1.3rem;
+
+  @include mobileLg {
+    font-size: 1.5rem;
+    top: 2.5px;
+  }
 }
