@@ -2,7 +2,8 @@
 
 header {
   font-family: $primaryFont;
-  z-index: 5;
+  position: relative;
+  z-index: 10;
 }
 
 .headerTop {

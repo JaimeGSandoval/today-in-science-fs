@@ -1,3 +1,4 @@
+@import '../../sass//variables';
 .heroContainer,
 .heroImg {
   height: 100vh;
@@ -6,19 +7,67 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
   background-position: 50% 50%;
   object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .overlay {
   position: absolute;
   width: 100vw;
   height: 100vh;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.heroInfoBox {
+  width: 92%;
+  color: white;
+  font-family: $primaryFont;
+
+  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    margin-top: 4rem;
+  }
+}
+
+.heroHeadline {
+  background: rgba(128, 128, 128, 0.3);
+  display: inline-block;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.7rem;
+  font-weight: 400;
+  color: white;
+  text-decoration: none;
+}
+
+.titleContainer {
+  padding: 1.5rem 0;
+}
+
+.heroArticleTitle {
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+}
+
+.readArticleLink {
+  color: rgb(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+.greaterThan {
+  position: relative;
+  top: 0.2rem;
+  left: 0.5rem;
+  font-size: 1.3rem;
 }
