@@ -31,14 +31,18 @@ export const Header = () => {
               TODAY IN SCIENCE
             </a>
           </div>
-
-          <span className={styles.navBtn} onClick={() => setIsOpen(true)}>
+          <button
+            className={styles.navMenuBtn}
+            onClick={() => setIsOpen(true)}
+            aria-controls='navbarModal'
+            aria-label='Toggle navigation'
+          >
             <span className={styles.navBtnBox}>
               <span className={styles.navIconBar}></span>
               <span className={styles.navIconBar}></span>
               <span className={styles.navIconBar}></span>
             </span>
-          </span>
+          </button>
         </div>
       </div>
       <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} />

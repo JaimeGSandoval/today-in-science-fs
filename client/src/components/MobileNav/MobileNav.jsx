@@ -18,7 +18,7 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
   ];
 
   return createPortal(
-    <div className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>
+    <div id='navbarModal' className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>
       <div className={styles.innerContainer}>
         <div className={styles.mobileClose} onClick={() => setIsOpen(false)}>
           &#x2715;
