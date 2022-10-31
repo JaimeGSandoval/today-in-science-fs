@@ -1,5 +1,24 @@
 import React from 'react';
+import NavLink from '../NavLink';
 import styles from './_footer.module.scss';
+
+const SUBJECTS_ONE = [
+  'Archaeology',
+  'Artificial Intelligence',
+  'Asteroids',
+  'Astrobiology',
+  'Astronomy',
+  'Big Bang',
+];
+
+const SUBJECTS_TWO = [
+  'Nano Physics',
+  'Robotics',
+  'Space Exploration',
+  'Stars',
+  'Quantum Computers',
+  'Quantum Physics',
+];
 
 export const Footer = () => {
   return (
@@ -9,71 +28,17 @@ export const Footer = () => {
         <nav className={styles.nav}>
           <div className={styles.linkBox}>
             <ul>
-              <li>
-                <a className={styles.navLink} href='/'>
-                  Archaeology
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Artificial Intelligence
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Asteroids
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Astrobiology
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Big Bang
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Nano Physics
-                </a>
-              </li>
+              {SUBJECTS_ONE.map((subject) => (
+                <NavLink subject={subject} styles={styles.navLink} />
+              ))}
             </ul>
           </div>
 
           <div className={styles.linkBox}>
             <ul>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Robotics
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Artificial Intelligence
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Space Exploration
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Stars
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Quantum Computers
-                </a>
-              </li>
-              <li>
-                <a href='/' className={styles.navLink}>
-                  Quantum Physics
-                </a>
-              </li>
+              {SUBJECTS_TWO.map((subject) => (
+                <NavLink subject={subject} styles={styles.navLink} />
+              ))}
             </ul>
           </div>
         </nav>
