@@ -1,0 +1,38 @@
+@import '../../sass/variables';
+
+.container {
+  width: 88vw;
+  margin: 0 auto 2rem;
+}
+
+.headline {
+  font-family: $primaryFont;
+  font-size: 1.2rem;
+  color: white;
+  margin: 2rem 0 1rem 0;
+}
+
+.navLink {
+  color: $secondaryFontColor;
+  text-decoration: none;
+  font-family: $primaryFont;
+  font-size: 0.8rem;
+  margin: 0.7rem 0;
+  display: inline-block;
+}
+
+.logoBox {
+  color: white;
+  font-family: $primaryFont;
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 1px solid $secondaryFontColor;
+}
+
+.logo {
+  color: white;
+  font-family: $primaryFont;
+  padding-top: 1rem;
+  display: block;
+  font-size: 0.8rem;
+}

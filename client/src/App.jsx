@@ -4,6 +4,7 @@ import Signup from './views/Signup';
 import Login from './views/Login';
 import { Home } from './views/Home';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           </Routes>
         </main>
       </Centered>
+      <Footer />
     </div>
   );
 }
