@@ -1,0 +1,111 @@
+@import '../../sass/variables';
+
+.container {
+  margin-top: 100px;
+  width: 100%;
+}
+
+.newsHeader {
+  font-family: $primaryFont;
+  font-weight: 500;
+  color: white;
+  border-bottom: 1px solid $primaryBlue;
+  padding-bottom: 0.2rem;
+  display: inline;
+  margin-bottom: 1rem;
+}
+
+.articlesContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
+  margin: 1rem auto 0 auto;
+  width: 94%;
+}
+
+.articleCard {
+  width: 100%;
+  font-family: $primaryFont;
+  text-decoration: none;
+  padding-bottom: 3rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $primaryBlue;
+}
+
+.cardImg {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cardHeader {
+  color: $primaryBlue;
+  text-decoration: none;
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  display: inline-block;
+}
+
+.cardTitle {
+  font-family: $primaryFont;
+  color: $primaryFontColor;
+  line-height: 1.9rem;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.cardText {
+  display: inline-block;
+  color: $secondaryFontColor;
+  line-height: 1.7rem;
+  margin-bottom: 1.3rem;
+}
+
+.cardDate {
+  display: block;
+  color: $secondaryFontColor;
+  margin-bottom: 2rem;
+}
+
+.cardBtn {
+  display: inline-block;
+  color: $primaryFontColor;
+  text-decoration: none;
+  padding: 11px 17px;
+  background-color: $primaryBlue;
+  border-radius: 5px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iconBox {
+  display: flex;
+  width: 4.06rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.outlineStar,
+.fillStar {
+  font-size: 1.7rem;
+  color: $secondaryFontColor;
+}
+
+.fillStar {
+  color: $iconGold;
+}
+
+.bookmarkOutline,
+.bookmarkFill {
+  font-size: 1.4rem;
+  color: $secondaryFontColor;
+}
+
+.bookmarkFill {
+  color: $iconGold;
+}

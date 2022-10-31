@@ -1,11 +1,11 @@
 @mixin mobileMd {
-  @media screen and (min-width: 375px) {
+  @media screen and (min-width: 375px) and (orientation: portrait) {
     @content;
   }
 }
 
 @mixin mobileLg {
-  @media screen and (min-width: 414px) {
+  @media screen and (min-width: 414px) and (orientation: portrait) {
     @content;
   }
 }

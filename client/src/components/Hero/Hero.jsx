@@ -8,6 +8,11 @@ export const Hero = () => {
   return (
     <>
       <section className={styles.heroContainer}>
+        <picture>
+          <source type='image/webp' srcSet={aiWebp} />
+          <source type='image/png' srcSet={`${medium} 600w, ${large} 1200w`} />
+          <img className={styles.heroImg} src={medium} alt='' />
+        </picture>
         <div className={styles.overlay}>
           <div className={styles.heroInfoBox}>
             <div className={styles.headlineContainer}>
@@ -39,11 +44,6 @@ export const Hero = () => {
             </div>
           </div>
         </div>
-        <picture>
-          <source type='image/webp' srcSet={aiWebp} />
-          <source type='image/png' srcSet={`${medium} 600w, ${large} 1200w`} />
-          <img className={styles.heroImg} src={medium} alt='' />
-        </picture>
       </section>
     </>
   );

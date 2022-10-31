@@ -1,7 +1,10 @@
 @import '../../sass//variables';
 @import '../../sass//media-queries';
 
-.heroContainer,
+.heroContainer {
+  height: 100vh;
+}
+
 .heroImg {
   height: 100vh;
   width: 100vw;
@@ -11,17 +14,14 @@
   left: 0;
   background-position: 50% 50%;
   object-fit: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .overlay {
+  top: 0;
+  left: 0;
   position: absolute;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -33,6 +33,8 @@
   width: 92%;
   color: white;
   font-family: $primaryFont;
+  z-index: 20;
+  position: relative;
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin-top: 4rem;
@@ -76,7 +78,7 @@
 }
 
 .readArticleLink {
-  color: rgb(255, 255, 255, 0.7);
+  color: $secondaryFontColor;
   text-decoration: none;
 
   @include mobileLg {
