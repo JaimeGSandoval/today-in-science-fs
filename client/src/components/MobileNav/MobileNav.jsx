@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import NavLink from '../NavLink';
 import styles from './_mobile-nav.module.scss';
 
 const MobileNav = ({ isOpen, setIsOpen }) => {
@@ -8,6 +9,7 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
     'Artificial Intelligence',
     'Asteroids',
     'Astrobiology',
+    'Astronomy',
     'Big Bang',
     'Nano Physics',
     'Robotics',
@@ -27,11 +29,7 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
         <nav className={styles.mobileNav}>
           <ul className={styles.subjectsList}>
             {SUBJECTS.map((subject) => (
-              <li key={subject}>
-                <a href='/' className={styles.navItem}>
-                  {subject}
-                </a>
-              </li>
+              <NavLink subject={subject} styles={styles.navLink} key={subject} />
             ))}
           </ul>
         </nav>
