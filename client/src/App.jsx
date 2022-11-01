@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Centered from './components/Centered/Centered';
-import { Signup } from './views/Signup';
-import Login from './views/Login';
+import { Signup, Login } from './views/Auth';
 import { Home } from './views/Home';
 
 function App() {
