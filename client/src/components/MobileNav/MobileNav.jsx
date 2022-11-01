@@ -29,7 +29,7 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
         <nav className={styles.mobileNav}>
           <ul className={styles.subjectsList}>
             {SUBJECTS.map((subject) => (
-              <NavLink subject={subject} styles={styles.navLink} />
+              <NavLink subject={subject} styles={styles.navLink} key={subject} />
             ))}
           </ul>
         </nav>

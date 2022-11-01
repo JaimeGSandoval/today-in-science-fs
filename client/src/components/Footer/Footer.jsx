@@ -29,7 +29,7 @@ export const Footer = () => {
           <div className={styles.linkBox}>
             <ul>
               {SUBJECTS_ONE.map((subject) => (
-                <NavLink subject={subject} styles={styles.navLink} />
+                <NavLink subject={subject} styles={styles.navLink} key={subject} />
               ))}
             </ul>
           </div>
@@ -37,7 +37,7 @@ export const Footer = () => {
           <div className={styles.linkBox}>
             <ul>
               {SUBJECTS_TWO.map((subject) => (
-                <NavLink subject={subject} styles={styles.navLink} />
+                <NavLink subject={subject} styles={styles.navLink} key={subject} />
               ))}
             </ul>
           </div>
