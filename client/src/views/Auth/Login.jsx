@@ -1,33 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaUser, FaLock, FaKey } from 'react-icons/fa';
+import { FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import styles from './_signup.module.scss';
+import styles from './_forms.module.scss';
 
-export const Signup = () => {
+export const Login = () => {
   return (
     <section className={styles.container}>
       <div className={styles.formBox}>
-        <h1 className={styles.headline}>Sign up</h1>
+        <h1 className={styles.headline}>Login</h1>
 
         <form action='' className={styles.form}>
           <div className={styles.fieldsWrapper}>
-            <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='username'>
-                username (6 - 20) characters
-              </label>
-              <FaUser className={styles.icon} />
-              <input
-                className={styles.field}
-                type='text'
-                id='username'
-                placeholder='Username (6 - 20) characters'
-                required
-                aria-required
-                tabIndex={0}
-              />
-            </div>
-
             <div className={styles.fieldBox}>
               <label className={styles.screenReaderText} htmlFor='email'>
                 email
@@ -46,31 +30,15 @@ export const Signup = () => {
 
             <div className={styles.fieldBox}>
               <label className={styles.screenReaderText} htmlFor='password'>
-                password (min 6 characters)
-              </label>
-              <FaLock className={styles.icon} />
-              <input
-                className={styles.field}
-                type='password'
-                id='password'
-                placeholder='Password (min 6 characters)'
-                minlength='6'
-                required
-                aria-required
-                tabIndex={0}
-              />
-            </div>
-
-            <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='password'>
-                confirm password
+                password
               </label>
               <FaKey className={styles.icon} />
               <input
                 className={styles.field}
                 type='password'
                 id='password'
-                placeholder='Confirm password'
+                placeholder='Password'
+                minlength='6'
                 required
                 aria-required
                 tabIndex={0}
@@ -79,15 +47,18 @@ export const Signup = () => {
 
             <div className={styles.forgotPasswordBox}>
               <small>
-                Already a member? &nbsp;
+                <Link to='/' className={styles.forgotText} tabIndex={0}>
+                  Forgot password
+                </Link>{' '}
+                &nbsp;or&nbsp;
                 <Link to='/login' className={styles.loginText} tabIndex={0}>
-                  Login
+                  Sign up
                 </Link>
               </small>
             </div>
 
             <button className={styles.submitBtn} tabIndex={0}>
-              Sign Up
+              Login
             </button>
           </div>
         </form>
