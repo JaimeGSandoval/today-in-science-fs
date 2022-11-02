@@ -1,5 +1,6 @@
 @import '../../sass/variables';
 @import '../../sass/media-queries';
+@import '../../sass/mixins';
 
 .container {
   width: 100vw;
@@ -7,20 +8,26 @@
   background-color: $primaryBackground;
 }
 
-.formBox {
-  color: white;
-  width: 88vw;
+.signupFormBox {
+  @include formBox;
   padding: 2rem 0;
-  background-color: rgb(55, 54, 54);
-  border-radius: 0.6rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate((-50%, -50%));
 
-  @include mobileLg {
-    width: 86vw;
+  @include mobileMd {
+    width: 84vw;
+    padding: 2.5rem 0;
+  }
+
+  @include mobileXlg {
     padding: 4rem 0;
+  }
+}
+
+.loginFormBox {
+  @include formBox;
+  padding: 4rem 0;
+
+  @include mobileMd {
+    width: 84vw;
   }
 }
 
@@ -44,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0.4rem;
+  padding: 0.8rem 0.4rem;
 }
 
 .field {
@@ -80,20 +87,19 @@
   text-decoration: none;
 }
 
-.submitBtn {
-  color: $primaryFontColor;
-  border: none;
-  padding: 0.8rem 1.8rem;
-  background-color: $primaryBlue;
-  border-radius: 5px;
-  font-family: $primaryFont;
-  align-self: center;
-  margin-top: 2rem;
+.signupSubmitBtn {
+  @include submitBtn;
+  padding: 1rem 1.8rem;
 
-  @include mobileLg {
+  @include mobileXlg {
     padding: 1.3rem 2.8rem;
     font-size: 1.1rem;
   }
+}
+
+.loginSubmitBtn {
+  @include submitBtn;
+  padding: 1.3rem 3rem;
 }
 
 .screenReaderText {

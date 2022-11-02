@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import styles from './_forms.module.scss';
+import { HeaderLogo } from '../../components/HeaderLogo';
 
 export const Signup = () => {
   return (
     <section className={styles.container}>
-      <div className={styles.formBox}>
+      <HeaderLogo />
+      <div className={styles.signupFormBox}>
         <h1 className={styles.headline}>Sign up</h1>
 
         <form action='' className={styles.form}>
@@ -25,6 +27,8 @@ export const Signup = () => {
                 required
                 aria-required
                 tabIndex={0}
+                minLength={6}
+                maxLength={20}
               />
             </div>
 
@@ -54,7 +58,7 @@ export const Signup = () => {
                 type='password'
                 id='password'
                 placeholder='Password (min 6 characters)'
-                minlength='6'
+                minLength='6'
                 required
                 aria-required
                 tabIndex={0}
@@ -62,14 +66,14 @@ export const Signup = () => {
             </div>
 
             <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='password'>
+              <label className={styles.screenReaderText} htmlFor='confirmPassword'>
                 confirm password
               </label>
               <FaKey className={styles.icon} />
               <input
                 className={styles.field}
                 type='password'
-                id='password'
+                id='confirmPassword'
                 placeholder='Confirm password'
                 required
                 aria-required
@@ -86,7 +90,7 @@ export const Signup = () => {
               </small>
             </div>
 
-            <button className={styles.submitBtn} tabIndex={0}>
+            <button className={styles.signupSubmitBtn} tabIndex={0}>
               Sign Up
             </button>
           </div>

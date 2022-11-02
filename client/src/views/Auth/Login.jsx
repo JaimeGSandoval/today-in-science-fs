@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import styles from './_forms.module.scss';
+import { HeaderLogo } from '../../components/HeaderLogo';
 
 export const Login = () => {
   return (
     <section className={styles.container}>
+      <HeaderLogo />
       <div className={styles.innerContainer}>
-        <div className={styles.formBox}>
+        <div className={styles.loginFormBox}>
           <h1 className={styles.headline}>Login</h1>
 
           <form action='' className={styles.form}>
@@ -39,7 +41,7 @@ export const Login = () => {
                   type='password'
                   id='password'
                   placeholder='Password'
-                  minlength='6'
+                  minLength='6'
                   required
                   aria-required
                   tabIndex={0}
@@ -58,7 +60,7 @@ export const Login = () => {
                 </small>
               </div>
 
-              <button className={styles.submitBtn} tabIndex={0}>
+              <button className={styles.loginSubmitBtn} tabIndex={0}>
                 Login
               </button>
             </div>

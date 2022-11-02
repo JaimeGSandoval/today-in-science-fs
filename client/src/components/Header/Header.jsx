@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './_header.module.scss';
 import { Link } from 'react-router-dom';
-import MobileNav from '../MobileNav/MobileNav';
+import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
 import { GiAtom } from 'react-icons/gi';
 
 export const Header = () => {
@@ -33,21 +33,10 @@ export const Header = () => {
               TODAY IN SCIENCE
             </a>
           </div>
-          <button
-            className={styles.navMenuBtn}
-            onClick={() => setIsOpen(true)}
-            aria-controls='navbarModal'
-            aria-label='Toggle navigation'
-          >
-            <span className={styles.navBtnBox}>
-              <span className={styles.navIconBar}></span>
-              <span className={styles.navIconBar}></span>
-              <span className={styles.navIconBar}></span>
-            </span>
-          </button>
+          <MobileNavBtn setFn={setIsOpen} styles={styles} />
         </div>
       </div>
-      <MobileNav isOpen={isOpen} setIsOpen={setIsOpen} />
+      <MobileNavMenu isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 };
