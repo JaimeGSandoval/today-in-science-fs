@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './_header.module.scss';
 import { Link } from 'react-router-dom';
 import MobileNav from '../MobileNav/MobileNav';
+import { GiAtom } from 'react-icons/gi';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,6 +28,7 @@ export const Header = () => {
 
         <div className={styles.headerBottom}>
           <div className={styles.logoBox}>
+            <GiAtom className={styles.logoIcon} />
             <a href='/' className={styles.logoText}>
               TODAY IN SCIENCE
             </a>

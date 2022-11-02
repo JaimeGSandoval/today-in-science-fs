@@ -56,10 +56,19 @@ header {
 }
 
 .logoBox {
-  display: inline;
+  display: flex;
+  align-items: center;
+}
+
+.logoIcon {
+  color: white;
+  font-size: 1.1rem;
+  position: relative;
+  // bottom: 1px;
 }
 
 .logoText {
+  margin-left: 0.3rem;
   text-decoration: none;
   color: $primaryFontColor;
   font-weight: bold;
