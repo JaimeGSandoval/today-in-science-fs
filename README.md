@@ -1,6 +1,6 @@
 # TODAY IN SCIENCE
 
-*A Resouce for the most recent news in science*
+*A Resource for the most recent news in science*
 
 ### Technologies:
 
