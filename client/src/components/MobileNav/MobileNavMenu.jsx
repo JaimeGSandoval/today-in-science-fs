@@ -1,9 +1,9 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import NavLink from '../NavLink';
-import styles from './_mobile-nav.module.scss';
+import styles from './_mobileNav.module.scss';
 
-const MobileNav = ({ isOpen, setIsOpen }) => {
+export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
   const SUBJECTS = [
     'Archaeology',
     'Artificial Intelligence',
@@ -38,5 +38,3 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
     document.getElementById('mobile-nav-modal')
   );
 };
-
-export default MobileNav;

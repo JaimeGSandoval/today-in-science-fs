@@ -1,11 +1,9 @@
 @import '../../sass/variables';
 @import '../../sass//media-queries';
+@import '../../sass/mixins';
 
 header {
-  font-family: $primaryFont;
-  position: absolute;
-  width: 94vw;
-  z-index: 10;
+  @include header;
 }
 
 .headerTop {
@@ -40,14 +38,6 @@ header {
   color: $primaryFontColor;
 }
 
-.navMenuBtn {
-  text-decoration: none;
-  color: $primaryFontColor;
-  background-color: transparent;
-  outline: 0;
-  border: none;
-}
-
 .headerBottom {
   display: flex;
   justify-content: space-between;
@@ -56,35 +46,18 @@ header {
 }
 
 .logoBox {
-  display: inline;
+  display: flex;
+  align-items: center;
+}
+
+.logoIcon {
+  @include logoIcon;
 }
 
 .logoText {
-  text-decoration: none;
-  color: $primaryFontColor;
-  font-weight: bold;
+  @include logoText;
 
   @include mobileLg {
     font-size: 1.2rem;
-  }
-}
-
-.navIconBar {
-  display: block;
-  width: 1.2rem;
-  background-color: white;
-  border-radius: 1px;
-  height: 0.18rem;
-
-  @include mobileLg {
-    width: 1.5rem;
-  }
-}
-
-.navBtnBox span:nth-of-type(2) {
-  margin: 0.25rem 0;
-
-  @include mobileLg {
-    margin: 0.32rem 0;
   }
 }

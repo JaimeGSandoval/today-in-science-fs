@@ -5,7 +5,6 @@
 
 html {
   min-height: 100%;
-
   display: flex;
   flex-direction: column;
 }
@@ -13,17 +12,10 @@ html {
 body {
   flex-grow: 1;
   background-color: $primaryBackground;
-  //   width: 100vw;
-  //   max-width: 100%;
 }
-
-// #root {
-//   height: 100vh;
-//   width: 100vw;
-//   max-width: 100%;
-// }
 
 .App {
   width: 100vw;
   max-width: 100%;
+  min-height: 100%;
 }

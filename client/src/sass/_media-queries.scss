@@ -9,3 +9,9 @@
     @content;
   }
 }
+
+@mixin mobileXlg {
+  @media screen and (min-width: 428px) and (orientation: portrait) {
+    @content;
+  }
+}
