@@ -14,4 +14,4 @@
 - CSS3
 - HTML5
 
-### This Full Stack Application is Currently Under Construction
+### This Full Stack Application is Currently Under Construction. Live Demo Coming Soon.
