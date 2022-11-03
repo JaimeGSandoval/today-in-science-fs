@@ -1,0 +1,11 @@
+@import '../../sass/variables';
+.icon {
+  background: $primaryBlue;
+  border-radius: 50%;
+  color: white;
+  font-size: 3rem;
+  position: fixed;
+  bottom: 3rem;
+  right: 2.2rem;
+  z-index: 10;
+}
