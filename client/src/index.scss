@@ -3,8 +3,19 @@
 @import './sass/variables.scss';
 @import './sass/mixins';
 
-html {
+html,
+body,
+#root,
+.App {
   min-height: 100%;
+}
+
+html,
+body {
+  height: var(--doc-height);
+}
+
+html {
   display: flex;
   flex-direction: column;
 }
@@ -17,5 +28,4 @@ body {
 .App {
   width: 100vw;
   max-width: 100%;
-  min-height: 100%;
 }
