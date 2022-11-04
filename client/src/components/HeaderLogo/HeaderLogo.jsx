@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
 import { GiAtom } from 'react-icons/gi';
 
-export const HeaderLogo = ({ styles }) => {
+export const HeaderLogo = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className={styles.header}>
+    <header>
       <div className={defaultStyles.headerContainer}>
         <div className={defaultStyles.innerContainer}>
           <div className={defaultStyles.logoBox}>
