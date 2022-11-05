@@ -1,9 +1,0 @@
-@import '../../sass/media-queries';
-
-.header {
-  position: static;
-
-  @include mobileXlg {
-    padding: 1rem 0;
-  }
-}

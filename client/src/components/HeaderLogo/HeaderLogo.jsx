@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import defaultStyles from './_headerLogo.module.scss';
+import styles from './_headerLogo.module.scss';
 import { Link } from 'react-router-dom';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
 import { GiAtom } from 'react-icons/gi';
@@ -8,12 +8,12 @@ export const HeaderLogo = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header>
-      <div className={defaultStyles.headerContainer}>
-        <div className={defaultStyles.innerContainer}>
-          <div className={defaultStyles.logoBox}>
-            <GiAtom className={defaultStyles.logoIcon} />
-            <Link to='/' className={defaultStyles.logoText}>
+    <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <div className={styles.innerContainer}>
+          <div className={styles.logoBox}>
+            <GiAtom className={styles.logoIcon} />
+            <Link to='/' className={styles.logoText}>
               TODAY IN SCIENCE
             </Link>
           </div>

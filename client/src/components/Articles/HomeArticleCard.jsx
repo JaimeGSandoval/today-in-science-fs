@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import qComputing from '../../assets/images/quantum-computing.webp';
 import styles from './_articles.module.scss';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 
-export const ArticleCard = ({ articleData }) => {
+export const HomeArticleCard = ({ articleData }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -12,6 +13,7 @@ export const ArticleCard = ({ articleData }) => {
 
   return (
     <div className={styles.articleCard}>
+      <img className={styles.cardImg} src={qComputing} alt='' />
       <div className={styles.cardBody}>
         <a href='/' className={styles.cardHeader}>
           {articleData.subject}

@@ -5,7 +5,7 @@ import { MdEmail } from 'react-icons/md';
 import styles from './_forms.module.scss';
 import { HeaderLogo } from '../../components/HeaderLogo';
 
-export const Login = () => {
+export const LoginView = () => {
   return (
     <section className={styles.container}>
       <HeaderLogo />

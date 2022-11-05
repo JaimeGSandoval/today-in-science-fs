@@ -29,12 +29,12 @@ const mockData = [
   },
 ];
 
-export const Articles = () => {
+export const ArticlesContainer = () => {
   return (
     <>
-      <section className={styles.container}>
+      <section className={styles.articlesOuterContainer}>
         <div className={styles.articlesContainer}>
-          <h1 className={styles.newsHeader}>Latest Articles</h1>
+          <h1 className={styles.newsHeader}>Artificial Intelligence</h1>
           {mockData.map((obj) => (
             <ArticleCard articleData={obj} key={obj.title} />
           ))}
