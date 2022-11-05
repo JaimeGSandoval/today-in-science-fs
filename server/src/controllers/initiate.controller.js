@@ -3,11 +3,18 @@ const AppError = require('../utils/app-error');
 
 const parser = new Parser();
 
-const httpRssFeed = async (req, res, next) => {
+const httpInitiate = async (req, res, next) => {
   //   const { category } = req.params;
   // const rssFeedUrl = `https://phys.org/rss-feed/space-news/${category}/`;
-  // const rssFeedUrl = 'https://phys.org/rss-feed/breaking/physics-news/quantum-physics/';
-  const rssFeedUrl = 'https://www.sciencedaily.com/rss/computers_math/quantum_computers.xml';
+  const rssFeedUrl = 'https://phys.org/rss-feed/breaking/physics-news/quantum-physics';
+  // const rssFeedUrl = 'https://www.sciencedaily.com/rss/computers_math/quantum_computers.xml';
+  const index = rssFeedUrl.lastIndexOf('/');
+  const subject = rssFeedUrl
+    .slice(index + 1)
+    .replace('.xml', '')
+    .replace('_', ' ')
+    .replace('-', ' ');
+  console.log('Subject', subject);
 
   try {
     const feed = await parser.parseURL(rssFeedUrl);
@@ -17,6 +24,7 @@ const httpRssFeed = async (req, res, next) => {
         description: item.content,
         date: item.pubDate,
         link: item.link,
+        subject,
       };
     });
 
@@ -27,5 +35,5 @@ const httpRssFeed = async (req, res, next) => {
 };
 
 module.exports = {
-  httpRssFeed,
+  httpInitiate,
 };

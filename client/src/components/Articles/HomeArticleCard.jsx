@@ -19,11 +19,9 @@ export const HomeArticleCard = ({ articleData }) => {
           {articleData.subject}
         </a>
 
-        <h3 href='/' className={styles.cardTitle}>
-          {articleData.title}
-        </h3>
+        <h3 className={styles.cardTitle}>{articleData.title}</h3>
 
-        <p className={styles.cardText}>{articleData.text}</p>
+        <p className={styles.cardText}>{articleData.description}</p>
 
         <span className={styles.cardDate}>{articleData.date}</span>
 
