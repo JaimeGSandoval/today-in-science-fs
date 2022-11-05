@@ -7,18 +7,13 @@ import aiWebp from '../../assets/images/ai.webp';
 export const Hero = () => {
   return (
     <>
-      <section className={styles.heroContainer} style={{ height: `${window.innerHeight}px` }}>
+      <section className={styles.heroContainer}>
         <picture>
           <source type='image/webp' srcSet={aiWebp} />
           <source type='image/png' srcSet={`${medium} 600w, ${large} 1200w`} />
-          <img
-            className={styles.heroImg}
-            style={{ height: `${window.innerHeight}px` }}
-            src={medium}
-            alt=''
-          />
+          <img className={styles.heroImg} src={medium} alt='' />
         </picture>
-        <div className={styles.overlay} style={{ height: `${window.innerHeight}px` }}>
+        <div className={styles.overlay}>
           <div className={styles.heroInfoBox}>
             <div className={styles.headlineContainer}>
               <a href='/' className={styles.heroHeadline}>

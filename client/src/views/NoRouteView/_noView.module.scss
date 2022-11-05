@@ -1,0 +1,18 @@
+@import '../../sass/variables';
+
+.container {
+  margin-top: 5rem;
+}
+
+.header {
+  font-family: $primaryFont;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.link {
+  color: $primaryBlue;
+  font-family: $primaryFont;
+  display: inline-block;
+  margin-top: 2rem;
+}

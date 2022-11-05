@@ -2,8 +2,15 @@
 @import '../../sass//media-queries';
 @import '../../sass//mixins';
 
-header {
-  @include header;
+.header {
+  position: static;
+  font-family: $primaryFont;
+  width: 94vw;
+  z-index: 10;
+
+  @include mobileXlg {
+    padding: 1rem 0;
+  }
 }
 
 .navMenuBtn {

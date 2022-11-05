@@ -5,6 +5,9 @@
   height: 100vh;
 }
 
+// This will let you maintain the initial height with the address bar excluded, and won't let it change when the bar disappears. Steps timing function is to avoid costly layout calculations.
+// transition: height 1000s steps(1);
+
 .heroImg {
   height: 100vh;
   width: 100vw;
@@ -15,6 +18,7 @@
   bottom: 0;
   background-position: 50% 50%;
   object-fit: cover;
+  transition: height 1000s steps(1);
 }
 
 .overlay {
@@ -29,6 +33,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  transition: height 1000s steps(1);
 }
 
 .heroInfoBox {

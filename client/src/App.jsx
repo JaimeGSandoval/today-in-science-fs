@@ -1,8 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import Centered from './components/Centered/Centered';
-import { Signup, Login } from './views/Auth';
-import { Home } from './views/Home';
-import { Dashboard } from './views/Dashboard';
+import { HomeView } from './views/HomeView';
+import { ArticlesView } from './views/ArticlesView/ArticlesView';
+import { DashboardView } from './views/DashboardView';
+import { SignupView, LoginView } from './views/AuthViews';
+import { NoRouteView } from './views/NoRouteView/NoRouteView';
 
 function App() {
   return (
@@ -10,10 +12,12 @@ function App() {
       <Centered>
         <main>
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/' element={<HomeView />} />
+            <Route path='/signup' element={<SignupView />} />
+            <Route path='/login' element={<LoginView />} />
+            <Route path='/dashboard' element={<DashboardView />} />
+            <Route path='/articles' element={<ArticlesView />} />
+            <Route path='*' element={<NoRouteView />} />
           </Routes>
         </main>
       </Centered>

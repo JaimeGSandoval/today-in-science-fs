@@ -8,7 +8,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header>
+    <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.headerTop}>
           <ul className={styles.authBtnsBox}>

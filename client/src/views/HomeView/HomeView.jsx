@@ -1,12 +1,11 @@
 import React from 'react';
 import { Header } from '../../components/Header';
 import { Hero } from '../../components/Hero';
-import { Articles } from '../../components/Articles';
+import { HomeArticlesContainer as Articles } from '../../components/Articles';
 import { ScrollToTop } from '../../components/ScrollToTop';
 import { Footer } from '../../components/Footer';
-import './_home.module.scss';
 
-export const Home = () => {
+export const HomeView = () => {
   return (
     <>
       <Header />
