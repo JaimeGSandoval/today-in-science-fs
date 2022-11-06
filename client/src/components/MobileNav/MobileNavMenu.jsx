@@ -5,18 +5,15 @@ import styles from './_mobileNav.module.scss';
 
 export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
   const SUBJECTS = [
-    'Archaeology',
     'Artificial Intelligence',
-    'Asteroids',
-    'Astrobiology',
+    'Ancient Civilizations',
     'Astronomy',
     'Big Bang',
-    'Nano Physics',
-    'Robotics',
-    'Space Exploration',
-    'Stars',
+    'Energy Technology',
+    'Mathematics',
+    'Neural Interfaces',
+    'Neuroscience',
     'Quantum Computers',
-    'Quantum Physics',
   ];
 
   return createPortal(

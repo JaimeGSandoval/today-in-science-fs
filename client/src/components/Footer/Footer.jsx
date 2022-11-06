@@ -3,22 +3,14 @@ import NavLink from '../NavLink';
 import styles from './_footer.module.scss';
 
 const SUBJECTS_ONE = [
-  'Archaeology',
   'Artificial Intelligence',
-  'Asteroids',
-  'Astrobiology',
+  'Ancient Civilizations',
   'Astronomy',
   'Big Bang',
+  'Energy Technology',
 ];
 
-const SUBJECTS_TWO = [
-  'Nano Physics',
-  'Robotics',
-  'Space Exploration',
-  'Stars',
-  'Quantum Computers',
-  'Quantum Physics',
-];
+const SUBJECTS_TWO = ['Mathematics', 'Neural Interfaces', 'Neuroscience', 'Quantum Computers'];
 
 export const Footer = () => {
   return (

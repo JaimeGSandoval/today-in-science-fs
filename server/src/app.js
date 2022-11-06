@@ -17,7 +17,6 @@ const articlesRouter = require('./routes/articles.router');
 const settingsRouter = require('./routes/settings.router');
 const rssRouter = require('./routes/rss.router');
 const { errorResponder, invalidPathHandler } = require('./middleware/error-handlers');
-// const { fetchRssFeed } = require('./utils/rss-feed');
 
 const app = express();
 

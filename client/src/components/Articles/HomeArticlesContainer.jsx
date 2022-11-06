@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './_articles.module.scss';
 import { HomeArticleCard } from './HomeArticleCard';
 
-export const HomeArticlesContainer = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [articles, setArticles] = useState(null);
-
-  useEffect(() => {
-    const getHomeArticles = async () => {
-      const response = await fetch('http://localhost:8000/news/initiate');
-      const data = await response.json();
-      setArticles(data);
-      setIsLoading(false);
-    };
-
-    getHomeArticles();
-  }, []);
-
+export const HomeArticlesContainer = ({ articles, isLoading }) => {
   return (
     <>
       <section className={styles.container}>
@@ -25,7 +11,7 @@ export const HomeArticlesContainer = () => {
           {isLoading && <h1 style={{ color: 'white' }}>Loading ...</h1>}
           {!isLoading &&
             articles.map((article) => (
-              <HomeArticleCard articleData={article} key={article.title} />
+              <HomeArticleCard articleData={article} key={article.article.title} />
             ))}
         </div>
       </section>
