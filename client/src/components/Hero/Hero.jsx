@@ -4,7 +4,17 @@ import medium from '../../assets/images/ai-md.png';
 import large from '../../assets/images/ai-lg.png';
 import aiWebp from '../../assets/images/ai.webp';
 
-export const Hero = () => {
+export const Hero = ({ heroArticle, isLoading }) => {
+  let article;
+  let articleSubject;
+  let articleDate;
+
+  if (!isLoading) {
+    article = heroArticle.article;
+    articleSubject = heroArticle.subject.replace('-', ' ');
+    articleDate = new Date(article.pubDate).toDateString();
+  }
+
   return (
     <>
       <section className={styles.heroContainer}>
@@ -14,35 +24,32 @@ export const Hero = () => {
           <img className={styles.heroImg} src={medium} alt='' />
         </picture>
         <div className={styles.overlay}>
-          <div className={styles.heroInfoBox}>
-            <div className={styles.headlineContainer}>
-              <a href='/' className={styles.heroHeadline}>
-                Robotics
-              </a>
-            </div>
+          {isLoading && <h1 style={{ color: 'white' }}>Loading ...</h1>}
+          {!isLoading && (
+            <div className={styles.heroInfoBox}>
+              <div className={styles.headlineContainer}>
+                <a href='/' className={styles.heroSubject}>
+                  {articleSubject}
+                </a>
+              </div>
 
-            <div className={styles.titleContainer}>
-              <a
-                href='https://www.sciencedaily.com/releases/2022/10/221021163556.htm'
-                className={styles.heroArticleTitle}
-                target='_blank'
-                rel='noreferrer'
-              >
-                Tentacle robot can gently grasp fragile objects
-              </a>
-            </div>
+              <div className={styles.titleContainer}>
+                <span className={styles.heroArticleTitle}>{article.title}</span>
+                <span className={styles.articleDate}>{articleDate}</span>
+              </div>
 
-            <div className={styles.readArticleContainer}>
-              <a
-                href='https://www.sciencedaily.com/releases/2022/10/221021163556.htm'
-                className={styles.readArticleLink}
-                target='_blank'
-                rel='noreferrer'
-              >
-                Read Article <span className={styles.greaterThan}>&#62;</span>
-              </a>
+              <div className={styles.readArticleContainer}>
+                <a
+                  href={article.link}
+                  className={styles.readArticleLink}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  Read Article
+                </a>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
     </>

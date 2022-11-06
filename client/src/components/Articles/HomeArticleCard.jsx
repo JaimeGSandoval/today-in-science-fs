@@ -11,22 +11,30 @@ export const HomeArticleCard = ({ articleData }) => {
   const handleFavoriteToggle = () => setIsFavorite(!isFavorite);
   const handleSavedToggle = () => setIsSaved(!isSaved);
 
+  const articleDate = new Date(articleData.article.pubDate).toDateString();
+  const articleSubject = articleData.subject.replace('-', ' ');
+
   return (
     <div className={styles.articleCard}>
       <img className={styles.cardImg} src={qComputing} alt='' />
       <div className={styles.cardBody}>
         <a href='/' className={styles.cardHeader}>
-          {articleData.subject}
+          {articleSubject}
         </a>
 
-        <h3 className={styles.cardTitle}>{articleData.title}</h3>
+        <h3 className={styles.cardTitle}>{articleData.article.title}</h3>
 
-        <p className={styles.cardText}>{articleData.description}</p>
+        <p className={styles.cardText}>{articleData.article.content}</p>
 
-        <span className={styles.cardDate}>{articleData.date}</span>
+        <span className={styles.cardDate}>{articleDate}</span>
 
         <div className={styles.cardFooter}>
-          <a href={articleData.link} className={styles.cardBtn} target='_blank' rel='noreferrer'>
+          <a
+            href={articleData.article.link}
+            className={styles.cardBtn}
+            target='_blank'
+            rel='noreferrer'
+          >
             Read Article
           </a>
 
