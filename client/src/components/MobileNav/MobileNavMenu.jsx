@@ -3,19 +3,19 @@ import { createPortal } from 'react-dom';
 import NavLink from '../NavLink';
 import styles from './_mobileNav.module.scss';
 
-export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
-  const SUBJECTS = [
-    'Artificial Intelligence',
-    'Ancient Civilizations',
-    'Astronomy',
-    'Big Bang',
-    'Energy Technology',
-    'Mathematics',
-    'Neural Interfaces',
-    'Neuroscience',
-    'Quantum Computers',
-  ];
+const SUBJECTS = [
+  'artificial-intelligence',
+  'ancient-civilizations',
+  'astronomy',
+  'big-bang',
+  'energy-technology',
+  'mathematics',
+  'neural-interfaces',
+  'neuroscience',
+  'quantum-computers',
+];
 
+export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
   return createPortal(
     <div id='navbarModal' className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>
       <div className={styles.innerContainer}>
@@ -26,7 +26,12 @@ export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
         <nav className={styles.mobileNav}>
           <ul className={styles.subjectsList}>
             {SUBJECTS.map((subject) => (
-              <NavLink subject={subject} styles={styles.navLink} key={subject} />
+              <NavLink
+                subject={subject}
+                styles={styles.navLink}
+                key={subject}
+                setIsOpen={setIsOpen}
+              />
             ))}
           </ul>
         </nav>
