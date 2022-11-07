@@ -10,6 +10,8 @@ export const ArticleCard = ({ articleData }) => {
   const handleFavoriteToggle = () => setIsFavorite(!isFavorite);
   const handleSavedToggle = () => setIsSaved(!isSaved);
 
+  const articleDate = new Date(articleData.pubDate).toDateString();
+
   return (
     <div className={styles.articleCard}>
       <div className={styles.cardBody}>
@@ -21,9 +23,9 @@ export const ArticleCard = ({ articleData }) => {
           {articleData.title}
         </h3>
 
-        <p className={styles.cardText}>{articleData.text}</p>
+        <p className={styles.cardText}>{articleData.content}</p>
 
-        <span className={styles.cardDate}>{articleData.date}</span>
+        <span className={styles.cardDate}>{articleDate}</span>
 
         <div className={styles.cardFooter}>
           <a href={articleData.link} className={styles.cardBtn} target='_blank' rel='noreferrer'>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './_hero.module.scss';
 import medium from '../../assets/images/ai-md.png';
 import large from '../../assets/images/ai-lg.png';
@@ -28,9 +29,9 @@ export const Hero = ({ heroArticle, isLoading }) => {
           {!isLoading && (
             <div className={styles.heroInfoBox}>
               <div className={styles.headlineContainer}>
-                <a href='/' className={styles.heroSubject}>
+                <Link to={`/articles/${heroArticle.subject}`} className={styles.heroSubject}>
                   {articleSubject}
-                </a>
+                </Link>
               </div>
 
               <div className={styles.titleContainer}>

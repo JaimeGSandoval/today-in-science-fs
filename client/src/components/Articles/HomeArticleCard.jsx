@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import qComputing from '../../assets/images/quantum-computing.webp';
 import styles from './_articles.module.scss';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -18,9 +19,9 @@ export const HomeArticleCard = ({ articleData }) => {
     <div className={styles.articleCard}>
       <img className={styles.cardImg} src={qComputing} alt='' />
       <div className={styles.cardBody}>
-        <a href='/' className={styles.cardHeader}>
+        <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
           {articleSubject}
-        </a>
+        </Link>
 
         <h3 className={styles.cardTitle}>{articleData.article.title}</h3>
 
