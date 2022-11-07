@@ -22,7 +22,12 @@ export const HomeView = () => {
       );
     };
 
-    getHomeArticles();
+    if (sessionStorage.getItem('home-articles')) {
+      setArticles(JSON.parse(sessionStorage.getItem('home-articles')));
+      setIsLoading(false);
+    } else {
+      getHomeArticles();
+    }
   }, []);
 
   let heroArticle;
