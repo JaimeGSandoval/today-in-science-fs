@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './_articles.module.scss';
+import { UserContext } from '../../context/User.context';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
+import styles from './_articles.module.scss';
 
-export const HomeArticleCard = ({ articleData }) => {
+export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const currentUserContext = useContext(UserContext);
+  const { currentUser } = currentUserContext;
 
-  const handleFavoriteToggle = () => setIsFavorite(!isFavorite);
+  const handleFavoriteToggle = () => {
+    if (!currentUser) {
+      setIsOpen(!isOpen);
+      return;
+    }
+
+    setIsFavorite(!isFavorite);
+  };
+
   const handleSavedToggle = () => setIsSaved(!isSaved);
 
   const articleDate = new Date(articleData.article.pubDate).toDateString();

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './_articles.module.scss';
 import { HomeArticleCard } from './HomeArticleCard';
+import { SignupModal } from '../SignupModal';
 
 export const HomeArticlesContainer = ({ articles, isLoading }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <section className={styles.container}>
@@ -11,10 +14,16 @@ export const HomeArticlesContainer = ({ articles, isLoading }) => {
           {isLoading && <h1 style={{ color: 'white' }}>Loading ...</h1>}
           {!isLoading &&
             articles.map((article) => (
-              <HomeArticleCard articleData={article} key={article.article.title} />
+              <HomeArticleCard
+                articleData={article}
+                key={article.article.title}
+                setIsOpen={setIsOpen}
+                isOpen={isOpen}
+              />
             ))}
         </div>
       </section>
+      <SignupModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };
