@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './_hero.module.scss';
-import medium from '../../assets/images/ai-md.png';
-import large from '../../assets/images/ai-lg.png';
-import aiWebp from '../../assets/images/ai.webp';
+import medium from '../../assets/images/jpg/artificial-intelligence-md.png';
+import large from '../../assets/images/jpg/artificial-intelligence-lg.png';
+import aiWebp from '../../assets/images/webp/artificial-intelligence.webp';
 
 export const Hero = ({ heroArticle, isLoading }) => {
   let article;

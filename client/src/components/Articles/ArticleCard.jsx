@@ -13,7 +13,7 @@ export const ArticleCard = ({ articleData }) => {
   const articleDate = new Date(articleData.pubDate).toDateString();
 
   return (
-    <div className={styles.articleCard}>
+    <div className={styles.articlesViewCard}>
       <div className={styles.cardBody}>
         <a href='/' className={styles.cardHeader}>
           {articleData.subject}
