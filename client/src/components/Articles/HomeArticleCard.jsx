@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './_articles.module.scss';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
-import IMAGES_WEBP from './images';
+import { IMAGES_WEBP, IMAGES_JPG } from './images';
 
 export const HomeArticleCard = ({ articleData }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -13,12 +13,16 @@ export const HomeArticleCard = ({ articleData }) => {
   const handleSavedToggle = () => setIsSaved(!isSaved);
 
   const articleDate = new Date(articleData.article.pubDate).toDateString();
-  const image = IMAGES_WEBP.get(articleData.subject);
+  const imageWebp = IMAGES_WEBP.get(articleData.subject);
+  const imageJpg = IMAGES_JPG.get(articleData.subject);
   const articleSubject = articleData.subject.replace('-', ' ');
 
   return (
     <div className={styles.articleCard}>
-      <img className={styles.cardImg} src={image} alt='' />
+      <picture>
+        <source srcSet={imageWebp} />
+        <img className={styles.cardImg} src={imageJpg} alt='' />
+      </picture>
       <div className={styles.cardBody}>
         <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
           {articleSubject}
