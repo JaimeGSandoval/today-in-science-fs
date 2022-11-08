@@ -5,7 +5,8 @@
   width: 100%;
 }
 
-.newsHeader {
+.newsHeader,
+.articleNewsHeader {
   font-family: $primaryFont;
   font-weight: 500;
   color: white;
@@ -16,11 +17,15 @@
   text-transform: capitalize;
 }
 
+.articleNewsHeader {
+  margin-bottom: 0;
+}
+
 .homeArticlesContainer,
 .articlesContainer {
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 1rem;
+  // row-gap: 1rem;
   margin: 1rem auto 0 auto;
   width: 94%;
 }
@@ -34,13 +39,18 @@
   margin-top: 1rem;
 }
 
-.articleCard {
+.articleCard,
+.articlesViewCard {
   width: 100%;
   font-family: $primaryFont;
   text-decoration: none;
   padding-bottom: 3rem;
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem;
   border-bottom: 1px solid $primaryBlue;
+}
+
+.articlesViewCard {
+  margin: 0;
 }
 
 .cardImg {

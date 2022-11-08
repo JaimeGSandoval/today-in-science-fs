@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import qComputing from '../../assets/images/quantum-computing.webp';
 import styles from './_articles.module.scss';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import IMAGES_WEBP from './images';
 
 export const HomeArticleCard = ({ articleData }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -13,11 +13,12 @@ export const HomeArticleCard = ({ articleData }) => {
   const handleSavedToggle = () => setIsSaved(!isSaved);
 
   const articleDate = new Date(articleData.article.pubDate).toDateString();
+  const image = IMAGES_WEBP.get(articleData.subject);
   const articleSubject = articleData.subject.replace('-', ' ');
 
   return (
     <div className={styles.articleCard}>
-      <img className={styles.cardImg} src={qComputing} alt='' />
+      <img className={styles.cardImg} src={image} alt='' />
       <div className={styles.cardBody}>
         <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
           {articleSubject}
