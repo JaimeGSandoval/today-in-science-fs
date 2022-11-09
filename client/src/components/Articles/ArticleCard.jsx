@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from './_articles.module.scss';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { UserContext } from '../../context/User.context';
 
-export const ArticleCard = ({ articleData }) => {
+export const ArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const currentUserContext = useContext(UserContext);
+  const { currentUser } = currentUserContext;
 
-  const handleFavoriteToggle = () => setIsFavorite(!isFavorite);
-  const handleSavedToggle = () => setIsSaved(!isSaved);
+  const handleToggle = (stateVal, setStateVal) => {
+    if (!currentUser) {
+      setIsOpen(!isOpen);
+      return;
+    }
+
+    setStateVal(!stateVal);
+  };
 
   const articleDate = new Date(articleData.pubDate).toDateString();
 
@@ -34,14 +43,26 @@ export const ArticleCard = ({ articleData }) => {
 
           <div className={styles.iconBox}>
             {isFavorite ? (
-              <AiFillStar className={styles.fillStar} onClick={handleFavoriteToggle} />
+              <AiFillStar
+                className={styles.fillStar}
+                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+              />
             ) : (
-              <AiOutlineStar className={styles.outlineStar} onClick={handleFavoriteToggle} />
+              <AiOutlineStar
+                className={styles.outlineStar}
+                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+              />
             )}
             {isSaved ? (
-              <BsBookmarkFill className={styles.bookmarkFill} onClick={handleSavedToggle} />
+              <BsBookmarkFill
+                className={styles.bookmarkFill}
+                onClick={() => handleToggle(isSaved, setIsSaved)}
+              />
             ) : (
-              <BsBookmark className={styles.bookmarkOutline} onClick={handleSavedToggle} />
+              <BsBookmark
+                className={styles.bookmarkOutline}
+                onClick={() => handleToggle(isSaved, setIsSaved)}
+              />
             )}
           </div>
         </div>

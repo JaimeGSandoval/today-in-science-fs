@@ -1,9 +1,39 @@
-.test {
+@import '../../sass//mixins';
+@import '../../sass/variables';
+
+.container {
   position: fixed;
-  background: red;
+  background: rgba(0, 0, 0, 0.9);
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   z-index: 20;
+}
+
+.innerContainer {
+  @include formBox;
+  position: relative;
+  bottom: 1rem;
+  transform: translate((-50%, -55%));
+}
+
+.infoBox {
+  font-family: $primaryFont;
+  color: white;
+  width: 98%;
+  margin: auto;
+  padding: 1rem;
+}
+
+.text {
+  display: block;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 2.7rem;
+  padding: 1rem 0.5rem;
+}
+
+.link {
+  color: $primaryBlue;
 }
