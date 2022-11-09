@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/User.context';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { CardFooter } from '../CardFooter';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
@@ -25,6 +24,16 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     setStateVal(!stateVal);
   };
 
+  const cardFooterData = {
+    articleData,
+    handleToggle,
+    isFavorite,
+    setIsFavorite,
+    isSaved,
+    setIsSaved,
+    styles,
+  };
+
   return (
     <div className={styles.articleCard}>
       <picture>
@@ -42,41 +51,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
         <span className={styles.cardDate}>{articleDate}</span>
 
-        <div className={styles.cardFooter}>
-          <a
-            href={articleData.article.link}
-            className={styles.cardBtn}
-            target='_blank'
-            rel='noreferrer'
-          >
-            Read Article
-          </a>
-
-          <div className={styles.iconBox}>
-            {isFavorite ? (
-              <AiFillStar
-                className={styles.fillStar}
-                onClick={() => handleToggle(isFavorite, setIsFavorite)}
-              />
-            ) : (
-              <AiOutlineStar
-                className={styles.outlineStar}
-                onClick={() => handleToggle(isFavorite, setIsFavorite)}
-              />
-            )}
-            {isSaved ? (
-              <BsBookmarkFill
-                className={styles.bookmarkFill}
-                onClick={() => handleToggle(isSaved, setIsSaved)}
-              />
-            ) : (
-              <BsBookmark
-                className={styles.bookmarkOutline}
-                onClick={() => handleToggle(isSaved, setIsSaved)}
-              />
-            )}
-          </div>
-        </div>
+        <CardFooter cardFooterData={cardFooterData} />
       </div>
     </div>
   );
