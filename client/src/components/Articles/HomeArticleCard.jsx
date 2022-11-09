@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './_articles.module.scss';
+import { UserContext } from '../../context/User.context';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
+import styles from './_articles.module.scss';
 
-export const HomeArticleCard = ({ articleData }) => {
+export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
-  const handleFavoriteToggle = () => setIsFavorite(!isFavorite);
-  const handleSavedToggle = () => setIsSaved(!isSaved);
-
+  const currentUserContext = useContext(UserContext);
+  const { currentUser } = currentUserContext;
   const articleDate = new Date(articleData.article.pubDate).toDateString();
   const imageWebp = IMAGES_WEBP.get(articleData.subject);
   const imageJpg = IMAGES_JPG.get(articleData.subject);
   const articleSubject = articleData.subject.replace('-', ' ');
+
+  const handleToggle = (stateVal, setStateVal) => {
+    if (!currentUser) {
+      setIsOpen(!isOpen);
+      return;
+    }
+
+    setStateVal(!stateVal);
+  };
 
   return (
     <div className={styles.articleCard}>
@@ -46,14 +54,26 @@ export const HomeArticleCard = ({ articleData }) => {
 
           <div className={styles.iconBox}>
             {isFavorite ? (
-              <AiFillStar className={styles.fillStar} onClick={handleFavoriteToggle} />
+              <AiFillStar
+                className={styles.fillStar}
+                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+              />
             ) : (
-              <AiOutlineStar className={styles.outlineStar} onClick={handleFavoriteToggle} />
+              <AiOutlineStar
+                className={styles.outlineStar}
+                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+              />
             )}
             {isSaved ? (
-              <BsBookmarkFill className={styles.bookmarkFill} onClick={handleSavedToggle} />
+              <BsBookmarkFill
+                className={styles.bookmarkFill}
+                onClick={() => handleToggle(isSaved, setIsSaved)}
+              />
             ) : (
-              <BsBookmark className={styles.bookmarkOutline} onClick={handleSavedToggle} />
+              <BsBookmark
+                className={styles.bookmarkOutline}
+                onClick={() => handleToggle(isSaved, setIsSaved)}
+              />
             )}
           </div>
         </div>
