@@ -1,7 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/User.context';
 import NavLink from '../NavLink';
+import { UserLogo } from '../UserLogo';
 import styles from './_mobileNav.module.scss';
 
 const SUBJECTS = [
@@ -17,23 +19,29 @@ const SUBJECTS = [
 ];
 
 export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
+  const currentUserContext = useContext(UserContext);
+  const { currentUser } = currentUserContext;
+
   return createPortal(
     <div id='navbarModal' className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>
       <div className={styles.innerContainer}>
         <header className={styles.header}>
-          <ul className={styles.authBtnsBox}>
-            <li>
-              <Link to='/signup' className={styles.authBtn} onClick={() => setIsOpen(false)}>
-                Sign Up
-              </Link>
-            </li>
-            <span className={styles.pipe}>|</span>
-            <li>
-              <Link to='/login' className={styles.authBtn} onClick={() => setIsOpen(false)}>
-                Login
-              </Link>
-            </li>
-          </ul>
+          {!currentUser && (
+            <ul className={styles.authBtnsBox}>
+              <li>
+                <Link to='/signup' className={styles.authBtn} onClick={() => setIsOpen(false)}>
+                  Sign Up
+                </Link>
+              </li>
+              <span className={styles.pipe}>|</span>
+              <li>
+                <Link to='/login' className={styles.authBtn} onClick={() => setIsOpen(false)}>
+                  Login
+                </Link>
+              </li>
+            </ul>
+          )}
+          {currentUser && <UserLogo styles={styles} />}
           <div className={styles.mobileClose} onClick={() => setIsOpen(false)}>
             &#x2715;
           </div>
