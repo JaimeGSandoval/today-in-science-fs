@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/User.context';
 import NavLink from '../NavLink';
 import { UserLogo } from '../UserLogo';
+import { AuthBtnsBox } from '../AuthBtnsBox';
 import styles from './_mobileNav.module.scss';
 
 const SUBJECTS = [
@@ -26,21 +27,7 @@ export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
     <div id='navbarModal' className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>
       <div className={styles.innerContainer}>
         <header className={styles.header}>
-          {!currentUser && (
-            <ul className={styles.authBtnsBox}>
-              <li>
-                <Link to='/signup' className={styles.authBtn} onClick={() => setIsOpen(false)}>
-                  Sign Up
-                </Link>
-              </li>
-              <span className={styles.pipe}>|</span>
-              <li>
-                <Link to='/login' className={styles.authBtn} onClick={() => setIsOpen(false)}>
-                  Login
-                </Link>
-              </li>
-            </ul>
-          )}
+          {!currentUser && <AuthBtnsBox styles={styles} setIsOpen={setIsOpen} />}
           {currentUser && <UserLogo styles={styles} />}
           <div className={styles.mobileClose} onClick={() => setIsOpen(false)}>
             &#x2715;
