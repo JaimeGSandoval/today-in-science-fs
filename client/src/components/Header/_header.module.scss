@@ -53,6 +53,29 @@
   align-items: center;
 }
 
+.userLogoBox {
+  display: flex;
+  align-items: center;
+}
+
+.imgBox {
+  width: 2rem;
+  height: 2rem;
+}
+
+.blankImg {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.username {
+  color: white;
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.8rem;
+}
+
 .logoIcon {
   @include logoIcon;
 }

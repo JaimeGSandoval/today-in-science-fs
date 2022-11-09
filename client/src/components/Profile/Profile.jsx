@@ -31,7 +31,7 @@ export const Profile = () => {
             <button className={styles.fieldBtn}>Username: HokageDev</button>
             <button className={styles.fieldBtn}>Email: hokage@gmail.com</button>
             <button className={styles.fieldBtn}>Reset Password</button>
-            <button className={styles.fieldBtn}>Sign Out</button>
+            <button className={styles.fieldBtn}>Log Out</button>
           </div>
         </section>
 

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createPortal } from 'react-dom';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/User.context';
 import NavLink from '../NavLink';
+import { UserLogo } from '../UserLogo';
+import { AuthBtnsBox } from '../AuthBtnsBox';
 import styles from './_mobileNav.module.scss';
 
 const SUBJECTS = [
@@ -16,13 +20,22 @@ const SUBJECTS = [
 ];
 
 export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
+  const currentUserContext = useContext(UserContext);
+  const { currentUser } = currentUserContext;
+
   return createPortal(
     <div id='navbarModal' className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>
       <div className={styles.innerContainer}>
-        <div className={styles.mobileClose} onClick={() => setIsOpen(false)}>
-          &#x2715;
-        </div>
-        <span className={styles.logo}>today in science</span>
+        <header className={styles.header}>
+          {!currentUser && <AuthBtnsBox styles={styles} setIsOpen={setIsOpen} />}
+          {currentUser && <UserLogo styles={styles} />}
+          <div className={styles.mobileClose} onClick={() => setIsOpen(false)}>
+            &#x2715;
+          </div>
+        </header>
+        <Link to='/' className={styles.logo}>
+          today in science
+        </Link>
         <nav className={styles.mobileNav}>
           <ul className={styles.subjectsList}>
             {SUBJECTS.map((subject) => (

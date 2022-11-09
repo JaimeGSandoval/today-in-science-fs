@@ -20,10 +20,69 @@
   flex-direction: column;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 88vw;
+  margin: 1rem auto;
+}
+
+.authBtnsBox {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.authBtn {
+  text-decoration: none;
+  color: #222;
+  display: inline-block;
+  margin: 0.5rem 0;
+  font-family: $primaryFont;
+
+  @include mobileLg {
+    font-size: 1.1rem;
+    margin: 0.8rem 0.3rem;
+  }
+}
+
+.authBtnsBox li:nth-of-type(1) a {
+  margin-right: 0.3rem;
+}
+
+.authBtnsBox li:nth-of-type(2) a {
+  margin-left: 0.3rem;
+}
+
+.userLogoBox {
+  display: flex;
+  align-items: center;
+}
+
+.imgBox {
+  width: 2rem;
+  height: 2rem;
+}
+
+.blankImg {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.username {
+  color: #222;
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.8rem;
+  font-family: $primaryFont;
+  font-size: 0.8rem;
+}
+
 .mobileClose {
   font-size: 1.5rem;
-  margin: 1.2rem;
-  align-self: flex-end;
+
   color: #222;
 }
 
@@ -36,6 +95,7 @@
   font-size: 1.3rem;
   text-transform: uppercase;
   color: #222;
+  text-decoration: none;
 
   @media screen and (orientation: landscape) {
     margin-top: 0;
