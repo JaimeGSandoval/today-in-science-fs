@@ -36,7 +36,7 @@
   font-weight: 500;
   text-align: center;
   font-size: 1.6rem;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
 }
 
 .fieldsWrapper {
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 0.4rem;
+  padding: 0.8rem 0.4rem 0;
 }
 
 .field {
@@ -76,7 +76,7 @@
   outline-color: rgb(252, 56, 56);
 }
 
-.validField:focus {
+.validField {
   outline-color: lightgreen;
 }
 
@@ -128,4 +128,18 @@
   overflow: hidden;
   position: absolute !important;
   word-wrap: normal !important;
+}
+
+.errMessage {
+  color: rgb(252, 56, 56);
+  visibility: hidden;
+  font-family: $primaryFont;
+  font-size: 0.7rem;
+  text-align: center;
+  position: relative;
+  top: 6px;
+}
+
+.show {
+  visibility: visible;
 }
