@@ -36,7 +36,7 @@
   font-weight: 500;
   text-align: center;
   font-size: 1.6rem;
-  margin-bottom: 1rem;
+  // margin-bottom: 1rem;
 }
 
 .fieldsWrapper {
@@ -51,14 +51,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 0.4rem;
+  padding: 0.8rem 0.4rem 0;
 }
 
 .field {
   width: 90%;
   border-radius: 0.2rem;
-  border: none;
+  outline: 2px solid transparent;
+  border: 1px solid transparent;
   padding: 0.5rem 0.4rem;
+  font-family: $primaryFont;
 
   @include mobileLg {
     padding: 0.8rem 0.4rem;
@@ -68,6 +70,14 @@
 .field::placeholder {
   font-family: $primaryFont;
   font-size: 0.8rem;
+}
+
+.invalidField:focus {
+  outline-color: rgb(252, 56, 56);
+}
+
+.validField {
+  outline-color: lightgreen;
 }
 
 .icon {
@@ -87,7 +97,8 @@
   text-decoration: none;
 }
 
-.signupSubmitBtn {
+.signupSubmitBtn,
+.disabledSubmitBtn {
   @include submitBtn;
   padding: 1rem 1.8rem;
 
@@ -95,6 +106,11 @@
     padding: 1.3rem 2.8rem;
     font-size: 1.1rem;
   }
+}
+
+.disabledSubmitBtn {
+  @include submitBtn;
+  background-color: rgb(214, 214, 214);
 }
 
 .loginSubmitBtn {
@@ -112,4 +128,18 @@
   overflow: hidden;
   position: absolute !important;
   word-wrap: normal !important;
+}
+
+.errMessage {
+  color: rgb(252, 56, 56);
+  visibility: hidden;
+  font-family: $primaryFont;
+  font-size: 0.7rem;
+  text-align: center;
+  position: relative;
+  top: 6px;
+}
+
+.show {
+  visibility: visible;
 }
