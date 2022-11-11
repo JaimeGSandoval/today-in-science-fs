@@ -7,11 +7,11 @@ const SUBJECTS = [
   'artificial-intelligence',
   'ancient-civilizations',
   'astronomy',
-  'big-bang',
   'energy-technology',
   'mathematics',
   'neural-interfaces',
   'neuroscience',
+  'new-species',
   'quantum-computers',
 ];
 
@@ -19,11 +19,11 @@ const RSS_URLS = [
   'https://www.sciencedaily.com/rss/computers_math/artificial_intelligence.xml',
   'https://www.sciencedaily.com/rss/fossils_ruins/ancient_civilizations.xml',
   'https://www.sciencedaily.com/rss/space_time/astronomy.xml',
-  'https://www.sciencedaily.com/rss/space_time/big_bang.xml',
   'https://www.sciencedaily.com/rss/matter_energy/energy_technology.xml',
   'https://www.sciencedaily.com/rss/computers_math/mathematical_modeling.xml',
   'https://www.sciencedaily.com/rss/computers_math/neural_interfaces.xml',
   'https://www.sciencedaily.com/rss/mind_brain/neuroscience.xml',
+  'https://www.sciencedaily.com/rss/plants_animals/new_species.xml',
   'https://www.sciencedaily.com/rss/computers_math/quantum_computers.xml',
 ];
 

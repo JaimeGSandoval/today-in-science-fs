@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../../context/User.context';
 import { Link } from 'react-router-dom';
-import { CardFooter } from '../CardFooter';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
@@ -24,16 +25,6 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     setStateVal(!stateVal);
   };
 
-  const cardFooterData = {
-    articleData,
-    handleToggle,
-    isFavorite,
-    setIsFavorite,
-    isSaved,
-    setIsSaved,
-    styles,
-  };
-
   return (
     <div className={styles.articleCard}>
       <picture>
@@ -44,14 +35,44 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
           {articleSubject}
         </Link>
-
         <h3 className={styles.cardTitle}>{articleData.article.title}</h3>
-
         <p className={styles.cardText}>{articleData.article.content}</p>
-
         <span className={styles.cardDate}>{articleDate}</span>
-
-        <CardFooter cardFooterData={cardFooterData} />
+        <div className={styles.cardFooter}>
+          <a
+            href={articleData.article.link}
+            className={styles.cardBtn}
+            target='_blank'
+            rel='noreferrer'
+          >
+            Read Article
+          </a>
+          <div className={styles.iconBox}>
+            {isFavorite ? (
+              <AiFillStar
+                className={styles.fillStar}
+                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+              />
+            ) : (
+              <AiOutlineStar
+                className={styles.outlineStar}
+                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+              />
+            )}
+            {isSaved ? (
+              <BsBookmarkFill
+                className={styles.bookmarkFill}
+                onClick={() => handleToggle(isSaved, setIsSaved)}
+              />
+            ) : (
+              <BsBookmark
+                className={styles.bookmarkOutline}
+                onClick={() => handleToggle(isSaved, setIsSaved)}
+              />
+            )}
+          </div>
+        </div>
+        ;
       </div>
     </div>
   );
