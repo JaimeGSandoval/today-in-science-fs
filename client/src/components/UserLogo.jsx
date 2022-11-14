@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../context/User.context';
 import { Link } from 'react-router-dom';
 import blankImg from '../assets/images/jpg/blank-profile.png';
 
 export const UserLogo = ({ styles }) => {
+  const currentUserContext = useContext(UserContext);
+  console.log(currentUserContext);
+  const { currentUser } = currentUserContext;
+
   return (
     <div className={styles.userLogoBox}>
       <div className={styles.imgBox}>
@@ -11,7 +16,7 @@ export const UserLogo = ({ styles }) => {
         </Link>
       </div>
 
-      <span className={styles.username}>HokageDev</span>
+      <span className={styles.username}>{currentUser.user_name}</span>
     </div>
   );
 };

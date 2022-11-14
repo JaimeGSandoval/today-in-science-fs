@@ -9,6 +9,8 @@
 }
 
 .signupFormBox {
+  overflow: hidden;
+
   @include formBox;
   padding: 2rem 0;
 
@@ -51,7 +53,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 0.4rem 0;
+  // padding: 0.8rem 0.4rem 0;
+  padding: 1.6rem 0.4rem 0;
 }
 
 .field {
@@ -130,16 +133,31 @@
   word-wrap: normal !important;
 }
 
-.errMessage {
+.errBox {
+  position: relative;
+  // border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 0;
+}
+
+.errMessage,
+.errTakenMessage {
   color: rgb(252, 56, 56);
-  visibility: hidden;
+  position: absolute;
+  top: 15px;
+  left: 9999px;
   font-family: $primaryFont;
   font-size: 0.7rem;
   text-align: center;
   position: relative;
-  top: 6px;
+}
+
+.errTakenMessage {
+  left: 8000px;
 }
 
 .show {
-  visibility: visible;
+  left: 0;
 }
