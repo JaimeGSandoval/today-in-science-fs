@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { UserContext } from '../../context/User.context';
 import { HeaderLogo } from '../../components/HeaderLogo';
 import { httpSignupUser } from '../../api/requests';
 import styles from './_forms.module.scss';
@@ -30,10 +29,9 @@ export const SignupView = () => {
   const [confirmErr, setConfirmErr] = useState(false);
   const confirmRef = useRef();
 
-  const [success, setSuccess] = useState(false);
+  const [validSuccess, setValidSuccess] = useState(false);
 
-  const currentUserContext = useContext(UserContext);
-  const { currentUser, setCurrentUser } = currentUserContext;
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
@@ -65,7 +63,7 @@ export const SignupView = () => {
     setEmail('');
     setPassword('');
     setConfirmPassword('');
-    setCurrentUser(response.data.newUser);
+    setSubmitSuccess(true);
   };
 
   useEffect(() => {
@@ -172,9 +170,9 @@ export const SignupView = () => {
 
   useEffect(() => {
     if (validUsername && validEmail && validPassword && validConfirm) {
-      setSuccess(true);
+      setValidSuccess(true);
     } else {
-      setSuccess(false);
+      setValidSuccess(false);
     }
   }, [validUsername, validEmail, validPassword, validConfirm]);
 
@@ -188,7 +186,7 @@ export const SignupView = () => {
 
   return (
     <section className={styles.container}>
-      {currentUser && <Navigate to='/' replace={true} />}
+      {submitSuccess && <Navigate to='/login' replace={true} />}
       <HeaderLogo />
       <div className={styles.signupFormBox}>
         <h1 className={styles.headline}>Sign up</h1>
@@ -317,9 +315,9 @@ export const SignupView = () => {
             </div>
 
             <button
-              className={success ? styles.signupSubmitBtn : styles.disabledSubmitBtn}
+              className={validSuccess ? styles.signupSubmitBtn : styles.disabledSubmitBtn}
               tabIndex={0}
-              disabled={success ? false : true}
+              disabled={validSuccess ? false : true}
             >
               Sign Up
             </button>
