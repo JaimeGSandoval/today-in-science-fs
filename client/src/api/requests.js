@@ -6,12 +6,48 @@ export const httpHealthCheck = async () => {
   console.log(data);
 };
 
-// const feed = 'https://phys.org/rss-feed/space-news/astronomy/';
-
 export const httpFeed = async () => {
-  // const response = await fetch(`${API}/news/astronomy`);
   const response = await fetch(`${API}/news/`);
 
   const data = await response.json();
   console.log(data);
+};
+
+export const httpSignupUser = async (userData) => {
+  try {
+    const response = await fetch(`${API}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+
+      if (data.statusCode === 409 && data.message === 'username taken') {
+        return {
+          error: true,
+          type: 'username',
+        };
+      }
+
+      if (data.statusCode === 409 && data.message === 'email exists') {
+        return {
+          error: true,
+          type: 'email',
+        };
+      }
+
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    console.log('OK', data);
+
+    return data;
+  } catch (e) {
+    console.error('There was a problem signing you up', e);
+  }
 };

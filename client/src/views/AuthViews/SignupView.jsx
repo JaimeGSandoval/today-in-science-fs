@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import styles from './_forms.module.scss';
 import { HeaderLogo } from '../../components/HeaderLogo';
+import { httpSignupUser } from '../../api/requests';
+import styles from './_forms.module.scss';
 
 export const SignupView = () => {
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
   const [usernameErr, setUsernameErr] = useState(false);
+  const [usernameTaken, setUsernameTaken] = useState(false);
   const usernameRef = useRef();
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [emailErr, setEmailErr] = useState(false);
+  const [emailTaken, setEmailTaken] = useState(false);
   const emailRef = useRef();
 
   const [password, setPassword] = useState('');
@@ -26,7 +29,9 @@ export const SignupView = () => {
   const [confirmErr, setConfirmErr] = useState(false);
   const confirmRef = useRef();
 
-  const [success, setSuccess] = useState(false);
+  const [validSuccess, setValidSuccess] = useState(false);
+
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
@@ -39,8 +44,31 @@ export const SignupView = () => {
     }
   };
 
+  const handleSubmit = async (e, userData) => {
+    e.preventDefault();
+
+    const response = await httpSignupUser(userData);
+
+    if (response.error && response.type === 'username') {
+      setUsernameTaken(true);
+      return;
+    }
+
+    if (response.error && response.type === 'email') {
+      setEmailTaken(true);
+      return;
+    }
+
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setSubmitSuccess(true);
+  };
+
   useEffect(() => {
     setUsernameErr(false);
+    setUsernameTaken(false);
 
     const usernameTrimmed = username.trim();
 
@@ -68,6 +96,7 @@ export const SignupView = () => {
 
   useEffect(() => {
     setEmailErr(false);
+    setEmailTaken(false);
 
     const emailTrimmed = email.trim();
 
@@ -141,23 +170,39 @@ export const SignupView = () => {
 
   useEffect(() => {
     if (validUsername && validEmail && validPassword && validConfirm) {
-      setSuccess(true);
+      setValidSuccess(true);
     } else {
-      setSuccess(false);
+      setValidSuccess(false);
     }
   }, [validUsername, validEmail, validPassword, validConfirm]);
 
+  const userData = {
+    userName: username.trim(),
+    email: email.trim(),
+    password: password.trim(),
+    passwordConfirm: confirmPassword.trim(),
+    role: 'user',
+  };
+
   return (
     <section className={styles.container}>
+      {submitSuccess && <Navigate to='/login' replace={true} />}
       <HeaderLogo />
       <div className={styles.signupFormBox}>
         <h1 className={styles.headline}>Sign up</h1>
 
-        <form action='' className={styles.form}>
+        <form action='' className={styles.form} onSubmit={(e) => handleSubmit(e, userData)}>
           <div className={styles.fieldsWrapper}>
-            <span className={`${styles.errMessage} ${usernameErr && styles.show}`}>
-              6 to 20 letters or numbers with no spaces
-            </span>
+            <div className={styles.errBox}>
+              <span
+                className={`${styles.errMessage} ${usernameErr && styles.show} ${
+                  usernameTaken && styles.show
+                }`}
+              >
+                {usernameTaken && 'Username taken'}
+                {usernameErr && '6 to 20 letters or numbers and no spaces'}
+              </span>
+            </div>
             <div className={styles.fieldBox}>
               <label className={styles.screenReaderText} htmlFor='username'>
                 username (6 - 20) characters
@@ -179,9 +224,16 @@ export const SignupView = () => {
               />
             </div>
 
-            <span className={`${styles.errMessage} ${emailErr && styles.show}`}>
-              Must be a valid email
-            </span>
+            <div className={styles.errBox}>
+              <span
+                className={`${styles.errMessage} ${emailTaken && styles.show} ${
+                  emailErr && styles.show
+                }`}
+              >
+                {emailTaken && 'Email already registered'}
+                {emailErr && 'Must be a valid email'}
+              </span>
+            </div>
 
             <div className={styles.fieldBox}>
               <label className={styles.screenReaderText} htmlFor='email'>
@@ -203,9 +255,11 @@ export const SignupView = () => {
               />
             </div>
 
-            <span className={`${styles.errMessage} ${passwordErr && styles.show}`}>
-              Password cannot contain spaces
-            </span>
+            <div className={styles.errBox}>
+              <span className={`${styles.errMessage} ${passwordErr && styles.show}`}>
+                Password cannot contain spaces
+              </span>
+            </div>
             <div className={styles.fieldBox}>
               <label className={styles.screenReaderText} htmlFor='password'>
                 password (min 6 characters)
@@ -226,9 +280,11 @@ export const SignupView = () => {
               />
             </div>
 
-            <span className={`${styles.errMessage} ${confirmErr && styles.show}`}>
-              Passwords do not match
-            </span>
+            <div className={styles.errBox}>
+              <span className={`${styles.errMessage} ${confirmErr && styles.show}`}>
+                Passwords do not match
+              </span>
+            </div>
             <div className={styles.fieldBox}>
               <label className={styles.screenReaderText} htmlFor='confirmPassword'>
                 confirm password
@@ -259,9 +315,9 @@ export const SignupView = () => {
             </div>
 
             <button
-              className={success ? styles.signupSubmitBtn : styles.disabledSubmitBtn}
+              className={validSuccess ? styles.signupSubmitBtn : styles.disabledSubmitBtn}
               tabIndex={0}
-              disabled={success ? false : true}
+              disabled={validSuccess ? false : true}
             >
               Sign Up
             </button>
