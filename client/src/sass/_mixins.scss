@@ -33,3 +33,13 @@
   font-size: 1.1rem;
   position: relative;
 }
+
+@mixin modalContainer {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.9);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { HeaderLogo } from '../../components/HeaderLogo';
 import { httpSignupUser } from '../../api/requests';
+import { SignupSuccessModal } from './SignupSuccessModal';
 import styles from './_forms.module.scss';
 
 export const SignupView = () => {
@@ -30,7 +31,6 @@ export const SignupView = () => {
   const confirmRef = useRef();
 
   const [validSuccess, setValidSuccess] = useState(false);
-
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const addValidOutline = (refVal) => {
@@ -186,7 +186,7 @@ export const SignupView = () => {
 
   return (
     <section className={styles.container}>
-      {submitSuccess && <Navigate to='/login' replace={true} />}
+      {submitSuccess && <SignupSuccessModal />}
       <HeaderLogo />
       <div className={styles.signupFormBox}>
         <h1 className={styles.headline}>Sign up</h1>
