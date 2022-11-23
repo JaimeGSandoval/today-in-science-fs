@@ -53,8 +53,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // padding: 0.8rem 0.4rem 0;
   padding: 1.6rem 0.4rem 0;
+}
+
+.fieldBoxLogin {
+  padding-top: 2.5rem;
+  padding-bottom: 1rem;
 }
 
 .field {
@@ -103,7 +107,6 @@
 .submitBtn,
 .disabledSubmitBtn {
   @include submitBtn;
-  padding: 1rem 1.8rem;
 
   @include mobileXlg {
     padding: 1.3rem 2.8rem;
