@@ -19,7 +19,7 @@ exports.postLogin = (req, res, next) => {
 
         return res.status(200).json({
           status: 'Success',
-          message: `User ${req.user.user_name} logged in successfully`,
+          message: `User ${user.user_name} logged in successfully`,
           data: {
             user,
           },

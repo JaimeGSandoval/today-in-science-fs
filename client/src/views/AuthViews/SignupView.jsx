@@ -315,7 +315,7 @@ export const SignupView = () => {
             </div>
 
             <button
-              className={validSuccess ? styles.signupSubmitBtn : styles.disabledSubmitBtn}
+              className={validSuccess ? styles.submitBtn : styles.disabledSubmitBtn}
               tabIndex={0}
               disabled={validSuccess ? false : true}
             >
