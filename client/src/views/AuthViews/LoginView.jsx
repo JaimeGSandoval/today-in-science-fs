@@ -1,20 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
+import { UserContext } from '../../context/User.context';
 import styles from './_forms.module.scss';
 import { HeaderLogo } from '../../components/HeaderLogo';
+import { httpLoginUser } from '../../api/requests';
 
 export const LoginView = () => {
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginFail, setLoginFail] = useState(false);
+  const currentUserContext = useContext(UserContext);
+  const { setCurrentUser } = currentUserContext;
+
+  const userData = {
+    email: userEmail,
+    password: userPassword,
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await httpLoginUser(userData);
+
+    if (!response) {
+      setLoginFail(true);
+      return;
+    }
+
+    setCurrentUser(response.data.user);
+    setLoginSuccess(true);
+  };
+
+  useEffect(() => {
+    setLoginFail(false);
+  }, [userEmail, userPassword]);
+
   return (
     <section className={styles.container}>
+      {loginSuccess && <Navigate to='/' replace={true} />}
       <HeaderLogo />
       <div className={styles.innerContainer}>
         <div className={styles.loginFormBox}>
           <h1 className={styles.headline}>Login</h1>
 
-          <form action='' className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.fieldsWrapper}>
+              <div className={styles.errBox}>
+                <span className={`${styles.errMessage} ${loginFail && styles.show}`}>
+                  {loginFail && 'Email or password is invalid'}
+                </span>
+              </div>
               <div className={styles.fieldBox}>
                 <label className={styles.screenReaderText} htmlFor='email'>
                   email
@@ -28,6 +66,8 @@ export const LoginView = () => {
                   required
                   aria-required
                   tabIndex={0}
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
                 />
               </div>
 
@@ -41,10 +81,11 @@ export const LoginView = () => {
                   type='password'
                   id='password'
                   placeholder='Password'
-                  minLength='6'
                   required
                   aria-required
                   tabIndex={0}
+                  value={userPassword}
+                  onChange={(e) => setUserPassword(e.target.value)}
                 />
               </div>
 
@@ -60,7 +101,11 @@ export const LoginView = () => {
                 </small>
               </div>
 
-              <button className={styles.loginSubmitBtn} tabIndex={0}>
+              <button
+                className={userEmail && userPassword ? styles.submitBtn : styles.disabledSubmitBtn}
+                disabled={!userEmail || !userPassword ? true : false}
+                tabIndex={0}
+              >
                 Login
               </button>
             </div>

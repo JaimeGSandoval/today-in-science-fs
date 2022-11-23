@@ -44,6 +44,30 @@ export const httpSignupUser = async (userData) => {
     }
 
     const data = await response.json();
+
+    return data;
+  } catch (e) {
+    console.error('There was a problem signing you up', e);
+  }
+};
+
+export const httpLoginUser = async (userData) => {
+  try {
+    const response = await fetch(`${API}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok && response.status === 400) return false;
+
+    if (!response.ok) {
+      throw new Error('Network error');
+    }
+
+    const data = await response.json();
     console.log('OK', data);
 
     return data;
