@@ -53,7 +53,7 @@ export const LoginView = () => {
                   {loginFail && 'Email or password is invalid'}
                 </span>
               </div>
-              <div className={styles.fieldBox}>
+              <div className={`${styles.fieldBox} ${styles.fieldBoxLogin}`}>
                 <label className={styles.screenReaderText} htmlFor='email'>
                   email
                 </label>
