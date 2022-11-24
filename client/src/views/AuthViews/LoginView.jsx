@@ -32,6 +32,7 @@ export const LoginView = () => {
 
     setCurrentUser(response.data.user);
     setLoginSuccess(true);
+    localStorage.setItem('currentUser', JSON.stringify(response.data.user));
   };
 
   useEffect(() => {
