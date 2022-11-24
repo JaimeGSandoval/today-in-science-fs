@@ -11,7 +11,7 @@ export const DashboardView = () => {
     <>
       {!currentUser && <Navigate to='/login' />}
       <HeaderLogo />
-      <Profile />
+      <Profile currentUser={currentUser} />
     </>
   );
 };
