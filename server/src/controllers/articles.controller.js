@@ -3,10 +3,9 @@ const AppError = require('../utils/app-error');
 
 module.exports = {
   httpAddArticle: async (req, res, next) => {
-    const { articleTitle, articleUrl, articleType } = req.body;
-    const { user_id } = req.user;
+    const { userId, articleTitle, articleUrl, articleType } = req.body;
 
-    if (!user_id) {
+    if (!userId) {
       return next(new AppError('User ID is required.', 400));
     }
 
@@ -16,18 +15,17 @@ module.exports = {
 
     try {
       const addedUrl = await articlesModel.addArticle(
-        user_id,
+        userId,
         articleTitle,
         articleUrl,
         articleType
       );
 
-      return res.status(201).json({
-        status: 'Success',
-        data: {
-          addedUrl: addedUrl.rows[0],
-        },
-      });
+      if (!addedUrl.rows.length) {
+        return next('Error adding article to list', 500);
+      }
+
+      return res.sendStatus(201);
     } catch (e) {
       return next(new AppError(e.message, 500));
     }

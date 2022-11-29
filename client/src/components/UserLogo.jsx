@@ -5,7 +5,6 @@ import blankImg from '../assets/images/jpg/blank-profile.png';
 
 export const UserLogo = ({ styles }) => {
   const currentUserContext = useContext(UserContext);
-  console.log(currentUserContext);
   const { currentUser } = currentUserContext;
 
   return (

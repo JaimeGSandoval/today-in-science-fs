@@ -3,6 +3,7 @@ import { UserContext } from '../../context/User.context';
 import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { httpAddArticle } from '../../api/requests';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
@@ -16,13 +17,24 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const imageJpg = IMAGES_JPG.get(articleData.subject);
   const articleSubject = articleData.subject.replace('-', ' ');
 
-  const handleToggle = (stateVal, setStateVal) => {
+  const favoriteArticleData = {
+    userId: currentUser && currentUser.user_id,
+    articleTitle: articleData.article.title,
+    articleUrl: articleData.article.link,
+    articleType: 'favorite',
+  };
+
+  const handleToggle = async (stateVal, setStateVal) => {
     if (!currentUser) {
       setIsOpen(!isOpen);
       return;
     }
 
-    setStateVal(!stateVal);
+    const response = await httpAddArticle(favoriteArticleData);
+
+    if (response) {
+      setStateVal(true);
+    }
   };
 
   return (

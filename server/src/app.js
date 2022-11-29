@@ -26,6 +26,7 @@ app.use(xss());
 app.use(
   cors({
     origin: 'http://localhost:3000',
+    credentials: true,
   })
 );
 
@@ -63,9 +64,10 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: Number(process.env.SESSION_MAX_AGE),
+      SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: false,
+      secure: false, // change this to true when changing over to https
     },
   })
 );
