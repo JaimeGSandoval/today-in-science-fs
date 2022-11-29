@@ -91,8 +91,6 @@ export const httpAddArticle = async (articleData) => {
       throw new Error('Network error');
     }
 
-    console.log(response);
-
     return true;
   } catch (e) {
     console.error('There was a problem add the article to your favorites list', e);
