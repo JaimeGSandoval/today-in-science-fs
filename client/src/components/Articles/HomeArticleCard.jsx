@@ -24,17 +24,28 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     articleType: 'favorite',
   };
 
-  const handleToggle = async (stateVal, setStateVal) => {
+  const readLaterArticleData = {
+    userId: currentUser && currentUser.user_id,
+    articleTitle: articleData.article.title,
+    articleUrl: articleData.article.link,
+    articleType: 'read-later',
+  };
+
+  const handleToggle = async (type, setStateVal) => {
     if (!currentUser) {
       setIsOpen(!isOpen);
       return;
     }
 
-    const response = await httpAddArticle(favoriteArticleData);
+    if (type === 'favorite') {
+      const favResponse = await httpAddArticle(favoriteArticleData);
 
-    if (response) {
-      setStateVal(true);
+      if (favResponse) return setStateVal(true);
     }
+
+    const readResponse = await httpAddArticle(readLaterArticleData);
+
+    if (readResponse) setStateVal(true);
   };
 
   return (
@@ -63,23 +74,23 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
             {isFavorite ? (
               <AiFillStar
                 className={styles.fillStar}
-                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+                onClick={() => handleToggle('favorite', setIsFavorite)}
               />
             ) : (
               <AiOutlineStar
                 className={styles.outlineStar}
-                onClick={() => handleToggle(isFavorite, setIsFavorite)}
+                onClick={() => handleToggle('favorite', setIsFavorite)}
               />
             )}
             {isSaved ? (
               <BsBookmarkFill
                 className={styles.bookmarkFill}
-                onClick={() => handleToggle(isSaved, setIsSaved)}
+                onClick={() => handleToggle('read-later', setIsSaved)}
               />
             ) : (
               <BsBookmark
                 className={styles.bookmarkOutline}
-                onClick={() => handleToggle(isSaved, setIsSaved)}
+                onClick={() => handleToggle('read-later', setIsSaved)}
               />
             )}
           </div>
