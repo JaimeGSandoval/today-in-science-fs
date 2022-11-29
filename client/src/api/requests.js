@@ -59,6 +59,7 @@ export const httpLoginUser = async (userData) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(userData),
+      credentials: 'include',
     });
 
     if (!response.ok && response.status === 400) return false;
@@ -68,10 +69,32 @@ export const httpLoginUser = async (userData) => {
     }
 
     const data = await response.json();
-    console.log('OK', data);
 
     return data;
   } catch (e) {
     console.error('There was a problem signing you up', e);
+  }
+};
+
+export const httpAddArticle = async (articleData) => {
+  try {
+    const response = await fetch(`${API}/articles`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(articleData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network error');
+    }
+
+    console.log(response);
+
+    return true;
+  } catch (e) {
+    console.error('There was a problem add the article to your favorites list', e);
   }
 };
