@@ -1,13 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/User.context';
 import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
-import { httpAddArticle } from '../../api/requests';
+import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
+import { checkUser } from '../../utils/helpers';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
+  const [addFavArticle, setAddFavArticle] = useState(false);
+  const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const currentUserContext = useContext(UserContext);
@@ -31,22 +34,63 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     articleType: 'read-later',
   };
 
-  const handleToggle = async (type, setStateVal) => {
-    if (!currentUser) {
-      setIsOpen(!isOpen);
-      return;
+  useEffect(() => {
+    async function addArticle() {
+      checkUser(currentUser, isOpen, setIsOpen);
+
+      const response = await httpAddArticle(favoriteArticleData);
+      if (response) {
+        return setIsFavorite(true);
+      }
     }
 
-    if (type === 'favorite') {
-      const favResponse = await httpAddArticle(favoriteArticleData);
+    async function deleteArticle() {
+      checkUser(currentUser, isOpen, setIsOpen);
 
-      if (favResponse) return setStateVal(true);
+      const response = await httpDeleteArticle(favoriteArticleData);
+      if (response) {
+        return setIsFavorite(false);
+      }
     }
 
-    const readResponse = await httpAddArticle(readLaterArticleData);
+    if (addFavArticle) {
+      addArticle();
+    }
 
-    if (readResponse) setStateVal(true);
-  };
+    if (!addFavArticle && isFavorite) {
+      deleteArticle();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addFavArticle]);
+
+  useEffect(() => {
+    async function addArticle() {
+      checkUser(currentUser, isOpen, setIsOpen);
+
+      const response = await httpAddArticle(readLaterArticleData);
+      if (response) {
+        return setIsSaved(true);
+      }
+    }
+
+    async function deleteArticle() {
+      checkUser(currentUser, isOpen, setIsOpen);
+
+      const response = await httpDeleteArticle(readLaterArticleData);
+      if (response) {
+        return setIsSaved(false);
+      }
+    }
+
+    if (addReadArticle) {
+      addArticle();
+    }
+
+    if (!addReadArticle && isSaved) {
+      deleteArticle();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addReadArticle]);
 
   return (
     <div className={styles.articleCard}>
@@ -72,25 +116,22 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
           </a>
           <div className={styles.iconBox}>
             {isFavorite ? (
-              <AiFillStar
-                className={styles.fillStar}
-                onClick={() => handleToggle('favorite', setIsFavorite)}
-              />
+              <AiFillStar className={styles.fillStar} onClick={() => setAddFavArticle(false)} />
             ) : (
               <AiOutlineStar
                 className={styles.outlineStar}
-                onClick={() => handleToggle('favorite', setIsFavorite)}
+                onClick={() => setAddFavArticle(true)}
               />
             )}
             {isSaved ? (
               <BsBookmarkFill
                 className={styles.bookmarkFill}
-                onClick={() => handleToggle('read-later', setIsSaved)}
+                onClick={() => setAddReadArticle(false)}
               />
             ) : (
               <BsBookmark
                 className={styles.bookmarkOutline}
-                onClick={() => handleToggle('read-later', setIsSaved)}
+                onClick={() => setAddReadArticle(true)}
               />
             )}
           </div>

@@ -8,6 +8,6 @@ router.use(checkAuth);
 router.post('/', articlesController.httpAddArticle);
 router.get('/favorite-articles/:userId', articlesController.httpGetFavoriteArticles);
 router.get('/read-later-articles/:userId', articlesController.httpGetReadLaterArticles);
-router.delete('/delete-article/:articleId', articlesController.httpDeleteArticle);
+router.delete('/delete-article', articlesController.httpDeleteArticle);
 
 module.exports = router;

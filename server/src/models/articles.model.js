@@ -36,11 +36,23 @@ module.exports = {
     return article;
   },
 
-  deleteArticle: async (articleId, articleType) => {
+  getUrl: async (userId, articleTitle, articleType) => {
+    let article;
+
     if (articleType === 'read-later') {
-      await db.query(queries.deleteReadLaterUrlQuery, [articleId]);
+      article = await db.query(queries.getReadLaterUrlQuery, [userId, articleTitle]);
     } else {
-      await db.query(queries.deleteFavoriteUrlQuery, [articleId]);
+      article = await db.query(queries.getFavoriteUrlQuery, [userId, articleTitle]);
+    }
+
+    return article;
+  },
+
+  deleteArticle: async (userId, articleTitle, articleType) => {
+    if (articleType === 'read-later') {
+      await db.query(queries.deleteReadLaterUrlQuery, [userId, articleTitle]);
+    } else {
+      await db.query(queries.deleteFavoriteUrlQuery, [userId, articleTitle]);
     }
   },
 };
