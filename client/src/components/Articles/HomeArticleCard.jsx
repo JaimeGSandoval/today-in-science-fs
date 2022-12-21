@@ -1,13 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { UserContext } from '../../context/User.context';
 import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
-import { httpAddArticle } from '../../api/requests';
+import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
+import { checkUser } from '../../utils/helpers';
 import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
+  const [addFavArticle, setAddFavArticle] = useState(false);
+  const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const currentUserContext = useContext(UserContext);
@@ -17,36 +20,85 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const imageJpg = IMAGES_JPG.get(articleData.subject);
   const articleSubject = articleData.subject.replace('-', ' ');
 
-  const favoriteArticleData = {
-    userId: currentUser && currentUser.user_id,
-    articleTitle: articleData.article.title,
-    articleUrl: articleData.article.link,
-    articleType: 'favorite',
-  };
+  const favoriteArticleData = useMemo(
+    () => ({
+      userId: currentUser && currentUser.user_id,
+      articleTitle: articleData.article.title,
+      articleUrl: articleData.article.link,
+      articleType: 'favorite',
+    }),
+    [articleData.article.link, articleData.article.title, currentUser]
+  );
 
-  const readLaterArticleData = {
-    userId: currentUser && currentUser.user_id,
-    articleTitle: articleData.article.title,
-    articleUrl: articleData.article.link,
-    articleType: 'read-later',
-  };
+  const readLaterArticleData = useMemo(
+    () => ({
+      userId: currentUser && currentUser.user_id,
+      articleTitle: articleData.article.title,
+      articleUrl: articleData.article.link,
+      articleType: 'read-later',
+    }),
+    [articleData.article.link, articleData.article.title, currentUser]
+  );
 
-  const handleToggle = async (type, setStateVal) => {
-    if (!currentUser) {
-      setIsOpen(!isOpen);
-      return;
+  const addArticle = useCallback(
+    async (type) => {
+      checkUser(currentUser, isOpen, setIsOpen);
+
+      if (type === 'favorite') {
+        const response = await httpAddArticle(favoriteArticleData);
+        if (response) {
+          return setIsFavorite(true);
+        }
+      }
+
+      const response = await httpAddArticle(readLaterArticleData);
+      if (response) {
+        return setIsSaved(true);
+      }
+    },
+    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+  );
+
+  const deleteArticle = useCallback(
+    async (type) => {
+      checkUser(currentUser, isOpen, setIsOpen);
+
+      if (type === 'favorite') {
+        const response = await httpDeleteArticle(favoriteArticleData);
+        if (response) {
+          return setIsFavorite(false);
+        }
+      }
+
+      const response = await httpDeleteArticle(readLaterArticleData);
+      if (response) {
+        return setIsSaved(false);
+      }
+    },
+    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+  );
+
+  useEffect(() => {
+    if (addFavArticle) {
+      addArticle('favorite');
     }
 
-    if (type === 'favorite') {
-      const favResponse = await httpAddArticle(favoriteArticleData);
+    if (!addFavArticle && isFavorite) {
+      deleteArticle('favorite');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addFavArticle, addArticle, deleteArticle]);
 
-      if (favResponse) return setStateVal(true);
+  useEffect(() => {
+    if (addReadArticle) {
+      addArticle('read-later');
     }
 
-    const readResponse = await httpAddArticle(readLaterArticleData);
-
-    if (readResponse) setStateVal(true);
-  };
+    if (!addReadArticle && isSaved) {
+      deleteArticle('read-later');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addReadArticle, addArticle, deleteArticle]);
 
   return (
     <div className={styles.articleCard}>
@@ -72,25 +124,22 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
           </a>
           <div className={styles.iconBox}>
             {isFavorite ? (
-              <AiFillStar
-                className={styles.fillStar}
-                onClick={() => handleToggle('favorite', setIsFavorite)}
-              />
+              <AiFillStar className={styles.fillStar} onClick={() => setAddFavArticle(false)} />
             ) : (
               <AiOutlineStar
                 className={styles.outlineStar}
-                onClick={() => handleToggle('favorite', setIsFavorite)}
+                onClick={() => setAddFavArticle(true)}
               />
             )}
             {isSaved ? (
               <BsBookmarkFill
                 className={styles.bookmarkFill}
-                onClick={() => handleToggle('read-later', setIsSaved)}
+                onClick={() => setAddReadArticle(false)}
               />
             ) : (
               <BsBookmark
                 className={styles.bookmarkOutline}
-                onClick={() => handleToggle('read-later', setIsSaved)}
+                onClick={() => setAddReadArticle(true)}
               />
             )}
           </div>

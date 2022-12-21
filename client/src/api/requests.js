@@ -96,3 +96,24 @@ export const httpAddArticle = async (articleData) => {
     console.error('There was a problem add the article to your favorites list', e);
   }
 };
+
+export const httpDeleteArticle = async (articleData) => {
+  try {
+    const response = await fetch(`${API}/articles/delete-article`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(articleData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network error');
+    }
+
+    return true;
+  } catch (e) {
+    console.error('There was a problem deleting the article to your favorites list', e);
+  }
+};

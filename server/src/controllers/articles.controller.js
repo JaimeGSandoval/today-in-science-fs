@@ -74,17 +74,17 @@ module.exports = {
   },
 
   httpDeleteArticle: async (req, res, next) => {
-    const { articleId } = req.params;
-    const { articleType } = req.body;
+    const { articleTitle, userId, articleType } = req.body;
 
     try {
-      const foundArticle = await articlesModel.getArticleById(parseInt(articleId, 10), articleType);
+      // const foundArticle = await articlesModel.getArticleById(parseInt(articleId, 10), articleType);
 
-      if (!foundArticle.rows.length) {
-        return next(new AppError('Article not found. It may have been deleted already', 404));
-      }
+      // if (!foundArticle.rows.length) {
+      //   return next(new AppError('Article not found. It may have been deleted already', 404));
+      // }
 
-      await articlesModel.deleteArticle(parseInt(articleId, 10), articleType);
+      // await articlesModel.deleteArticle(parseInt(articleId, 10), articleType);
+      await articlesModel.deleteArticle(userId, articleTitle, articleType);
 
       return res.sendStatus(204);
     } catch (e) {

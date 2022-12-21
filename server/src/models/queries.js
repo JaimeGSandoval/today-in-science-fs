@@ -38,11 +38,17 @@ exports.getFavoriteByIdQuery =
 exports.getReadLaterByIdQuery =
   'SELECT article_id FROM users.read_later_articles WHERE users.read_later_articles.article_id = $1';
 
+exports.getFavoriteUrlQuery =
+  'SELECT article_title FROM users.favorite_articles WHERE user_id = $1 AND article_title = $2';
+
+exports.getReadLaterUrlQuery =
+  'SELECT article_title FROM users.read_later_articles WHERE user_id = $1 AND article_title = $2';
+
 exports.deleteReadLaterUrlQuery =
-  'DELETE FROM users.read_later_articles WHERE users.read_later_articles.article_id = $1';
+  'DELETE FROM users.read_later_articles WHERE user_id = $1 AND article_title = $2';
 
 exports.deleteFavoriteUrlQuery =
-  'DELETE FROM users.favorite_articles WHERE users.favorite_articles.article_id = $1';
+  'DELETE FROM users.favorite_articles WHERE user_id = $1 AND article_title = $2';
 
 // SETTINGS QUERIES
 exports.updateUsernameQuery =
