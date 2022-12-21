@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { UserContext } from '../../context/User.context';
 import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -20,77 +20,85 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const imageJpg = IMAGES_JPG.get(articleData.subject);
   const articleSubject = articleData.subject.replace('-', ' ');
 
-  const favoriteArticleData = {
-    userId: currentUser && currentUser.user_id,
-    articleTitle: articleData.article.title,
-    articleUrl: articleData.article.link,
-    articleType: 'favorite',
-  };
+  const favoriteArticleData = useMemo(
+    () => ({
+      userId: currentUser && currentUser.user_id,
+      articleTitle: articleData.article.title,
+      articleUrl: articleData.article.link,
+      articleType: 'favorite',
+    }),
+    [articleData.article.link, articleData.article.title, currentUser]
+  );
 
-  const readLaterArticleData = {
-    userId: currentUser && currentUser.user_id,
-    articleTitle: articleData.article.title,
-    articleUrl: articleData.article.link,
-    articleType: 'read-later',
-  };
+  const readLaterArticleData = useMemo(
+    () => ({
+      userId: currentUser && currentUser.user_id,
+      articleTitle: articleData.article.title,
+      articleUrl: articleData.article.link,
+      articleType: 'read-later',
+    }),
+    [articleData.article.link, articleData.article.title, currentUser]
+  );
 
-  useEffect(() => {
-    async function addArticle() {
+  const addArticle = useCallback(
+    async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
 
-      const response = await httpAddArticle(favoriteArticleData);
-      if (response) {
-        return setIsFavorite(true);
+      if (type === 'favorite') {
+        const response = await httpAddArticle(favoriteArticleData);
+        if (response) {
+          return setIsFavorite(true);
+        }
       }
-    }
-
-    async function deleteArticle() {
-      checkUser(currentUser, isOpen, setIsOpen);
-
-      const response = await httpDeleteArticle(favoriteArticleData);
-      if (response) {
-        return setIsFavorite(false);
-      }
-    }
-
-    if (addFavArticle) {
-      addArticle();
-    }
-
-    if (!addFavArticle && isFavorite) {
-      deleteArticle();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addFavArticle]);
-
-  useEffect(() => {
-    async function addArticle() {
-      checkUser(currentUser, isOpen, setIsOpen);
 
       const response = await httpAddArticle(readLaterArticleData);
       if (response) {
         return setIsSaved(true);
       }
-    }
+    },
+    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+  );
 
-    async function deleteArticle() {
+  const deleteArticle = useCallback(
+    async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
+
+      if (type === 'favorite') {
+        const response = await httpDeleteArticle(favoriteArticleData);
+        if (response) {
+          return setIsFavorite(false);
+        }
+      }
 
       const response = await httpDeleteArticle(readLaterArticleData);
       if (response) {
         return setIsSaved(false);
       }
+    },
+    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+  );
+
+  useEffect(() => {
+    if (addFavArticle) {
+      addArticle('favorite');
     }
 
+    if (!addFavArticle && isFavorite) {
+      deleteArticle('favorite');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addFavArticle, addArticle, deleteArticle]);
+
+  useEffect(() => {
     if (addReadArticle) {
-      addArticle();
+      addArticle('read-later');
     }
 
     if (!addReadArticle && isSaved) {
-      deleteArticle();
+      deleteArticle('read-later');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addReadArticle]);
+  }, [addReadArticle, addArticle, deleteArticle]);
 
   return (
     <div className={styles.articleCard}>
