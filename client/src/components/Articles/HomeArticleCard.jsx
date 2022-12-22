@@ -9,35 +9,38 @@ import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
+  console.log('ARTICLE DATA', articleData);
+  console.log(articleData.image.thumbnail.contentUrl);
   const [addFavArticle, setAddFavArticle] = useState(false);
   const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
-  const articleDate = new Date(articleData.article.pubDate).toDateString();
+  const articleDate = new Date(articleData.datePublished).toDateString();
   const imageWebp = IMAGES_WEBP.get(articleData.subject);
   const imageJpg = IMAGES_JPG.get(articleData.subject);
-  const articleSubject = articleData.subject.replace('-', ' ');
+  const articleProvider = articleData.provider[0].name;
+  const image = articleData.image.thumbnail.contentUrl;
 
   const favoriteArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.article.title,
-      articleUrl: articleData.article.link,
+      articleTitle: articleData.name,
+      articleUrl: articleData.url,
       articleType: 'favorite',
     }),
-    [articleData.article.link, articleData.article.title, currentUser]
+    [articleData.url, articleData.name, currentUser]
   );
 
   const readLaterArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.article.title,
-      articleUrl: articleData.article.link,
+      articleTitle: articleData.name,
+      articleUrl: articleData.url,
       articleType: 'read-later',
     }),
-    [articleData.article.link, articleData.article.title, currentUser]
+    [articleData.url, articleData.name, currentUser]
   );
 
   const addArticle = useCallback(
@@ -103,23 +106,19 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   return (
     <div className={styles.articleCard}>
       <picture>
-        <source srcSet={imageWebp} />
-        <img className={styles.cardImg} src={imageJpg} alt='' />
+        {/* <source srcSet={imageWebp} /> */}
+        {/* <img className={styles.cardImg} src={image} alt='' /> */}
       </picture>
       <div className={styles.cardBody}>
-        <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
+        <span className={styles.cardProvider}>{articleProvider}</span>
+        {/* <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
           {articleSubject}
-        </Link>
-        <h3 className={styles.cardTitle}>{articleData.article.title}</h3>
-        <p className={styles.cardText}>{articleData.article.content}</p>
+        </Link> */}
+        <h3 className={styles.cardTitle}>{articleData.name}</h3>
+        <p className={styles.cardText}>{articleData.description}</p>
         <span className={styles.cardDate}>{articleDate}</span>
         <div className={styles.cardFooter}>
-          <a
-            href={articleData.article.link}
-            className={styles.cardBtn}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <a href={articleData.url} className={styles.cardBtn} target='_blank' rel='noreferrer'>
             Read Article
           </a>
           <div className={styles.iconBox}>

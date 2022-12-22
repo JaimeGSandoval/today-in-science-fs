@@ -49,6 +49,10 @@
   border-bottom: 1px solid $primaryBlue;
 }
 
+.articleCard {
+  margin-top: 0;
+}
+
 .articlesViewCard {
   margin: 0;
 }
@@ -84,10 +88,17 @@
   margin-bottom: 1.3rem;
 }
 
-.cardDate {
+.cardDate,
+.cardProvider {
   display: block;
   color: $secondaryFontColor;
-  margin-bottom: 2rem;
+  margin: 1.4rem 0 2.5rem;
+  font-size: 0.8rem;
+}
+
+.cardProvider {
+  margin: 1rem 0 2rem;
+  font-size: 1.1rem;
 }
 
 .cardBtn {
