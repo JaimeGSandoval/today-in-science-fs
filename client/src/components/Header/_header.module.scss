@@ -7,14 +7,18 @@
   position: absolute;
   width: 94vw;
   z-index: 10;
+  padding: 0.3rem 0 0.8rem;
 }
 
 .headerTop {
-  border-bottom: 1px solid white;
-  padding: 0.4rem 0;
+  padding: 0.4rem 0 0.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.bottomBorder {
+  border-bottom: 1px solid white;
 }
 
 .authBtnsBox {
@@ -45,7 +49,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 1rem;
+  padding: 1rem 0 0.8rem;
 }
 
 .logoBox {
@@ -59,8 +63,8 @@
 }
 
 .imgBox {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .blankImg {

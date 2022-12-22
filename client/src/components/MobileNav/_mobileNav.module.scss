@@ -82,7 +82,7 @@
 
 .mobileClose {
   font-size: 1.5rem;
-
+  margin-left: auto;
   color: #222;
 }
 
@@ -90,8 +90,8 @@
   font-family: $primaryFont;
   font-weight: bold;
   display: block;
-  align-self: flex-end;
-  margin: 1rem 1.2rem 0 0;
+  text-align: center;
+  margin-top: 1rem;
   font-size: 1.3rem;
   text-transform: uppercase;
   color: #222;
@@ -104,8 +104,6 @@
 
 .mobileNav {
   margin-top: 1rem;
-  align-self: flex-end;
-  margin-right: 1.2rem;
 }
 
 .navMenuBtn {
@@ -139,6 +137,7 @@
 
 .navLink {
   color: #222;
+  font-size: 1.2rem;
   font-family: $primaryFont;
   text-decoration: none;
   margin: 0.8rem 0;
@@ -154,6 +153,7 @@
 .subjectsList {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
