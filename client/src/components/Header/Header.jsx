@@ -3,7 +3,6 @@ import { GiAtom } from 'react-icons/gi';
 import { UserContext } from '../../context/User.context';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
 import { UserLogo } from '../UserLogo';
-import { AuthBtnsBox } from '../AuthBtnsBox';
 import styles from './_header.module.scss';
 
 export const Header = () => {
@@ -14,12 +13,13 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.headerTop}>
-          {!currentUser && <AuthBtnsBox styles={styles} />}
-          {currentUser && <UserLogo styles={styles} />}
-        </div>
+        {currentUser && (
+          <div className={`${styles.headerTop} ${currentUser && styles.bottomBorder}`}>
+            <UserLogo styles={styles} />
+          </div>
+        )}
 
-        <div className={styles.headerBottom}>
+        <div className={`${styles.headerBottom} ${!currentUser && styles.bottomBorder}`}>
           <div className={styles.logoBox}>
             <GiAtom className={styles.logoIcon} />
             <a href='/' className={styles.logoText}>
