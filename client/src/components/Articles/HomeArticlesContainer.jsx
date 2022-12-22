@@ -5,7 +5,6 @@ import { SignupModal } from '../SignupModal';
 
 export const HomeArticlesContainer = ({ articles, isLoading }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log('ARTICLES', articles);
 
   return (
     <>

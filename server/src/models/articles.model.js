@@ -2,15 +2,25 @@ const db = require('../config/database');
 const queries = require('./queries');
 
 module.exports = {
-  addArticle: async (userId, title, articleUrl, type) => {
+  addArticle: async (userId, title, articleUrl, type, provider) => {
     let addedUrlResult;
 
     if (type === 'read-later') {
-      addedUrlResult = await db.query(queries.addReadLaterUrlQuery, [userId, title, articleUrl]);
+      addedUrlResult = await db.query(queries.addReadLaterUrlQuery, [
+        userId,
+        title,
+        articleUrl,
+        provider,
+      ]);
       return addedUrlResult;
     }
 
-    addedUrlResult = await db.query(queries.addFavoriteUrlQuery, [userId, title, articleUrl]);
+    addedUrlResult = await db.query(queries.addFavoriteUrlQuery, [
+      userId,
+      title,
+      articleUrl,
+      provider,
+    ]);
     return addedUrlResult;
   },
 

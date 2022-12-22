@@ -3,7 +3,7 @@ const AppError = require('../utils/app-error');
 
 module.exports = {
   httpAddArticle: async (req, res, next) => {
-    const { userId, articleTitle, articleUrl, articleType } = req.body;
+    const { userId, articleTitle, articleUrl, articleType, provider } = req.body;
 
     if (!userId) {
       return next(new AppError('User ID is required.', 400));
@@ -18,7 +18,8 @@ module.exports = {
         userId,
         articleTitle,
         articleUrl,
-        articleType
+        articleType,
+        provider
       );
 
       if (!addedUrl.rows.length) {

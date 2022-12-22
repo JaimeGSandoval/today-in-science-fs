@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { UserContext } from '../../context/User.context';
-import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
 import { checkUser } from '../../utils/helpers';
-import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
-  console.log('ARTICLE DATA', articleData);
-  console.log(articleData.image.thumbnail.contentUrl);
   const [addFavArticle, setAddFavArticle] = useState(false);
   const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -18,19 +14,17 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
   const articleDate = new Date(articleData.datePublished).toDateString();
-  const imageWebp = IMAGES_WEBP.get(articleData.subject);
-  const imageJpg = IMAGES_JPG.get(articleData.subject);
   const articleProvider = articleData.provider[0].name;
-  const image = articleData.image.thumbnail.contentUrl;
 
   const favoriteArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
       articleTitle: articleData.name,
       articleUrl: articleData.url,
+      provider: articleData.provider[0].name,
       articleType: 'favorite',
     }),
-    [articleData.url, articleData.name, currentUser]
+    [articleData.url, articleData.name, articleData.provider, currentUser]
   );
 
   const readLaterArticleData = useMemo(
@@ -38,9 +32,10 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
       userId: currentUser && currentUser.user_id,
       articleTitle: articleData.name,
       articleUrl: articleData.url,
+      provider: articleData.provider[0].name,
       articleType: 'read-later',
     }),
-    [articleData.url, articleData.name, currentUser]
+    [articleData.url, articleData.name, articleData.provider, currentUser]
   );
 
   const addArticle = useCallback(
@@ -59,7 +54,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         return setIsSaved(true);
       }
     },
-    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser, favoriteArticleData, readLaterArticleData]
   );
 
   const deleteArticle = useCallback(
@@ -78,7 +74,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         return setIsSaved(false);
       }
     },
-    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser, favoriteArticleData, readLaterArticleData]
   );
 
   useEffect(() => {
@@ -105,15 +102,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
   return (
     <div className={styles.articleCard}>
-      <picture>
-        {/* <source srcSet={imageWebp} /> */}
-        {/* <img className={styles.cardImg} src={image} alt='' /> */}
-      </picture>
       <div className={styles.cardBody}>
         <span className={styles.cardProvider}>{articleProvider}</span>
-        {/* <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
-          {articleSubject}
-        </Link> */}
         <h3 className={styles.cardTitle}>{articleData.name}</h3>
         <p className={styles.cardText}>{articleData.description}</p>
         <span className={styles.cardDate}>{articleDate}</span>
