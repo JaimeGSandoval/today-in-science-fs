@@ -29,24 +29,13 @@ const AppError = require('../utils/app-error');
 // ];
 
 const httpInitiate = async (req, res, next) => {
-  // const fetchArticles = (urls) => {
-  //   const promises = urls.map(async (url, i) => {
-  //     return {
-  //       articles: await parser.parseURL(url),
-  //       subject: SUBJECTS[i],
-  //     };
-  //   });
-
-  //   return Promise.all(promises);
-  // };
-
   async function getAllArticles() {
     const options = {
       method: 'GET',
       params: { category: 'science', safeSearch: 'Strict', textFormat: 'Raw' },
       headers: {
         'X-BingApis-SDK': 'true',
-        'X-RapidAPI-Key': '806b3916cfmsh9852bc41b0897a1p11d875jsn677ad6dadabd',
+        'X-RapidAPI-Key': process.env.BING_SEARCH_API_KEY,
         'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
       },
     };
@@ -66,7 +55,6 @@ const httpInitiate = async (req, res, next) => {
     status: 'Success',
     data: {
       fetchedArticles,
-      // homeArticles,
     },
   });
 
