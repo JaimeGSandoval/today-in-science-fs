@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { UserContext } from '../../context/User.context';
-import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
 import { checkUser } from '../../utils/helpers';
-import { IMAGES_WEBP, IMAGES_JPG } from './images';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
@@ -15,29 +13,29 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [isSaved, setIsSaved] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
-  const articleDate = new Date(articleData.article.pubDate).toDateString();
-  const imageWebp = IMAGES_WEBP.get(articleData.subject);
-  const imageJpg = IMAGES_JPG.get(articleData.subject);
-  const articleSubject = articleData.subject.replace('-', ' ');
+  const articleDate = new Date(articleData.datePublished).toDateString();
+  const articleProvider = articleData.provider[0].name;
 
   const favoriteArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.article.title,
-      articleUrl: articleData.article.link,
+      articleTitle: articleData.name,
+      articleUrl: articleData.url,
+      provider: articleData.provider[0].name,
       articleType: 'favorite',
     }),
-    [articleData.article.link, articleData.article.title, currentUser]
+    [articleData.url, articleData.name, articleData.provider, currentUser]
   );
 
   const readLaterArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.article.title,
-      articleUrl: articleData.article.link,
+      articleTitle: articleData.name,
+      articleUrl: articleData.url,
+      provider: articleData.provider[0].name,
       articleType: 'read-later',
     }),
-    [articleData.article.link, articleData.article.title, currentUser]
+    [articleData.url, articleData.name, articleData.provider, currentUser]
   );
 
   const addArticle = useCallback(
@@ -56,7 +54,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         return setIsSaved(true);
       }
     },
-    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser, favoriteArticleData, readLaterArticleData]
   );
 
   const deleteArticle = useCallback(
@@ -75,7 +74,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         return setIsSaved(false);
       }
     },
-    [currentUser, isOpen, setIsOpen, favoriteArticleData, readLaterArticleData]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentUser, favoriteArticleData, readLaterArticleData]
   );
 
   useEffect(() => {
@@ -102,24 +102,13 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
   return (
     <div className={styles.articleCard}>
-      <picture>
-        <source srcSet={imageWebp} />
-        <img className={styles.cardImg} src={imageJpg} alt='' />
-      </picture>
       <div className={styles.cardBody}>
-        <Link to={`/articles/${articleData.subject}`} className={styles.cardHeader}>
-          {articleSubject}
-        </Link>
-        <h3 className={styles.cardTitle}>{articleData.article.title}</h3>
-        <p className={styles.cardText}>{articleData.article.content}</p>
+        <span className={styles.cardProvider}>{articleProvider}</span>
+        <h3 className={styles.cardTitle}>{articleData.name}</h3>
+        <p className={styles.cardText}>{articleData.description}</p>
         <span className={styles.cardDate}>{articleDate}</span>
         <div className={styles.cardFooter}>
-          <a
-            href={articleData.article.link}
-            className={styles.cardBtn}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <a href={articleData.url} className={styles.cardBtn} target='_blank' rel='noreferrer'>
             Read Article
           </a>
           <div className={styles.iconBox}>

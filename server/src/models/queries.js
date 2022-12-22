@@ -21,10 +21,10 @@ exports.signupUserQuery =
 
 // ARTICLE QUERIES
 exports.addReadLaterUrlQuery =
-  'INSERT INTO users.read_later_articles (user_id, article_title, article_url) VALUES ($1, $2, $3) RETURNING users.read_later_articles.article_url';
+  'INSERT INTO users.read_later_articles (user_id, article_title, article_url, provider) VALUES ($1, $2, $3, $4) RETURNING users.read_later_articles.article_url';
 
 exports.addFavoriteUrlQuery =
-  'INSERT INTO users.favorite_articles (user_id, article_title, article_url) VALUES ($1, $2, $3) RETURNING users.favorite_articles.article_url';
+  'INSERT INTO users.favorite_articles (user_id, article_title, article_url, provider) VALUES ($1, $2, $3, $4) RETURNING users.favorite_articles.article_url';
 
 exports.getFavoriteUrlsQuery =
   'SELECT article_id, date_added, article_title, article_url FROM favorite_articles WHERE favorite_articles.user_id = $1';

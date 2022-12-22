@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styles from './_hero.module.scss';
 import medium from '../../assets/images/jpg/artificial-intelligence-md.png';
 import large from '../../assets/images/jpg/artificial-intelligence-lg.png';
@@ -7,13 +6,13 @@ import aiWebp from '../../assets/images/webp/artificial-intelligence.webp';
 
 export const Hero = ({ heroArticle, isLoading }) => {
   let article;
-  let articleSubject;
   let articleDate;
+  let articleProvider;
 
   if (!isLoading) {
-    article = heroArticle.article;
-    articleSubject = heroArticle.subject.replace('-', ' ');
-    articleDate = new Date(article.pubDate).toDateString();
+    article = heroArticle;
+    articleDate = new Date(heroArticle.datePublished).toDateString();
+    articleProvider = heroArticle.provider[0].name;
   }
 
   return (
@@ -29,19 +28,17 @@ export const Hero = ({ heroArticle, isLoading }) => {
           {!isLoading && (
             <div className={styles.heroInfoBox}>
               <div className={styles.headlineContainer}>
-                <Link to={`/articles/${heroArticle.subject}`} className={styles.heroSubject}>
-                  {articleSubject}
-                </Link>
+                <span className={styles.heroProvider}>{articleProvider}</span>
               </div>
 
               <div className={styles.titleContainer}>
-                <span className={styles.heroArticleTitle}>{article.title}</span>
+                <span className={styles.heroArticleTitle}>{article.name}</span>
                 <span className={styles.articleDate}>{articleDate}</span>
               </div>
 
               <div className={styles.readArticleContainer}>
                 <a
-                  href={article.link}
+                  href={article.url}
                   className={styles.readArticleLink}
                   target='_blank'
                   rel='noreferrer'

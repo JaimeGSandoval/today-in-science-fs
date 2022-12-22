@@ -10,23 +10,21 @@ export const HomeView = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getHomeArticles = async () => {
+    const getArticles = async () => {
       const response = await fetch('http://localhost:8000/news/initiate');
       const parsedData = await response.json();
-      const { data } = parsedData;
-      setArticles(data.homeArticles);
+      setArticles(parsedData.data.fetchedArticles.value);
       setIsLoading(false);
-      sessionStorage.setItem('home-articles', JSON.stringify(data.homeArticles));
-      data.allArticles.forEach((a) =>
-        sessionStorage.setItem(a.subject, JSON.stringify(a.articles))
-      );
+      sessionStorage.setItem('articles', JSON.stringify(parsedData.data.fetchedArticles.value));
     };
 
-    if (sessionStorage.getItem('home-articles')) {
-      setArticles(JSON.parse(sessionStorage.getItem('home-articles')));
+    if (sessionStorage.getItem('articles')) {
+      console.log('FROM SESSIONS STORAGE');
+
+      setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {
-      getHomeArticles();
+      getArticles();
     }
   }, []);
 
