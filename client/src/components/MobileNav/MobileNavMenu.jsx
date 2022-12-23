@@ -22,6 +22,28 @@ const AuthLinks = ({ setIsOpen }) => {
   );
 };
 
+const ArticleViewLinks = ({ setIsOpen }) => {
+  return (
+    <>
+      <li>
+        <Link to='/signup' className={styles.navLink} onClick={() => setIsOpen(false)}>
+          Favorite Articles
+        </Link>
+      </li>
+      <li>
+        <Link to='/login' className={styles.navLink} onClick={() => setIsOpen(false)}>
+          Read Later Articles
+        </Link>
+      </li>
+      <li>
+        <Link to='/login' className={styles.navLink} onClick={() => setIsOpen(false)}>
+          Logout
+        </Link>
+      </li>
+    </>
+  );
+};
+
 export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
@@ -41,6 +63,7 @@ export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
         <nav className={styles.mobileNav}>
           <ul className={styles.subjectsList}>
             {!currentUser && <AuthLinks setIsOpen={setIsOpen} />}
+            {currentUser && <ArticleViewLinks setIsOpen={setIsOpen} />}
           </ul>
         </nav>
       </div>
