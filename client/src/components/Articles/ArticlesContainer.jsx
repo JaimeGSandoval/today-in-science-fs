@@ -5,12 +5,12 @@ import styles from './_articles.module.scss';
 import { ArticleCard } from './ArticleCard';
 
 export const ArticlesContainer = () => {
-  const [articles, setArticles] = useState([]);
+  const { articlesType } = useParams();
+  const [favArticles, setFavArticles] = useState([]);
+  const [readLaterArticles, setReadLaterArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useContext(UserContext);
-  const { articlesType } = useParams();
-  console.log(articlesType);
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -22,24 +22,33 @@ export const ArticlesContainer = () => {
       );
       const retrievedArticles = await response.json();
 
-      if (articlesType === 'favorite-articles') {
-        sessionStorage.setItem(
-          articlesType,
-          JSON.stringify(retrievedArticles.data.favoriteArticles)
-        );
-        setArticles(retrievedArticles.data.favoriteArticles);
-      } else {
-        sessionStorage.setItem(
-          articlesType,
-          JSON.stringify(retrievedArticles.data.readLaterArticles)
-        );
-        setArticles(retrievedArticles.data.readLaterArticles);
+      if (retrievedArticles.data.favoriteArticles) {
+        if (retrievedArticles.data.favoriteArticles.length) {
+          setFavArticles(retrievedArticles.data.favoriteArticles);
+          sessionStorage.setItem(
+            'favorite-articles',
+            JSON.stringify(retrievedArticles.data.favoriteArticles)
+          );
+        }
+      }
+
+      if (retrievedArticles.data.readLaterArticles) {
+        if (retrievedArticles.data.readLaterArticles.length) {
+          setReadLaterArticles(retrievedArticles.data.readLaterArticles);
+          sessionStorage.setItem(
+            'read-later-articles',
+            JSON.stringify(retrievedArticles.data.readLaterArticles)
+          );
+        }
       }
     };
 
     if (sessionStorage.getItem(articlesType)) {
-      const storedArticles = JSON.parse(sessionStorage.getItem(articlesType));
-      setArticles(storedArticles);
+      if (articlesType === 'favorite-articles') {
+        setFavArticles(JSON.parse(sessionStorage.getItem(articlesType)));
+      } else {
+        setReadLaterArticles(JSON.parse(sessionStorage.getItem(articlesType)));
+      }
     } else {
       fetchArticles();
     }
@@ -55,9 +64,24 @@ export const ArticlesContainer = () => {
           <h1 className={styles.articleNewsHeader}>
             {articlesType === 'favorite-articles' ? 'Favorites' : 'Read later'}
           </h1>
-          {articles.map((obj) => (
-            <ArticleCard articleData={obj} key={obj.title} setIsOpen={setIsOpen} isOpen={isOpen} />
-          ))}
+          {articlesType === 'favorite-articles' &&
+            favArticles.map((obj) => (
+              <ArticleCard
+                articleData={obj}
+                key={obj.article_id}
+                setIsOpen={setIsOpen}
+                isOpen={isOpen}
+              />
+            ))}
+          {articlesType === 'read-later-articles' &&
+            readLaterArticles.map((obj) => (
+              <ArticleCard
+                articleData={obj}
+                key={obj.article_id}
+                setIsOpen={setIsOpen}
+                isOpen={isOpen}
+              />
+            ))}
         </div>
       </section>
     </>

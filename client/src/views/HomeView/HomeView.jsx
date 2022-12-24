@@ -19,8 +19,6 @@ export const HomeView = () => {
     };
 
     if (sessionStorage.getItem('articles')) {
-      console.log('FROM SESSIONS STORAGE');
-
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {

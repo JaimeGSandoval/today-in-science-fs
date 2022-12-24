@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './_profile.module.scss';
 
 export const Profile = ({ currentUser }) => {
@@ -16,12 +17,12 @@ export const Profile = ({ currentUser }) => {
         <section className={styles.section}>
           <h1 className={styles.sectionTitle}>Lists</h1>
           <div className={styles.fieldBox}>
-            <a href='/' className={styles.fieldLink}>
+            <Link to='/articles/favorite-articles' className={styles.fieldLink}>
               Favorite Articles
-            </a>
-            <a href='/' className={styles.fieldLink}>
+            </Link>
+            <Link to='/articles/read-later-articles' className={styles.fieldLink}>
               Read Later Articles
-            </a>
+            </Link>
           </div>
         </section>
 
