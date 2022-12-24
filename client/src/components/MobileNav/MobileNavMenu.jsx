@@ -19,11 +19,19 @@ const AUTH_LINKS = [
 
 const ARTICLE_VIEW_LINKS = [
   {
-    route: '/signup',
+    route: '/',
+    text: 'Home',
+  },
+  {
+    route: '/dashboard',
+    text: 'Dashboard',
+  },
+  {
+    route: '/articles/favorite-articles',
     text: 'Favorite Articles',
   },
   {
-    route: '/login',
+    route: '/articles/read-later-articles',
     text: 'Read Later Articles',
   },
   {
@@ -52,11 +60,21 @@ export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
           <ul className={styles.subjectsList}>
             {!currentUser &&
               AUTH_LINKS.map((linkData) => (
-                <NavLink styles={styles.navLink} linkData={linkData} setIsOpen={setIsOpen} />
+                <NavLink
+                  styles={styles.navLink}
+                  linkData={linkData}
+                  setIsOpen={setIsOpen}
+                  key={linkData.text}
+                />
               ))}
             {currentUser &&
               ARTICLE_VIEW_LINKS.map((linkData) => (
-                <NavLink styles={styles.navLink} linkData={linkData} setIsOpen={setIsOpen} />
+                <NavLink
+                  styles={styles.navLink}
+                  linkData={linkData}
+                  setIsOpen={setIsOpen}
+                  key={linkData.text}
+                />
               ))}
           </ul>
         </nav>

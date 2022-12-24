@@ -19,21 +19,26 @@ export const ArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     setStateVal(!stateVal);
   };
 
-  const articleDate = new Date(articleData.pubDate).toDateString();
+  const articleDate = new Date(articleData.date_added).toDateString();
 
   return (
     <div className={styles.articlesViewCard}>
       <div className={styles.cardBody}>
         <a href='/' className={styles.cardHeader}>
-          {articleData.subject}
+          {articleData.provider}
         </a>
         <h3 href='/' className={styles.cardTitle}>
-          {articleData.title}
+          {articleData.article_title}
         </h3>
         <p className={styles.cardText}>{articleData.content}</p>
         <span className={styles.cardDate}>{articleDate}</span>
         <div className={styles.cardFooter}>
-          <a href={articleData.link} className={styles.cardBtn} target='_blank' rel='noreferrer'>
+          <a
+            href={articleData.article_url}
+            className={styles.cardBtn}
+            target='_blank'
+            rel='noreferrer'
+          >
             Read Article
           </a>
 

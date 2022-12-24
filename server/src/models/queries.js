@@ -27,10 +27,10 @@ exports.addFavoriteUrlQuery =
   'INSERT INTO users.favorite_articles (user_id, article_title, article_url, provider) VALUES ($1, $2, $3, $4) RETURNING users.favorite_articles.article_url';
 
 exports.getFavoriteUrlsQuery =
-  'SELECT article_id, date_added, article_title, article_url FROM favorite_articles WHERE favorite_articles.user_id = $1';
+  'SELECT article_id, date_added, article_title, article_url, provider FROM favorite_articles WHERE favorite_articles.user_id = $1';
 
 exports.getReadLaterUrlsQuery =
-  'SELECT article_id, date_added, article_title, article_url FROM read_later_articles WHERE read_later_articles.user_id = $1';
+  'SELECT article_id, date_added, article_title, article_url, provider FROM read_later_articles WHERE read_later_articles.user_id = $1';
 
 exports.getFavoriteByIdQuery =
   'SELECT article_id FROM users.favorite_articles WHERE users.favorite_articles.article_id = $1';
