@@ -16,7 +16,7 @@ function App() {
             <Route path='/signup' element={<SignupView />} />
             <Route path='/login' element={<LoginView />} />
             <Route path='/dashboard' element={<DashboardView />} />
-            <Route path='/articles/:subject' element={<ArticlesView />} />
+            <Route path='/articles/:articlesType' element={<ArticlesView />} />
             <Route path='*' element={<NoRouteView />} />
           </Routes>
         </main>
