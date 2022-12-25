@@ -4,12 +4,22 @@ import { useParams } from 'react-router-dom';
 import styles from './_articles.module.scss';
 import { ArticleCard } from './ArticleCard';
 
+const NoArticles = () => {
+  return (
+    <div className={styles.noArticles}>
+      <p>No articles saved</p>
+    </div>
+  );
+};
+
 export const ArticlesContainer = () => {
   const { articlesType } = useParams();
   const [favArticles, setFavArticles] = useState([]);
   const [readLaterArticles, setReadLaterArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [readLaterAvailable, setReadLaterAvailable] = useState(false);
+  const [favsAvailable, setFavsAvailable] = useState(false);
+
   const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -25,6 +35,7 @@ export const ArticlesContainer = () => {
       if (retrievedArticles.data.favoriteArticles) {
         if (retrievedArticles.data.favoriteArticles.length) {
           setFavArticles(retrievedArticles.data.favoriteArticles);
+          setFavsAvailable(true);
           sessionStorage.setItem(
             'favorite-articles',
             JSON.stringify(retrievedArticles.data.favoriteArticles)
@@ -35,6 +46,7 @@ export const ArticlesContainer = () => {
       if (retrievedArticles.data.readLaterArticles) {
         if (retrievedArticles.data.readLaterArticles.length) {
           setReadLaterArticles(retrievedArticles.data.readLaterArticles);
+          setReadLaterAvailable(true);
           sessionStorage.setItem(
             'read-later-articles',
             JSON.stringify(retrievedArticles.data.readLaterArticles)
@@ -46,8 +58,10 @@ export const ArticlesContainer = () => {
     if (sessionStorage.getItem(articlesType)) {
       if (articlesType === 'favorite-articles') {
         setFavArticles(JSON.parse(sessionStorage.getItem(articlesType)));
+        setFavsAvailable(true);
       } else {
         setReadLaterArticles(JSON.parse(sessionStorage.getItem(articlesType)));
+        setReadLaterAvailable(true);
       }
     } else {
       fetchArticles();
@@ -58,30 +72,22 @@ export const ArticlesContainer = () => {
 
   return (
     <>
-      {isLoading && <h1 style={{ color: 'white' }}>LOADING</h1>}
       <section className={styles.articlesOuterContainer}>
+        {isLoading && <h1 style={{ color: 'white' }}>LOADING</h1>}
         <div className={styles.articlesContainer}>
           <h1 className={styles.articleNewsHeader}>
             {articlesType === 'favorite-articles' ? 'Favorites' : 'Read later'}
           </h1>
+
+          {!favsAvailable && articlesType === 'favorite-articles' && <NoArticles />}
+
           {articlesType === 'favorite-articles' &&
-            favArticles.map((obj) => (
-              <ArticleCard
-                articleData={obj}
-                key={obj.article_id}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-              />
-            ))}
+            favArticles.map((obj) => <ArticleCard articleData={obj} key={obj.article_id} />)}
+
+          {!readLaterAvailable && articlesType === 'read-later-articles' && <NoArticles />}
+
           {articlesType === 'read-later-articles' &&
-            readLaterArticles.map((obj) => (
-              <ArticleCard
-                articleData={obj}
-                key={obj.article_id}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-              />
-            ))}
+            readLaterArticles.map((obj) => <ArticleCard articleData={obj} key={obj.article_id} />)}
         </div>
       </section>
     </>
