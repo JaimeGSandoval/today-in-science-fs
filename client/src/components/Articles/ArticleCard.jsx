@@ -4,17 +4,17 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import styles from './_articles.module.scss';
 
-export const ArticleCard = ({ articleData, isOpen, setIsOpen }) => {
+export const ArticleCard = ({ articleData }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
 
   const handleToggle = (stateVal, setStateVal) => {
-    if (!currentUser) {
-      setIsOpen(!isOpen);
-      return;
-    }
+    // if (!currentUser) {
+    //   setIsOpen(!isOpen);
+    //   return;
+    // }
 
     setStateVal(!stateVal);
   };
