@@ -8,6 +8,17 @@ const checkAuth = (req, res, next) => {
   next();
 };
 
+const checkExpiredCookie = (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res
+      .status(401)
+      .json('Unauthorized. You must be logged in to view this page. Redirecting to login page.');
+  }
+
+  // return res.status(200);
+  return res.status(200).json('valid cookie');
+};
+
 const verifyRoles =
   (...roles) =>
   (req, res, next) => {
@@ -23,4 +34,5 @@ const verifyRoles =
 module.exports = {
   checkAuth,
   verifyRoles,
+  checkExpiredCookie,
 };
