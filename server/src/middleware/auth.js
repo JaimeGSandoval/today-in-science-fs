@@ -10,13 +10,14 @@ const checkAuth = (req, res, next) => {
 
 const checkExpiredCookie = (req, res) => {
   if (!req.isAuthenticated()) {
-    return res
-      .status(401)
-      .json('Unauthorized. You must be logged in to view this page. Redirecting to login page.');
+    return res.status(200).json({
+      expired: true,
+    });
   }
 
-  // return res.status(200);
-  return res.status(200).json('valid cookie');
+  return res.status(200).json({
+    expired: false,
+  });
 };
 
 const verifyRoles =

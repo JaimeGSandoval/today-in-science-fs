@@ -1,0 +1,13 @@
+@import '../../sass/variables';
+
+.errorTextBox {
+  height: 50vh;
+  padding-top: 5rem;
+}
+
+.errorText {
+  color: white;
+  padding-top: 4rem;
+  font-family: $primaryFont;
+  font-size: 1.4rem;
+}
