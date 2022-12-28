@@ -8,6 +8,18 @@ const checkAuth = (req, res, next) => {
   next();
 };
 
+const checkExpiredCookie = (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(200).json({
+      expired: true,
+    });
+  }
+
+  return res.status(200).json({
+    expired: false,
+  });
+};
+
 const verifyRoles =
   (...roles) =>
   (req, res, next) => {
@@ -23,4 +35,5 @@ const verifyRoles =
 module.exports = {
   checkAuth,
   verifyRoles,
+  checkExpiredCookie,
 };

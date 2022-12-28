@@ -1,4 +1,5 @@
 const axios = require('axios');
+// const { httpGetFavoriteArticles } = require('./articles.controller');
 const AppError = require('../utils/app-error');
 
 const httpInitiate = async (req, res, next) => {
@@ -14,9 +15,12 @@ const httpInitiate = async (req, res, next) => {
     };
 
     try {
-      const response = await axios.get('https://bing-news-search1.p.rapidapi.com/news', options);
+      const newsResponse = await axios.get(
+        'https://bing-news-search1.p.rapidapi.com/news',
+        options
+      );
 
-      return response.data;
+      return newsResponse.data;
     } catch (e) {
       console.error(e);
       return next(new AppError(e.message), 500);
