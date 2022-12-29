@@ -45,10 +45,10 @@ export const HomeView = () => {
       }
     };
 
-    checkAuth();
-
     const getArticles = async () => {
       try {
+        await checkAuth();
+
         const response = await fetch('http://localhost:8000/news/initiate', options);
 
         if (!response.ok) {
@@ -56,7 +56,8 @@ export const HomeView = () => {
         }
 
         const parsedData = await response.json();
-        setArticles(parsedData.data.fetchedArticles.value);
+
+        setArticles(parsedData.data.finalArticles);
         setIsLoading(false);
         // sessionStorage.setItem('articles', JSON.stringify(parsedData.data.fetchedArticles.value));
       } catch (e) {
