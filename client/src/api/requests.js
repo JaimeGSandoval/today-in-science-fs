@@ -81,6 +81,7 @@ export const httpLoginUser = async (userData) => {
 };
 
 export const httpAddArticle = async (articleData) => {
+  console.log('DATA', articleData);
   try {
     const response = await fetch(`${API}/articles`, {
       method: 'POST',
