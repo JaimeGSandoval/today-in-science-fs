@@ -3,14 +3,14 @@ import { UserContext } from '../../context/User.context';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
-import { checkUser } from '../../utils/helpers';
+import { checkUser, updateSessionStorage } from '../../utils/helpers';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [addFavArticle, setAddFavArticle] = useState(false);
   const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isReadLater, setIsReadLater] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
   const articleDate = new Date(articleData.datePublished).toDateString();
@@ -41,17 +41,39 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const addArticle = useCallback(
     async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
+      const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
+      let updatedArticles;
 
       if (type === 'favorite') {
         const response = await httpAddArticle(favoriteArticleData);
+
         if (response) {
+          updatedArticles = updateSessionStorage(
+            type,
+            sessionArticles,
+            favoriteArticleData.articleTitle,
+            true
+          );
+
+          sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+
           return setIsFavorite(true);
         }
       }
 
       const response = await httpAddArticle(readLaterArticleData);
+
       if (response) {
-        return setIsSaved(true);
+        updatedArticles = updateSessionStorage(
+          type,
+          sessionArticles,
+          readLaterArticleData.articleTitle,
+          true
+        );
+
+        sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+
+        return setIsReadLater(true);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,16 +84,38 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
 
+      const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
+      let updatedArticles;
+
       if (type === 'favorite') {
         const response = await httpDeleteArticle(favoriteArticleData);
+
         if (response) {
+          updatedArticles = updateSessionStorage(
+            type,
+            sessionArticles,
+            favoriteArticleData.articleTitle,
+            false
+          );
+
+          sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+
           return setIsFavorite(false);
         }
       }
 
       const response = await httpDeleteArticle(readLaterArticleData);
+
       if (response) {
-        return setIsSaved(false);
+        updatedArticles = updateSessionStorage(
+          type,
+          sessionArticles,
+          readLaterArticleData.articleTitle,
+          false
+        );
+
+        sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+        return setIsReadLater(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +123,19 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   );
 
   useEffect(() => {
-    if (addFavArticle) {
+    if (articleData.isFavorite) {
+      setIsFavorite(true);
+      setAddFavArticle(true);
+    }
+
+    if (articleData.isReadLater) {
+      setIsReadLater(true);
+      setAddReadArticle(true);
+    }
+  }, [articleData.isFavorite, articleData.isReadLater]);
+
+  useEffect(() => {
+    if (addFavArticle && !isFavorite) {
       addArticle('favorite');
     }
 
@@ -90,11 +146,11 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   }, [addFavArticle, addArticle, deleteArticle]);
 
   useEffect(() => {
-    if (addReadArticle) {
+    if (addReadArticle && !isReadLater) {
       addArticle('read-later');
     }
 
-    if (!addReadArticle && isSaved) {
+    if (!addReadArticle && isReadLater) {
       deleteArticle('read-later');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,7 +176,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
                 onClick={() => setAddFavArticle(true)}
               />
             )}
-            {isSaved ? (
+            {isReadLater ? (
               <BsBookmarkFill
                 className={styles.bookmarkFill}
                 onClick={() => setAddReadArticle(false)}
