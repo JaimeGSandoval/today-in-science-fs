@@ -3,7 +3,7 @@ import { UserContext } from '../../context/User.context';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
-import { checkUser } from '../../utils/helpers';
+import { checkUser, updateSessionStorage } from '../../utils/helpers';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
@@ -48,13 +48,12 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         const response = await httpAddArticle(favoriteArticleData);
 
         if (response) {
-          updatedArticles = sessionArticles.map((a) => {
-            if (a.name === favoriteArticleData.articleTitle) {
-              a.isFavorite = true;
-            }
-
-            return a;
-          });
+          updatedArticles = updateSessionStorage(
+            type,
+            sessionArticles,
+            favoriteArticleData.articleTitle,
+            true
+          );
 
           sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
 
@@ -62,18 +61,15 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         }
       }
 
-      // *****
-
       const response = await httpAddArticle(readLaterArticleData);
 
       if (response) {
-        updatedArticles = sessionArticles.map((a) => {
-          if (a.name === readLaterArticleData.articleTitle) {
-            a.isReadLater = true;
-          }
-
-          return a;
-        });
+        updatedArticles = updateSessionStorage(
+          type,
+          sessionArticles,
+          readLaterArticleData.articleTitle,
+          true
+        );
 
         sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
 
@@ -87,6 +83,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const deleteArticle = useCallback(
     async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
+
       const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
       let updatedArticles;
 
@@ -94,13 +91,12 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         const response = await httpDeleteArticle(favoriteArticleData);
 
         if (response) {
-          updatedArticles = sessionArticles.map((a) => {
-            if (a.name === favoriteArticleData.articleTitle) {
-              a.isFavorite = false;
-            }
-
-            return a;
-          });
+          updatedArticles = updateSessionStorage(
+            type,
+            sessionArticles,
+            favoriteArticleData.articleTitle,
+            false
+          );
 
           sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
 
@@ -108,18 +104,15 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         }
       }
 
-      // ******
-
       const response = await httpDeleteArticle(readLaterArticleData);
 
       if (response) {
-        updatedArticles = sessionArticles.map((a) => {
-          if (a.name === readLaterArticleData.articleTitle) {
-            a.isReadLater = false;
-          }
-
-          return a;
-        });
+        updatedArticles = updateSessionStorage(
+          type,
+          sessionArticles,
+          readLaterArticleData.articleTitle,
+          false
+        );
 
         sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
         return setIsReadLater(false);
