@@ -10,7 +10,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [addFavArticle, setAddFavArticle] = useState(false);
   const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isReadLater, setIsReadLater] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
   const articleDate = new Date(articleData.datePublished).toDateString();
@@ -41,17 +41,43 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const addArticle = useCallback(
     async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
+      const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
+      let updatedArticles;
 
       if (type === 'favorite') {
         const response = await httpAddArticle(favoriteArticleData);
+
         if (response) {
+          updatedArticles = sessionArticles.map((a) => {
+            if (a.name === favoriteArticleData.articleTitle) {
+              a.isFavorite = true;
+            }
+
+            return a;
+          });
+
+          sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+
           return setIsFavorite(true);
         }
       }
 
+      // *****
+
       const response = await httpAddArticle(readLaterArticleData);
+
       if (response) {
-        return setIsSaved(true);
+        updatedArticles = sessionArticles.map((a) => {
+          if (a.name === readLaterArticleData.articleTitle) {
+            a.isReadLater = true;
+          }
+
+          return a;
+        });
+
+        sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+
+        return setIsReadLater(true);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,17 +87,42 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const deleteArticle = useCallback(
     async (type) => {
       checkUser(currentUser, isOpen, setIsOpen);
+      const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
+      let updatedArticles;
 
       if (type === 'favorite') {
         const response = await httpDeleteArticle(favoriteArticleData);
+
         if (response) {
+          updatedArticles = sessionArticles.map((a) => {
+            if (a.name === favoriteArticleData.articleTitle) {
+              a.isFavorite = false;
+            }
+
+            return a;
+          });
+
+          sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+
           return setIsFavorite(false);
         }
       }
 
+      // ******
+
       const response = await httpDeleteArticle(readLaterArticleData);
+
       if (response) {
-        return setIsSaved(false);
+        updatedArticles = sessionArticles.map((a) => {
+          if (a.name === readLaterArticleData.articleTitle) {
+            a.isReadLater = false;
+          }
+
+          return a;
+        });
+
+        sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+        return setIsReadLater(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +130,19 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   );
 
   useEffect(() => {
-    if (addFavArticle) {
+    if (articleData.isFavorite) {
+      setIsFavorite(true);
+      setAddFavArticle(true);
+    }
+
+    if (articleData.isReadLater) {
+      setIsReadLater(true);
+      setAddReadArticle(true);
+    }
+  }, [articleData.isFavorite, articleData.isReadLater]);
+
+  useEffect(() => {
+    if (addFavArticle && !isFavorite) {
       addArticle('favorite');
     }
 
@@ -90,11 +153,11 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   }, [addFavArticle, addArticle, deleteArticle]);
 
   useEffect(() => {
-    if (addReadArticle) {
+    if (addReadArticle && !isReadLater) {
       addArticle('read-later');
     }
 
-    if (!addReadArticle && isSaved) {
+    if (!addReadArticle && isReadLater) {
       deleteArticle('read-later');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,7 +183,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
                 onClick={() => setAddFavArticle(true)}
               />
             )}
-            {isSaved ? (
+            {isReadLater ? (
               <BsBookmarkFill
                 className={styles.bookmarkFill}
                 onClick={() => setAddReadArticle(false)}

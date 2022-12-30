@@ -59,7 +59,7 @@ export const HomeView = () => {
 
         setArticles(parsedData.data.finalArticles);
         setIsLoading(false);
-        // sessionStorage.setItem('articles', JSON.stringify(parsedData.data.fetchedArticles.value));
+        sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
       } catch (e) {
         setHttpError(true);
         console.error(e);
@@ -67,6 +67,7 @@ export const HomeView = () => {
     };
 
     if (sessionStorage.getItem('articles')) {
+      checkAuth();
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {
