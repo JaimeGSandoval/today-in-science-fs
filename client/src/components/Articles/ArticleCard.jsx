@@ -1,23 +1,61 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback, useMemo } from 'react';
 import { UserContext } from '../../context/User.context';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
+import { httpDeleteArticle } from '../../api/requests';
+import { BsTrash } from 'react-icons/bs';
 import styles from './_articles.module.scss';
 
-export const ArticleCard = ({ articleData }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
+export const ArticleCard = ({ articleData, type, setFavArticles }) => {
+  const [isSaved, setIsSaved] = useState(true);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
 
-  const handleToggle = (stateVal, setStateVal) => {
-    // if (!currentUser) {
-    //   setIsOpen(!isOpen);
-    //   return;
-    // }
+  const favoriteArticleData = useMemo(
+    () => ({
+      articleTitle: articleData.article_title,
+      userId: currentUser.user_id,
+      articleType: 'favorite',
+    }),
+    [articleData.article_title, currentUser.user_id]
+  );
 
-    setStateVal(!stateVal);
+  const readLaterArticleData = {
+    articleTitle: articleData.article_title,
+    userId: currentUser.user_id,
+    articleType: 'read-later',
   };
+
+  const deleteArticle = useCallback(
+    async (articleType) => {
+      if (articleType === 'favorite-articles') {
+        const response = await httpDeleteArticle(favoriteArticleData);
+        console.log(response);
+      }
+    },
+    [favoriteArticleData]
+  );
+
+  useEffect(() => {
+    if (!isSaved) {
+      deleteArticle(type, favoriteArticleData);
+      const sessionArticles = JSON.parse(sessionStorage.getItem('favorite-articles'));
+      const updatedArticles = sessionArticles.filter(
+        (a) => a.article_title !== favoriteArticleData.articleTitle
+      );
+
+      const homeArticles = JSON.parse(sessionStorage.getItem('articles'));
+      const updatedHomeArticles = homeArticles.map((a) => {
+        if (a.article_title !== favoriteArticleData.articleTitle) {
+          a.isFavorite = false;
+        }
+
+        return a;
+      });
+
+      sessionStorage.setItem('favorite-articles', JSON.stringify(updatedArticles));
+      sessionStorage.setItem('articles', JSON.stringify(updatedHomeArticles));
+      setFavArticles(updatedArticles);
+    }
+  }, [isSaved, deleteArticle, type, favoriteArticleData, setFavArticles, articleData.articleTitle]);
 
   const articleDate = new Date(articleData.date_added).toDateString();
 
@@ -43,28 +81,7 @@ export const ArticleCard = ({ articleData }) => {
           </a>
 
           <div className={styles.iconBox}>
-            {isFavorite ? (
-              <AiFillStar
-                className={styles.fillStar}
-                onClick={() => handleToggle(isFavorite, setIsFavorite)}
-              />
-            ) : (
-              <AiOutlineStar
-                className={styles.outlineStar}
-                onClick={() => handleToggle(isFavorite, setIsFavorite)}
-              />
-            )}
-            {isSaved ? (
-              <BsBookmarkFill
-                className={styles.bookmarkFill}
-                onClick={() => handleToggle(isSaved, setIsSaved)}
-              />
-            ) : (
-              <BsBookmark
-                className={styles.bookmarkOutline}
-                onClick={() => handleToggle(isSaved, setIsSaved)}
-              />
-            )}
+            <BsTrash className={styles.trashIcon} onClick={() => setIsSaved(false)} />
           </div>
         </div>
         ;

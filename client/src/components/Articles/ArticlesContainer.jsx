@@ -14,6 +14,7 @@ const NoArticles = () => {
 
 export const ArticlesContainer = () => {
   const { articlesType } = useParams();
+
   const [favArticles, setFavArticles] = useState([]);
   const [readLaterArticles, setReadLaterArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,8 @@ export const ArticlesContainer = () => {
   const [favsAvailable, setFavsAvailable] = useState(false);
 
   const { currentUser } = useContext(UserContext);
+
+  sessionStorage.setItem('favorite-articles', JSON.stringify([]));
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -55,7 +58,9 @@ export const ArticlesContainer = () => {
       }
     };
 
-    if (sessionStorage.getItem(articlesType)) {
+    const sessionArticles = JSON.parse(sessionStorage.getItem(articlesType));
+
+    if (sessionArticles.length) {
       if (articlesType === 'favorite-articles') {
         setFavArticles(JSON.parse(sessionStorage.getItem(articlesType)));
         setFavsAvailable(true);
@@ -70,6 +75,11 @@ export const ArticlesContainer = () => {
     setIsLoading(false);
   }, [articlesType, currentUser]);
 
+  useEffect(() => {
+    sessionStorage.setItem('favorite-articles', JSON.stringify(favArticles));
+    if (!favArticles.length) setFavsAvailable(false);
+  }, [favArticles]);
+
   return (
     <>
       <section className={styles.articlesOuterContainer}>
@@ -82,12 +92,21 @@ export const ArticlesContainer = () => {
           {!favsAvailable && articlesType === 'favorite-articles' && <NoArticles />}
 
           {articlesType === 'favorite-articles' &&
-            favArticles.map((obj) => <ArticleCard articleData={obj} key={obj.article_id} />)}
+            favArticles.map((obj) => (
+              <ArticleCard
+                articleData={obj}
+                key={obj.article_id}
+                type={articlesType}
+                setFavArticles={setFavArticles}
+              />
+            ))}
 
           {!readLaterAvailable && articlesType === 'read-later-articles' && <NoArticles />}
 
           {articlesType === 'read-later-articles' &&
-            readLaterArticles.map((obj) => <ArticleCard articleData={obj} key={obj.article_id} />)}
+            readLaterArticles.map((obj) => (
+              <ArticleCard articleData={obj} key={obj.article_id} type={articlesType} />
+            ))}
         </div>
       </section>
     </>
