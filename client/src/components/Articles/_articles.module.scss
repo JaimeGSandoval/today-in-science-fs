@@ -131,6 +131,13 @@
   align-items: center;
 }
 
+.trashIcon {
+  color: $secondaryFontColor;
+  margin: 0 0.5rem 0 auto;
+  width: 2.06rem;
+  font-size: 1.7rem;
+}
+
 .outlineStar,
 .fillStar {
   font-size: 1.7rem;
