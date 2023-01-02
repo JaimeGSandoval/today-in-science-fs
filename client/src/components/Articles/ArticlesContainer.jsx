@@ -24,6 +24,7 @@ export const ArticlesContainer = () => {
   const { currentUser } = useContext(UserContext);
 
   sessionStorage.setItem('favorite-articles', JSON.stringify([]));
+  sessionStorage.setItem('read-later-articles', JSON.stringify([]));
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -80,6 +81,11 @@ export const ArticlesContainer = () => {
     if (!favArticles.length) setFavsAvailable(false);
   }, [favArticles]);
 
+  useEffect(() => {
+    sessionStorage.setItem('read-later-articles', JSON.stringify(readLaterArticles));
+    if (!readLaterArticles.length) setReadLaterAvailable(false);
+  }, [readLaterArticles]);
+
   return (
     <>
       <section className={styles.articlesOuterContainer}>
@@ -105,7 +111,12 @@ export const ArticlesContainer = () => {
 
           {articlesType === 'read-later-articles' &&
             readLaterArticles.map((obj) => (
-              <ArticleCard articleData={obj} key={obj.article_id} type={articlesType} />
+              <ArticleCard
+                articleData={obj}
+                key={obj.article_id}
+                type={articlesType}
+                setReadLaterArticles={setReadLaterArticles}
+              />
             ))}
         </div>
       </section>
