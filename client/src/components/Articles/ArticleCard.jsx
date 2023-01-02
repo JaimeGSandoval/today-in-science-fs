@@ -29,74 +29,95 @@ export const ArticleCard = ({ articleData, type, setFavArticles, setReadLaterArt
 
   const deleteArticle = useCallback(
     async (articleType) => {
+      const errMessage = 'Error: could not delete article';
+
       if (articleType === 'favorite-articles') {
-        const response = await httpDeleteArticle(favoriteArticleData);
-        console.log('FAV', response);
+        try {
+          const response = await httpDeleteArticle(favoriteArticleData);
+
+          if (!response) {
+            throw new Error(errMessage);
+          }
+
+          return true;
+        } catch (e) {
+          console.error(e.message);
+        }
       } else {
-        const response = await httpDeleteArticle(readLaterArticleData);
-        console.log('READ', response);
+        try {
+          const response = await httpDeleteArticle(readLaterArticleData);
+
+          if (!response) {
+            throw new Error(errMessage);
+          }
+
+          return true;
+        } catch (e) {
+          console.error(e.message);
+        }
       }
     },
     [favoriteArticleData, readLaterArticleData]
   );
 
+  const articleSetter = useCallback(
+    async (articleType, articleData, deleteFn) => {
+      let sessionArticles, updatedArticles, homeArticles, updatedHomeArticles;
+
+      const isDeleted = await deleteFn(articleType, articleData);
+
+      if (isDeleted) {
+        sessionArticles = JSON.parse(sessionStorage.getItem(articleType));
+        updatedArticles = sessionArticles.filter(
+          (a) => a.article_title !== articleData.articleTitle
+        );
+
+        homeArticles = JSON.parse(sessionStorage.getItem('articles'));
+        updatedHomeArticles = homeArticles.map((a) => {
+          if (a.name === articleData.articleTitle) {
+            if (articleType === 'favorite-articles') {
+              a.isFavorite = false;
+            } else {
+              a.isReadLater = false;
+            }
+          }
+
+          return a;
+        });
+
+        sessionStorage.setItem(articleType, JSON.stringify(updatedArticles));
+        sessionStorage.setItem('articles', JSON.stringify(updatedHomeArticles));
+
+        if (articleType === 'favorite-articles') {
+          setFavArticles(updatedArticles);
+        } else {
+          setReadLaterArticles(updatedArticles);
+        }
+      }
+    },
+    [setFavArticles, setReadLaterArticles]
+  );
+
   useEffect(() => {
-    let sessionArticles, updatedArticles, homeArticles, updatedHomeArticles;
+    const removeUserArticle = async () => {
+      if (!isSaved && type === 'favorite-articles') {
+        await articleSetter(type, favoriteArticleData, deleteArticle);
+      } else if (!isSaved) {
+        await articleSetter(type, readLaterArticleData, deleteArticle);
+      }
+    };
 
-    if (!isSaved && type === 'favorite-articles') {
-      deleteArticle(type, favoriteArticleData);
-      sessionArticles = JSON.parse(sessionStorage.getItem('favorite-articles'));
-      updatedArticles = sessionArticles.filter(
-        (a) => a.article_title !== favoriteArticleData.articleTitle
-      );
-
-      homeArticles = JSON.parse(sessionStorage.getItem('articles'));
-      updatedHomeArticles = homeArticles.map((a) => {
-        if (a.name === favoriteArticleData.articleTitle) {
-          a.isFavorite = false;
-        }
-
-        return a;
-      });
-
-      console.log('UPDATED', updatedHomeArticles);
-
-      sessionStorage.setItem('favorite-articles', JSON.stringify(updatedArticles));
-      sessionStorage.setItem('articles', JSON.stringify(updatedHomeArticles));
-
-      setFavArticles(updatedArticles);
-    }
-
-    if (!isSaved && type === 'read-later-articles') {
-      deleteArticle(type, readLaterArticleData);
-      sessionArticles = JSON.parse(sessionStorage.getItem('read-later-articles'));
-      updatedArticles = sessionArticles.filter(
-        (a) => a.article_title !== readLaterArticleData.articleTitle
-      );
-
-      homeArticles = JSON.parse(sessionStorage.getItem('articles'));
-      updatedHomeArticles = homeArticles.map((a) => {
-        if (a.name === readLaterArticleData.articleTitle) {
-          a.isReadLater = false;
-        }
-
-        return a;
-      });
-
-      sessionStorage.setItem('read-later-articles', JSON.stringify(updatedArticles));
-      sessionStorage.setItem('articles', JSON.stringify(updatedHomeArticles));
-
-      setReadLaterArticles(updatedArticles);
-    }
+    removeUserArticle();
   }, [
     isSaved,
     deleteArticle,
     type,
+    articleData.articleTitle,
     favoriteArticleData,
     setFavArticles,
-    articleData.articleTitle,
     readLaterArticleData,
     setReadLaterArticles,
+    articleSetter,
   ]);
 
   const articleDate = new Date(articleData.date_added).toDateString();
