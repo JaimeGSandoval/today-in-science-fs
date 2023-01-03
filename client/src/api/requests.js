@@ -121,3 +121,26 @@ export const httpDeleteArticle = async (articleData) => {
     console.error('There was a problem deleting the article to your favorites list', e);
   }
 };
+
+export const httpUpdateUsername = async (usernameObj) => {
+  const { userId } = usernameObj;
+
+  try {
+    const response = await fetch(`${API}/settings/update-username/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(usernameObj),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network error');
+    }
+
+    return true;
+  } catch (e) {
+    console.error('There was a problem updating your username', e);
+  }
+};
