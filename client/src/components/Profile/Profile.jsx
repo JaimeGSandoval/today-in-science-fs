@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { UsernameModal } from '../SettingsModals/UsernameModal';
+import { EmailModal } from '../SettingsModals/EmailModal';
 import styles from './_profile.module.scss';
 
 export const Profile = ({ currentUser }) => {
@@ -41,7 +42,7 @@ export const Profile = ({ currentUser }) => {
                   className={styles.editIcon}
                   onClick={() => {
                     setIsOpen(!isOpen);
-                    setUpdateType('username');
+                    setUpdateType('Update Username');
                   }}
                 />
               </div>
@@ -51,7 +52,7 @@ export const Profile = ({ currentUser }) => {
                   className={styles.editIcon}
                   onClick={() => {
                     setIsOpen(!isOpen);
-                    setUpdateType('email');
+                    setUpdateType('Update Email');
                   }}
                 />
               </div>
@@ -76,12 +77,22 @@ export const Profile = ({ currentUser }) => {
           </section>
         </div>
       </section>
-      <UsernameModal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        currentUser={currentUser}
-        updateType={updateType}
-      />
+      {updateType === 'Update Username' && (
+        <UsernameModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentUser={currentUser}
+          updateType={updateType}
+        />
+      )}
+      {updateType === 'Update Email' && (
+        <EmailModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentUser={currentUser}
+          updateType={updateType}
+        />
+      )}
     </>
   );
 };

@@ -4,14 +4,14 @@ import { httpUpdateUsername } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
 import styles from './_settingsModal.module.scss';
 
-export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
+export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
-  const [username, setUsername] = useState(currentUser.user_name);
-  const [usernameErr, setUsernameErr] = useState(false);
-  const [usernameTaken, setUsernameTaken] = useState(false);
-  const [validUsername, setValidUsername] = useState(false);
+  const [email, setEmail] = useState(currentUser.email);
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailErr, setEmailErr] = useState(false);
+  const [emailTaken, setEmailTaken] = useState(false);
+  const emailRef = useRef();
   const [submit, setSubmit] = useState(false);
-  const usernameRef = useRef();
 
   const addValidOutline = (refVal) => {
     if (refVal.current) {
@@ -34,24 +34,24 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const usernameObj = {
-        newUsername: username,
+      const emailObj = {
+        newEmail: email,
         userId: currentUser.user_id,
       };
 
       try {
-        await httpUpdateUsername(usernameObj);
+        await httpUpdateUsername(emailObj);
 
         setCurrentUser({
           ...currentUser,
-          user_name: username,
+          email,
         });
 
         localStorage.setItem(
           'currentUser',
           JSON.stringify({
             ...currentUser,
-            user_name: username,
+            email,
           })
         );
 
@@ -66,33 +66,33 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
     }
 
     return () => setSubmit(false);
-  }, [currentUser, currentUser.user_id, setCurrentUser, setIsOpen, submit, username]);
+  }, [currentUser, currentUser.user_id, setCurrentUser, setIsOpen, submit, email]);
+
+  const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);
 
   useEffect(() => {
-    setUsernameErr(false);
-    setUsernameTaken(false);
+    setEmailErr(false);
+    setEmailTaken(false);
 
-    const usernameTrimmed = username.trim();
+    const emailTrimmed = email.trim();
 
-    if (!usernameTrimmed.length) {
-      usernameRef.current.classList.remove(styles.validField);
-      usernameRef.current.classList.remove(styles.invalidField);
+    if (!emailTrimmed.length) {
+      emailRef.current.classList.remove(styles.validField);
+      emailRef.current.classList.remove(styles.invalidField);
       return;
     }
 
-    if (/\s/.test(usernameTrimmed) || usernameTrimmed.length < 6 || usernameTrimmed.length > 20) {
-      usernameRef.current.classList.add(styles.invalidField);
-      setUsernameErr(true);
-      setValidUsername(false);
+    if (!isEmail(emailTrimmed)) {
+      emailRef.current.classList.add(styles.invalidField);
+      setEmailErr(true);
+      setValidEmail(false);
       return;
     }
 
-    if (/[a-zA-Z0-9]/.test(usernameTrimmed)) {
-      addValidOutline(usernameRef);
-      setUsernameErr(false);
-      setValidUsername(true);
-    }
-  }, [username]);
+    addValidOutline(emailRef);
+    setValidEmail(true);
+    setEmailErr(false);
+  }, [email]);
 
   return createPortal(
     <>
@@ -102,23 +102,25 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
           <form className={styles.innerContainer} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.infoBox}>
               <h1 className={styles.text}>{updateType}</h1>
+
               <input
-                type='text'
+                type='email'
                 className={styles.inputField}
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
-                placeholder={username}
-                onBlur={(e) => removeOutline(e, validUsername)}
-                ref={usernameRef}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                placeholder={email}
+                onBlur={(e) => removeOutline(e, validEmail)}
+                ref={emailRef}
               />
+
               <div className={styles.errBox}>
                 <span
-                  className={`${styles.errMessage} ${usernameErr && styles.show} ${
-                    usernameTaken && styles.show
+                  className={`${styles.errMessage} ${emailErr && styles.show} ${
+                    emailTaken && styles.show
                   }`}
                 >
-                  {usernameTaken && 'Username taken'}
-                  {usernameErr && '6 to 20 letters or numbers and no spaces'}
+                  {emailTaken && 'Email already registered'}
+                  {emailErr && 'Must be a valid email'}
                 </span>
               </div>
               <div className={styles.btnBox}>
@@ -127,9 +129,9 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
                     Cancel
                   </button>
                   <button
-                    className={validUsername ? styles.saveButton : styles.disabledBtn}
+                    className={validEmail ? styles.saveButton : styles.disabledBtn}
                     type={'submit'}
-                    disabled={validUsername ? false : true}
+                    disabled={validEmail ? false : true}
                   >
                     Save
                   </button>
@@ -140,6 +142,6 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
         </>
       )}
     </>,
-    document.getElementById('username-modal')
+    document.getElementById('email-modal')
   );
 };
