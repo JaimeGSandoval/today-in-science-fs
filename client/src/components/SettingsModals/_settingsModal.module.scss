@@ -1,0 +1,119 @@
+@import '../../sass//mixins';
+@import '../../sass/variables';
+
+.container {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.9);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  //   z-index: 20;
+}
+
+.innerContainer {
+  @include formBox;
+  position: fixed;
+  bottom: 1rem;
+  transform: translate((-50%, -55%));
+}
+
+.infoBox {
+  font-family: $primaryFont;
+  color: white;
+  width: 98%;
+  margin: auto;
+  padding: 1rem;
+}
+
+.inputField {
+  width: 100%;
+  border-radius: 0.2rem;
+  outline: 2px solid transparent;
+  border: 1px solid transparent;
+  padding: 0.3rem 0.4rem;
+}
+
+.text {
+  display: block;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 2.7rem;
+  padding: 1rem 0.5rem;
+}
+
+.btnBox {
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.btnBoxInner {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin-left: auto;
+}
+
+.cancelButton,
+.saveButton {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.2rem;
+  outline: none;
+  border: none;
+  color: white;
+}
+
+.cancelButton {
+  background-color: rgb(162, 162, 162);
+}
+
+.saveButton {
+  background-color: $primaryBlue;
+}
+
+.errBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 0;
+}
+
+.errMessage,
+.errTakenMessage {
+  color: rgb(252, 56, 56);
+  position: absolute;
+  top: 15px;
+  left: 9999px;
+  font-family: $primaryFont;
+  font-size: 0.7rem;
+  text-align: center;
+  position: relative;
+}
+
+.errTakenMessage {
+  left: 8000px;
+}
+
+.show {
+  left: 0;
+}
+
+.invalidField:focus {
+  outline-color: rgb(252, 56, 56);
+}
+
+.validField {
+  outline-color: lightgreen;
+}
+
+.disabledBtn {
+  background-color: rgb(214, 214, 214);
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.2rem;
+  outline: none;
+  border: none;
+  color: white;
+}
