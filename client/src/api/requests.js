@@ -144,3 +144,26 @@ export const httpUpdateUsername = async (usernameObj) => {
     console.error('There was a problem updating your username', e);
   }
 };
+
+export const httpUpdateEmailRequest = async (emailObj) => {
+  const { userId } = emailObj;
+
+  try {
+    const response = await fetch(`${API}/settings/update-email-request/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(emailObj),
+    });
+
+    if (!response.ok) {
+      throw new Error('There was a problem updating your email');
+    }
+
+    return true;
+  } catch (e) {
+    console.error(e.message);
+  }
+};

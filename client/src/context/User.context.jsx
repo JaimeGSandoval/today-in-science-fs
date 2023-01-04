@@ -8,7 +8,6 @@ export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
     userLocalStorage ? JSON.parse(userLocalStorage) : null
   );
-  console.log(currentUser);
 
   const userControls = {
     currentUser,

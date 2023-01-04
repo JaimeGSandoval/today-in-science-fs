@@ -101,18 +101,16 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
           <div className={styles.container} onClick={() => setIsOpen(false)}></div>
           <form className={styles.innerContainer} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.infoBox}>
-              <h1 className={styles.text}>{updateType === 'username' && 'Update Username'}</h1>
-              {updateType === 'username' && (
-                <input
-                  type='text'
-                  className={styles.inputField}
-                  onChange={(e) => setUsername(e.target.value)}
-                  value={username}
-                  placeholder={username}
-                  onBlur={(e) => removeOutline(e, validUsername)}
-                  ref={usernameRef}
-                />
-              )}
+              <h1 className={styles.text}>Update Username</h1>
+              <input
+                type='text'
+                className={styles.inputField}
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+                placeholder={username}
+                onBlur={(e) => removeOutline(e, validUsername)}
+                ref={usernameRef}
+              />
               <div className={styles.errBox}>
                 <span
                   className={`${styles.errMessage} ${usernameErr && styles.show} ${
@@ -142,6 +140,6 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
         </>
       )}
     </>,
-    document.getElementById('settings-modal')
+    document.getElementById('username-modal')
   );
 };
