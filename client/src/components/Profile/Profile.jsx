@@ -42,7 +42,7 @@ export const Profile = ({ currentUser }) => {
                   className={styles.editIcon}
                   onClick={() => {
                     setIsOpen(!isOpen);
-                    setUpdateType('Update Username');
+                    setUpdateType('username');
                   }}
                 />
               </div>
@@ -52,7 +52,7 @@ export const Profile = ({ currentUser }) => {
                   className={styles.editIcon}
                   onClick={() => {
                     setIsOpen(!isOpen);
-                    setUpdateType('Update Email');
+                    setUpdateType('email');
                   }}
                 />
               </div>
@@ -77,21 +77,11 @@ export const Profile = ({ currentUser }) => {
           </section>
         </div>
       </section>
-      {updateType === 'Update Username' && (
-        <UsernameModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          currentUser={currentUser}
-          updateType={updateType}
-        />
+      {updateType === 'username' && (
+        <UsernameModal isOpen={isOpen} setIsOpen={setIsOpen} currentUser={currentUser} />
       )}
-      {updateType === 'Update Email' && (
-        <EmailModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          currentUser={currentUser}
-          updateType={updateType}
-        />
+      {updateType === 'email' && (
+        <EmailModal isOpen={isOpen} setIsOpen={setIsOpen} currentUser={currentUser} />
       )}
     </>
   );

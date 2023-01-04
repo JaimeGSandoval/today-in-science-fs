@@ -38,6 +38,8 @@ const httpUpdateEmailRequest = async (req, res, next) => {
   const { userId } = req.params;
   const { newEmail } = req.body;
 
+  console.log(userId, newEmail);
+
   try {
     const emailExists = await usersModel.getUserByEmail(newEmail);
 
@@ -89,10 +91,19 @@ const httpUpdateUserEmail = async (req, res, next) => {
   try {
     await settingsModel.updateUserEmail(parseInt(userId, 10), newEmail);
 
-    // how to destroy or delete session in DB? Can I get sessionID somehow and put it in the token too?
+    req.logOut((err) => {
+      if (err) {
+        return next(new AppError(err, 500));
+      }
+    });
 
-    // just using send for now. when the frontend gets a status code of 204 then I'll redirect the user to login page with react router
-    res.send('User email updated. A new login is required. Redirecting to login page.');
+    req.session.destroy((err) => {
+      if (err) {
+        return next(new AppError('Error : Failed to destroy the session during logout.', err));
+      }
+
+      res.status(204).redirect('http://localhost:3000/login');
+    });
   } catch (e) {
     return next(new AppError(e.message, 500));
   }

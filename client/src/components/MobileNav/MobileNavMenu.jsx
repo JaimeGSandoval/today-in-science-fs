@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../context/User.context';
 import { NavLink } from '../NavLink';
 import { UserLogo } from '../UserLogo';
 import styles from './_mobileNav.module.scss';
@@ -41,8 +40,7 @@ const ARTICLE_VIEW_LINKS = [
 ];
 
 export const MobileNavMenu = ({ isOpen, setIsOpen }) => {
-  const currentUserContext = useContext(UserContext);
-  const { currentUser } = currentUserContext;
+  const currentUser = localStorage.getItem('currentUser');
 
   return createPortal(
     <div id='navbarModal' className={`${styles.modalContainer} ${isOpen ? styles.modalOpen : ''}`}>

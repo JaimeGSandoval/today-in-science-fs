@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
-import { httpUpdateUsername } from '../../api/requests';
+import { httpUpdateEmailRequest } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
 import styles from './_settingsModal.module.scss';
 
@@ -40,20 +40,20 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
       };
 
       try {
-        await httpUpdateUsername(emailObj);
+        await httpUpdateEmailRequest(emailObj);
 
-        setCurrentUser({
-          ...currentUser,
-          email,
-        });
+        // setCurrentUser({
+        //   ...currentUser,
+        //   email,
+        // });
 
-        localStorage.setItem(
-          'currentUser',
-          JSON.stringify({
-            ...currentUser,
-            email,
-          })
-        );
+        // localStorage.setItem(
+        //   'currentUser',
+        //   JSON.stringify({
+        //     ...currentUser,
+        //     email,
+        //   })
+        // );
 
         setIsOpen(false);
       } catch (e) {
@@ -101,7 +101,7 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
           <div className={styles.container} onClick={() => setIsOpen(false)}></div>
           <form className={styles.innerContainer} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.infoBox}>
-              <h1 className={styles.text}>{updateType}</h1>
+              <h1 className={styles.text}>Update Email</h1>
 
               <input
                 type='email'

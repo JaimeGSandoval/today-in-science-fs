@@ -101,7 +101,7 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
           <div className={styles.container} onClick={() => setIsOpen(false)}></div>
           <form className={styles.innerContainer} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.infoBox}>
-              <h1 className={styles.text}>{updateType}</h1>
+              <h1 className={styles.text}>Update Username</h1>
               <input
                 type='text'
                 className={styles.inputField}
