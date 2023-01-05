@@ -42,19 +42,6 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
       try {
         await httpUpdateEmailRequest(emailObj);
 
-        // setCurrentUser({
-        //   ...currentUser,
-        //   email,
-        // });
-
-        // localStorage.setItem(
-        //   'currentUser',
-        //   JSON.stringify({
-        //     ...currentUser,
-        //     email,
-        //   })
-        // );
-
         setIsOpen(false);
       } catch (e) {
         console.error(e.message);
@@ -66,7 +53,7 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
     }
 
     return () => setSubmit(false);
-  }, [currentUser, currentUser.user_id, setCurrentUser, setIsOpen, submit, email]);
+  }, [currentUser, setIsOpen, submit, email]);
 
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);
 

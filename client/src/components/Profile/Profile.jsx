@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { UsernameModal } from '../SettingsModals/UsernameModal';
 import { EmailModal } from '../SettingsModals/EmailModal';
+import { PasswordModal } from '../SettingsModals/PasswordModal';
 import styles from './_profile.module.scss';
 
 export const Profile = ({ currentUser }) => {
@@ -82,6 +83,14 @@ export const Profile = ({ currentUser }) => {
       )}
       {updateType === 'email' && (
         <EmailModal isOpen={isOpen} setIsOpen={setIsOpen} currentUser={currentUser} />
+      )}
+      {updateType === 'password' && (
+        <PasswordModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentUser={currentUser}
+          updateType={updateType}
+        />
       )}
     </>
   );
