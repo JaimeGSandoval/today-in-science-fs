@@ -80,6 +80,23 @@ export const httpLoginUser = async (userData) => {
   }
 };
 
+export const httpLogoutUser = async () => {
+  try {
+    const response = await fetch(`${API}/auth/logout`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('There was a problem logging you out');
+    }
+
+    return response;
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
 export const httpAddArticle = async (articleData) => {
   try {
     const response = await fetch(`${API}/articles`, {

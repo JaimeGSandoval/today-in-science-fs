@@ -42,6 +42,8 @@ exports.logout = async (req, res, next) => {
     }
   });
 
+  res.clearCookie('connect.sid');
+
   req.session.destroy((err) => {
     if (err) {
       return next(new AppError('Error : Failed to destroy the session during logout.', err));
