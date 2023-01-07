@@ -182,7 +182,7 @@ export const httpUpdatePasswordRequest = async (emailObj) => {
     });
 
     if (!response.ok) {
-      throw new Error('There was a problem updating your email');
+      throw new Error('There was a problem updating your password');
     }
 
     return true;

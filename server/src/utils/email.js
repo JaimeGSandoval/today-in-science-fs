@@ -30,8 +30,10 @@ const sendEmail = async (options) => {
       subject: options.subject, // Subject line
       html: options.updateEmailHtml ? options.updateEmailHtml : options.updatePasswordHtml, // message and link
     });
+
     // await sgMail.send(msg);
   } catch (e) {
+    console.log('from email');
     throw new AppError(e.message, 500);
   }
 };

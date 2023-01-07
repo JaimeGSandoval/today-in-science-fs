@@ -4,7 +4,7 @@ import { httpUpdatePasswordRequest } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
 import styles from './_settingsModal.module.scss';
 
-export const PasswordModal = ({ isOpen, setIsOpen, updateType }) => {
+export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
   const { currentUser } = useContext(UserContext);
 
   const [password, setPassword] = useState('');
@@ -50,6 +50,7 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType }) => {
       try {
         await httpUpdatePasswordRequest(passwordObj);
 
+        setConfirm(true);
         setIsOpen(false);
       } catch (e) {
         console.error(e.message);
@@ -61,7 +62,7 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType }) => {
     }
 
     return () => setSubmit(false);
-  }, [currentUser, password, setIsOpen, submit]);
+  }, [currentUser, password, setConfirm, setIsOpen, submit]);
 
   useEffect(() => {
     setPasswordErr(false);
@@ -125,7 +126,7 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType }) => {
             onSubmit={(e) => handleSubmit(e)}
           >
             <div className={styles.infoBox}>
-              <h1 className={styles.text}>Reset Password</h1>
+              <h1 className={styles.titleText}>Reset Password</h1>
 
               <div className={styles.errBox}>
                 <span

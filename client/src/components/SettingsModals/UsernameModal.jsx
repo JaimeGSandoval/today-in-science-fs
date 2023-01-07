@@ -4,7 +4,7 @@ import { httpUpdateUsername } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
 import styles from './_settingsModal.module.scss';
 
-export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
+export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const [username, setUsername] = useState(currentUser.user_name);
   const [usernameErr, setUsernameErr] = useState(false);
@@ -29,7 +29,6 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    console.log('I can');
   };
 
   useEffect(() => {
@@ -55,6 +54,7 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
           })
         );
 
+        setConfirm(true);
         setIsOpen(false);
       } catch (e) {
         console.error(e.message);
@@ -66,7 +66,7 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
     }
 
     return () => setSubmit(false);
-  }, [currentUser, currentUser.user_id, setCurrentUser, setIsOpen, submit, username]);
+  }, [currentUser, currentUser.user_id, setConfirm, setCurrentUser, setIsOpen, submit, username]);
 
   useEffect(() => {
     setUsernameErr(false);
@@ -101,7 +101,7 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType }) => {
           <div className={styles.container} onClick={() => setIsOpen(false)}></div>
           <form className={styles.innerContainer} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.infoBox}>
-              <h1 className={styles.text}>Update Username</h1>
+              <h1 className={styles.titleText}>Update Username</h1>
               <input
                 type='text'
                 className={styles.inputField}

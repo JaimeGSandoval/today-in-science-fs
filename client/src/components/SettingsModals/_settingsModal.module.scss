@@ -35,12 +35,32 @@
   margin: 0.2rem 0;
 }
 
-.text {
+.titleText {
   display: block;
   text-align: left;
   font-size: 1.2rem;
   line-height: 2.7rem;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0;
+}
+
+.emailText {
+  display: block;
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 2.7rem;
+  padding: 0 0.5rem;
+}
+
+.usernameText {
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 2.7rem;
+  padding: 0 0.5rem;
+}
+
+.customTextCenter {
+  text-align: center;
 }
 
 .btnBox {
@@ -141,4 +161,13 @@
 
 .customTop {
   top: 0;
+}
+
+.closeBox {
+  display: flex;
+  margin-left: auto;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0.5rem 0 auto;
 }
