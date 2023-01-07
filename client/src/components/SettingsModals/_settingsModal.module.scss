@@ -32,14 +32,35 @@
   outline: 2px solid transparent;
   border: 1px solid transparent;
   padding: 0.3rem 0.4rem;
+  margin: 0.2rem 0;
 }
 
-.text {
+.titleText {
   display: block;
   text-align: left;
   font-size: 1.2rem;
   line-height: 2.7rem;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0;
+}
+
+.emailText {
+  display: block;
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 2.7rem;
+  padding: 0 0.5rem;
+}
+
+.usernameText {
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 2.7rem;
+  padding: 0 0.5rem;
+}
+
+.customTextCenter {
+  text-align: center;
 }
 
 .btnBox {
@@ -116,4 +137,37 @@
   outline: none;
   border: none;
   color: white;
+}
+
+.customPadding {
+  padding: 1rem 0;
+}
+
+.customHeight {
+  height: 330px;
+}
+
+.screenReaderText {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  width: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  word-wrap: normal !important;
+}
+
+.customTop {
+  top: 0;
+}
+
+.closeBox {
+  display: flex;
+  margin-left: auto;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0.5rem 0 auto;
 }

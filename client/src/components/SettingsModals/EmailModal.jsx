@@ -4,8 +4,8 @@ import { httpUpdateEmailRequest } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
 import styles from './_settingsModal.module.scss';
 
-export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
+  const { currentUser } = useContext(UserContext);
   const [email, setEmail] = useState(currentUser.email);
   const [validEmail, setValidEmail] = useState(false);
   const [emailErr, setEmailErr] = useState(false);
@@ -29,7 +29,6 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    console.log('I can');
   };
 
   useEffect(() => {
@@ -42,19 +41,7 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
       try {
         await httpUpdateEmailRequest(emailObj);
 
-        // setCurrentUser({
-        //   ...currentUser,
-        //   email,
-        // });
-
-        // localStorage.setItem(
-        //   'currentUser',
-        //   JSON.stringify({
-        //     ...currentUser,
-        //     email,
-        //   })
-        // );
-
+        setConfirm(true);
         setIsOpen(false);
       } catch (e) {
         console.error(e.message);
@@ -66,7 +53,7 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
     }
 
     return () => setSubmit(false);
-  }, [currentUser, currentUser.user_id, setCurrentUser, setIsOpen, submit, email]);
+  }, [currentUser, setIsOpen, submit, email, setConfirm]);
 
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);
 
@@ -101,7 +88,7 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType }) => {
           <div className={styles.container} onClick={() => setIsOpen(false)}></div>
           <form className={styles.innerContainer} onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.infoBox}>
-              <h1 className={styles.text}>Update Email</h1>
+              <h1 className={styles.titleText}>Update Email</h1>
 
               <input
                 type='email'

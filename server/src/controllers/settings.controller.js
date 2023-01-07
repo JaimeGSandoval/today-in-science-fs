@@ -57,7 +57,7 @@ const httpUpdateEmailRequest = async (req, res, next) => {
     const updateEmailUrl = `${req.protocol}://${req.get('host')}/settings/update-email/${token}`;
 
     const updateEmailHtml = `
-  <p> Please click the button below to verify this new email and complete the update process. It will take you back to Today in Science and you will be required to log in again.\nIf you didn't request an email change please ignore this email.</p>\n<br/>
+  <p> Please click the link below to verify this new email and complete the update process. It will take you back to Today in Science and you will be required to log in again.\nIf you didn't request an email change please ignore this email.</p>\n<br/>
   <a href="${updateEmailUrl}" target="_blank">Verify Email</a>
   `;
 
@@ -134,7 +134,7 @@ const httpUpdatePasswordRequest = async (req, res, next) => {
     )}/settings/update-password/${token}`;
 
     const updatePasswordHtml = `
-    <p> Please click the button below to verify this email and complete the update process. It will take you back to Today in Science and you can then update your password.\nIf you didn't request an password change please ignore this email.</p>\n<br/>
+    <p> Please click the link below to verify this email and complete the password update process. It will take you back to Today in Science and you will be required to log in again with your new password.\nIf you didn't request an password change please ignore this email.</p>\n<br/>
     <a href="${updatePasswordUrl}" target="_blank">Update password</a>
     `;
 
@@ -173,10 +173,19 @@ const httpUpdateUserPassword = async (req, res, next) => {
     const encryptedPassword = await encryptPassword(newPassword);
     await settingsModel.updateUserPassword(encryptedPassword, parseInt(userId, 10));
 
-    // how to destroy or delete session in DB? Can I get sessionID somehow and put it in the token too?
+    req.logOut((err) => {
+      if (err) {
+        return next(new AppError(err, 500));
+      }
+    });
 
-    // just using send for now. when the frontend gets a status code of 204 then I'll redirect the user to login page with react router
-    res.send('User password updated. A new login is required. Redirecting to login page.');
+    req.session.destroy((err) => {
+      if (err) {
+        return next(new AppError('Error : Failed to destroy the session during logout.', err));
+      }
+
+      res.status(204).redirect('http://localhost:3000/login');
+    });
   } catch (e) {
     return next(new AppError(e.message, 500));
   }

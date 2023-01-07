@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { UsernameModal } from '../SettingsModals/UsernameModal';
 import { EmailModal } from '../SettingsModals/EmailModal';
+import { PasswordModal } from '../SettingsModals/PasswordModal';
+import { ConfirmModal } from '../SettingsModals/ConfirmModal';
 import styles from './_profile.module.scss';
 
 export const Profile = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [updateType, setUpdateType] = useState('');
+  const [confirm, setConfirm] = useState(false);
 
   return (
     <>
@@ -78,11 +81,31 @@ export const Profile = ({ currentUser }) => {
         </div>
       </section>
       {updateType === 'username' && (
-        <UsernameModal isOpen={isOpen} setIsOpen={setIsOpen} currentUser={currentUser} />
+        <UsernameModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentUser={currentUser}
+          setConfirm={setConfirm}
+        />
       )}
       {updateType === 'email' && (
-        <EmailModal isOpen={isOpen} setIsOpen={setIsOpen} currentUser={currentUser} />
+        <EmailModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentUser={currentUser}
+          setConfirm={setConfirm}
+        />
       )}
+      {updateType === 'password' && (
+        <PasswordModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          currentUser={currentUser}
+          updateType={updateType}
+          setConfirm={setConfirm}
+        />
+      )}
+      {confirm && <ConfirmModal setConfirm={setConfirm} updateType={updateType} />}
     </>
   );
 };
