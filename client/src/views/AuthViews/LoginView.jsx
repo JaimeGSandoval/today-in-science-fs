@@ -43,7 +43,6 @@ export const LoginView = () => {
 
   useEffect(() => {
     const localUser = localStorage.getItem('currentUser');
-    console.log('LOGIN', localUser);
 
     if (localUser) {
       localStorage.removeItem('currentUser');

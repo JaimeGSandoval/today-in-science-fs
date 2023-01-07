@@ -33,10 +33,6 @@ const ARTICLE_VIEW_LINKS = [
     route: '/articles/read-later-articles',
     text: 'Read Later Articles',
   },
-  {
-    route: '/login',
-    text: 'Logout',
-  },
 ];
 
 export const MobileNavMenu = ({ isOpen, setIsOpen }) => {

@@ -1,19 +1,37 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Navigate } from 'react-router-dom';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { UsernameModal } from '../SettingsModals/UsernameModal';
 import { EmailModal } from '../SettingsModals/EmailModal';
 import { PasswordModal } from '../SettingsModals/PasswordModal';
 import { ConfirmModal } from '../SettingsModals/ConfirmModal';
+import { httpLogoutUser } from '../../api/requests';
 import styles from './_profile.module.scss';
 
 export const Profile = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [updateType, setUpdateType] = useState('');
   const [confirm, setConfirm] = useState(false);
+  const [logout, setLogout] = useState(false);
+  const [logoutSuccess, setLogoutSuccess] = useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await httpLogoutUser();
+
+      if (response.ok) {
+        setLogoutSuccess(true);
+      }
+    };
+
+    if (logout) {
+      fetch();
+    }
+  }, [logout]);
 
   return (
     <>
+      {logoutSuccess && <Navigate to='/' replace={true} />}
       <section className={styles.container}>
         <div className={styles.innerContainer}>
           <section className={styles.section}>
@@ -69,7 +87,9 @@ export const Profile = ({ currentUser }) => {
                   }}
                 />
               </div>
-              <span className={styles.fieldItem}>Log Out</span>
+              <span className={styles.fieldItem} onClick={() => setLogout(true)}>
+                Log Out
+              </span>
             </div>
           </section>
 

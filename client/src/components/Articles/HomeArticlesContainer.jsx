@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './_articles.module.scss';
 import { HomeArticleCard } from './HomeArticleCard';
 import { SignupModal } from '../SignupModal';
 
 export const HomeArticlesContainer = ({ articles, isLoading }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
