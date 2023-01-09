@@ -6,12 +6,12 @@ import { Profile } from '../../components/Profile/Profile';
 
 export const DashboardView = () => {
   const currentUserContext = useContext(UserContext);
-  const { currentUser } = currentUserContext;
+  const { currentUser, setCurrentUser } = currentUserContext;
   return (
     <>
       {!currentUser && <Navigate to='/login' />}
       <HeaderLogo />
-      <Profile currentUser={currentUser} />
+      <Profile currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </>
   );
 };

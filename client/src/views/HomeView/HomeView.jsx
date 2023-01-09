@@ -10,7 +10,7 @@ import styles from './_homeView.module.scss';
 export const HomeView = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [httpError, setHttpError] = useState('false');
+  const [httpError, setHttpError] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
 
   useEffect(() => {

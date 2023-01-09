@@ -207,3 +207,23 @@ export const httpUpdatePasswordRequest = async (emailObj) => {
     console.error(e.message);
   }
 };
+
+export const httpDeleteUserAccount = async (userId) => {
+  try {
+    const response = await fetch(`${API}/users/delete-user/${userId}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('There was a problem deleting your account.');
+    }
+
+    return response;
+  } catch (e) {
+    console.error(e.message);
+  }
+};

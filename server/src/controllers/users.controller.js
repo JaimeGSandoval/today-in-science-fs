@@ -54,9 +54,21 @@ module.exports = {
 
       await usersModel.deleteUserById(userId);
 
-      return res
-        .status(200)
-        .send('user account deleted. FE would redirect to home page after getting 204 status code');
+      req.logOut((err) => {
+        if (err) {
+          return next(new AppError(err, 500));
+        }
+      });
+
+      res.clearCookie('connect.sid');
+
+      req.session.destroy((err) => {
+        if (err) {
+          return next(new AppError('Error : Failed to destroy the session during logout.', err));
+        }
+
+        return res.sendStatus(204);
+      });
     } catch (e) {
       return next(new AppError('There was an error deleting your account. Please try again.', 500));
     }
