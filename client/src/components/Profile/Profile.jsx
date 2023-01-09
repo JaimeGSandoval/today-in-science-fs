@@ -5,40 +5,78 @@ import { UsernameModal } from '../SettingsModals/UsernameModal';
 import { EmailModal } from '../SettingsModals/EmailModal';
 import { PasswordModal } from '../SettingsModals/PasswordModal';
 import { ConfirmModal } from '../SettingsModals/ConfirmModal';
+import { DeleteUserModal } from '../SettingsModals/DeleteUserModal';
 import { httpLogoutUser } from '../../api/requests';
+import { httpDeleteUserAccount } from '../../api/requests';
 import styles from './_profile.module.scss';
 
-export const Profile = ({ currentUser }) => {
+export const Profile = ({ currentUser, setCurrentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [updateType, setUpdateType] = useState('');
   const [confirm, setConfirm] = useState(false);
   const [logout, setLogout] = useState(false);
   const [logoutSuccess, setLogoutSuccess] = useState(false);
+  const [deleteUser, setDeleteUser] = useState(false);
+  const [deleteUserSuccess, setDeleteUserSuccess] = useState(false);
 
   useEffect(() => {
-    const fetch = async () => {
-      const response = await httpLogoutUser();
+    let ignore = false;
 
-      if (response.ok) {
-        setLogoutSuccess(true);
+    const fetch = async () => {
+      if (!ignore) {
+        const response = await httpLogoutUser();
+
+        if (response.ok) {
+          setLogoutSuccess(true);
+        }
       }
     };
 
     if (logout) {
       fetch();
     }
+
+    return () => {
+      ignore = true;
+    };
   }, [logout]);
+
+  useEffect(() => {
+    let ignore = false;
+    const storageKeys = ['favorite-articles', 'read-later-articles', 'articles'];
+
+    const fetch = async () => {
+      if (!ignore && currentUser) {
+        const response = await httpDeleteUserAccount(currentUser.user_id);
+
+        if (response.ok) {
+          localStorage.removeItem('currentUser');
+          storageKeys.forEach((key) => sessionStorage.removeItem(key));
+          setDeleteUserSuccess(true);
+          setCurrentUser(null);
+        }
+      }
+    };
+
+    if (deleteUser) {
+      fetch();
+    }
+
+    return () => {
+      ignore = true;
+    };
+  }, [deleteUser, currentUser, setCurrentUser]);
 
   return (
     <>
-      {logoutSuccess && <Navigate to='/' replace={true} />}
+      {(logoutSuccess || deleteUserSuccess) && <Navigate to='/' replace={true} />}
       <section className={styles.container}>
         <div className={styles.innerContainer}>
           <section className={styles.section}>
             <h1 className={styles.sectionTitle}>Profile</h1>
             <div className={styles.fieldBox}>
-              <span className={styles.field}>{currentUser.user_name}</span>
-              <span className={styles.field}>{currentUser.email}</span>
+              <span className={styles.field}>{currentUser && currentUser.user_name}</span>
+              <span className={styles.field}>{currentUser && currentUser.email}</span>
             </div>
           </section>
 
@@ -58,21 +96,25 @@ export const Profile = ({ currentUser }) => {
             <h1 className={styles.sectionTitle}>Settings</h1>
             <div className={styles.fieldsContainer}>
               <div className={styles.fieldItem}>
-                <span className={styles.fieldBtn}>{`Username: ${currentUser.user_name}`}</span>{' '}
+                <span className={styles.fieldBtn}>{`Username: ${
+                  currentUser && currentUser.user_name
+                }`}</span>{' '}
                 <MdOutlineModeEditOutline
                   className={styles.editIcon}
                   onClick={() => {
-                    setIsOpen(!isOpen);
+                    setIsOpen(true);
                     setUpdateType('username');
                   }}
                 />
               </div>
               <div className={styles.fieldItem}>
-                <span className={styles.fieldBtn}>{`Email: ${currentUser.email}`}</span>{' '}
+                <span className={styles.fieldBtn}>{`Email: ${
+                  currentUser && currentUser.email
+                }`}</span>{' '}
                 <MdOutlineModeEditOutline
                   className={styles.editIcon}
                   onClick={() => {
-                    setIsOpen(!isOpen);
+                    setIsOpen(true);
                     setUpdateType('email');
                   }}
                 />
@@ -82,7 +124,7 @@ export const Profile = ({ currentUser }) => {
                 <MdOutlineModeEditOutline
                   className={styles.editIcon}
                   onClick={() => {
-                    setIsOpen(!isOpen);
+                    setIsOpen(true);
                     setUpdateType('password');
                   }}
                 />
@@ -95,7 +137,15 @@ export const Profile = ({ currentUser }) => {
 
           <section className={styles.section}>
             <div className={styles.deleteFieldBox}>
-              <button className={styles.deleteFieldBtn}>Delete Account</button>
+              <button
+                className={styles.deleteFieldBtn}
+                onClick={() => {
+                  setIsOpen(true);
+                  setUpdateType('delete');
+                }}
+              >
+                Delete Account
+              </button>
             </div>
           </section>
         </div>
@@ -124,6 +174,9 @@ export const Profile = ({ currentUser }) => {
           updateType={updateType}
           setConfirm={setConfirm}
         />
+      )}
+      {updateType === 'delete' && (
+        <DeleteUserModal isOpen={isOpen} setIsOpen={setIsOpen} setDeleteUser={setDeleteUser} />
       )}
       {confirm && <ConfirmModal setConfirm={setConfirm} updateType={updateType} />}
     </>

@@ -5,7 +5,6 @@ import styles from './_settingsModal.module.scss';
 
 export const ConfirmModal = ({ setConfirm, updateType }) => {
   let confirmText;
-  console.log(updateType);
 
   if (updateType === 'email' || updateType === 'password') {
     confirmText = 'Please check your email for a verification link to complete the update process.';

@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import { HeaderLogo } from '../../components/HeaderLogo';
 import { httpSignupUser } from '../../api/requests';
 import { SignupSuccessModal } from './SignupSuccessModal';
+import { Header } from '../../components/Header';
 import styles from './_forms.module.scss';
 
 export const SignupView = () => {
@@ -187,7 +187,7 @@ export const SignupView = () => {
   return (
     <section className={styles.container}>
       {submitSuccess && <SignupSuccessModal />}
-      <HeaderLogo />
+      <Header />
       <div className={styles.signupFormBox}>
         <h1 className={styles.headline}>Sign up</h1>
 

@@ -7,6 +7,10 @@ import styles from './_mobileNav.module.scss';
 
 const AUTH_LINKS = [
   {
+    route: '/',
+    text: 'Home',
+  },
+  {
     route: '/signup',
     text: 'Sign up',
   },
