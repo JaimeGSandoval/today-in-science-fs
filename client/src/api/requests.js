@@ -32,6 +32,8 @@ export const httpSignupUser = async (userData) => {
           type: 'email',
         };
       }
+
+      throw new Error('issue');
     }
 
     const signUpResponse = await response.json();

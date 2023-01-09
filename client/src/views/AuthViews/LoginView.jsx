@@ -12,10 +12,9 @@ export const LoginView = () => {
   const [userPassword, setUserPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginFail, setLoginFail] = useState(false);
+  const [userLoggedOut, setUserLoggedOut] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { setCurrentUser } = currentUserContext;
-
-  const [userLoggedOut, setUserLoggedOut] = useState(false);
 
   const userData = {
     email: userEmail,

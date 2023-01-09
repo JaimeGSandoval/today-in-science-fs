@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
@@ -31,6 +31,7 @@ export const SignupView = () => {
   const confirmRef = useRef();
 
   const [validSuccess, setValidSuccess] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const addValidOutline = (refVal) => {
@@ -42,28 +43,6 @@ export const SignupView = () => {
     if (!stateVal) {
       e.target.classList.remove(styles.validField);
     }
-  };
-
-  const handleSubmit = async (e, userData) => {
-    e.preventDefault();
-
-    const response = await httpSignupUser(userData);
-
-    if (response.error && response.type === 'username') {
-      setUsernameTaken(true);
-      return;
-    }
-
-    if (response.error && response.type === 'email') {
-      setEmailTaken(true);
-      return;
-    }
-
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    setSubmitSuccess(true);
   };
 
   useEffect(() => {
@@ -176,12 +155,55 @@ export const SignupView = () => {
     }
   }, [validUsername, validEmail, validPassword, validConfirm]);
 
-  const userData = {
-    userName: username.trim(),
-    email: email.trim(),
-    password: password.trim(),
-    passwordConfirm: confirmPassword.trim(),
-    role: 'user',
+  const userData = useMemo(
+    () => ({
+      userName: username.trim(),
+      email: email.trim(),
+      password: password.trim(),
+      passwordConfirm: confirmPassword.trim(),
+      role: 'user',
+    }),
+    [confirmPassword, email, password, username]
+  );
+
+  useEffect(() => {
+    let ignore = false;
+
+    const fetch = async () => {
+      if (!ignore) {
+        const response = await httpSignupUser(userData);
+
+        if (response.error && response.type === 'username') {
+          setUsernameTaken(true);
+          return;
+        }
+
+        if (response.error && response.type === 'email') {
+          setEmailTaken(true);
+          return;
+        }
+
+        setUsername('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setSubmitSuccess(true);
+        setSubmit(false);
+      }
+    };
+
+    if (submit) {
+      fetch();
+    }
+
+    return () => {
+      ignore = true;
+    };
+  }, [submit, userData]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmit(true);
   };
 
   return (
@@ -191,7 +213,7 @@ export const SignupView = () => {
       <div className={styles.signupFormBox}>
         <h1 className={styles.headline}>Sign up</h1>
 
-        <form action='' className={styles.form} onSubmit={(e) => handleSubmit(e, userData)}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.fieldsWrapper}>
             <div className={styles.errBox}>
               <span

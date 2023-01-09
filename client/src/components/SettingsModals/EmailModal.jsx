@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { httpUpdateEmailRequest } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
+import { fetchUpdate } from '../../utils/helpers';
 import styles from './_settingsModal.module.scss';
 
 export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
@@ -34,29 +35,23 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
   useEffect(() => {
     let ignore = false;
 
-    const fetch = async () => {
+    const fetchData = async () => {
       const emailObj = {
+        type: 'email',
         newEmail: email,
         userId: currentUser.user_id,
+        httpFn: httpUpdateEmailRequest,
+        setConfirm,
+        setIsOpen,
       };
 
       if (!ignore) {
-        const response = await httpUpdateEmailRequest(emailObj);
-
-        if (response.ok) {
-          setConfirm(true);
-          setIsOpen(false);
-        }
+        fetchUpdate(emailObj);
       }
-      // try {
-
-      // } catch (e) {
-      //   console.error(e.message);
-      // }
     };
 
     if (submit) {
-      fetch();
+      fetchData();
     }
 
     return () => {

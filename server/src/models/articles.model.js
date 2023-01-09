@@ -12,6 +12,7 @@ module.exports = {
         articleUrl,
         provider,
       ]);
+
       return addedUrlResult;
     }
 
@@ -21,12 +22,12 @@ module.exports = {
       articleUrl,
       provider,
     ]);
+
     return addedUrlResult;
   },
 
   getFavoriteArticles: async (userId) => {
     const favoriteUrls = await db.query(queries.getFavoriteUrlsQuery, [userId]);
-
     return favoriteUrls;
   },
 

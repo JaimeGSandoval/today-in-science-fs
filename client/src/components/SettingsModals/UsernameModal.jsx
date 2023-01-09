@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { httpUpdateUsername } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
+import { fetchUpdate } from '../../utils/helpers';
 import styles from './_settingsModal.module.scss';
 
 export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
@@ -34,42 +35,26 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
   useEffect(() => {
     let ignore = false;
 
-    const fetch = async () => {
+    const fetchData = async () => {
       const usernameObj = {
+        type: 'username',
+        httpFn: httpUpdateUsername,
+        currentUser,
+        setCurrentUser,
         newUsername: username,
         userId: currentUser.user_id,
+        setSubmit,
+        setIsOpen,
+        setConfirm,
       };
 
       if (!ignore) {
-        const response = await httpUpdateUsername(usernameObj);
-
-        if (response.ok) {
-          setCurrentUser({
-            ...currentUser,
-            user_name: username,
-          });
-
-          localStorage.setItem(
-            'currentUser',
-            JSON.stringify({
-              ...currentUser,
-              user_name: username,
-            })
-          );
-
-          setConfirm(true);
-          setIsOpen(false);
-        }
+        fetchUpdate(usernameObj);
       }
-
-      // try {
-      // } catch (e) {
-      //   console.error(e.message);
-      // }
     };
 
     if (submit) {
-      fetch();
+      fetchData();
     }
 
     return () => {
