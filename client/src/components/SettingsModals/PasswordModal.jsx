@@ -39,6 +39,8 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
   };
 
   useEffect(() => {
+    let ignore = false;
+
     const fetch = async () => {
       const passwordObj = {
         newPassword: password,
@@ -47,21 +49,30 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
         userId: currentUser.user_id,
       };
 
-      try {
-        await httpUpdatePasswordRequest(passwordObj);
+      if (!ignore) {
+        const response = await httpUpdatePasswordRequest(passwordObj);
 
-        setConfirm(true);
-        setIsOpen(false);
-      } catch (e) {
-        console.error(e.message);
+        if (response.ok) {
+          setConfirm(true);
+          setIsOpen(false);
+        }
       }
+
+      // try {
+
+      // } catch (e) {
+      //   console.error(e.message);
+      // }
     };
 
     if (submit) {
       fetch();
     }
 
-    return () => setSubmit(false);
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
   }, [currentUser, password, setConfirm, setIsOpen, submit]);
 
   useEffect(() => {

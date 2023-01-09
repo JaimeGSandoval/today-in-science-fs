@@ -32,27 +32,37 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
   };
 
   useEffect(() => {
+    let ignore = false;
+
     const fetch = async () => {
       const emailObj = {
         newEmail: email,
         userId: currentUser.user_id,
       };
 
-      try {
-        await httpUpdateEmailRequest(emailObj);
+      if (!ignore) {
+        const response = await httpUpdateEmailRequest(emailObj);
 
-        setConfirm(true);
-        setIsOpen(false);
-      } catch (e) {
-        console.error(e.message);
+        if (response.ok) {
+          setConfirm(true);
+          setIsOpen(false);
+        }
       }
+      // try {
+
+      // } catch (e) {
+      //   console.error(e.message);
+      // }
     };
 
     if (submit) {
       fetch();
     }
 
-    return () => setSubmit(false);
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
   }, [currentUser, setIsOpen, submit, email, setConfirm]);
 
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);

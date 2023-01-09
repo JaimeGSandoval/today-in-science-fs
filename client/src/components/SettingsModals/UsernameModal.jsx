@@ -32,40 +32,50 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
   };
 
   useEffect(() => {
+    let ignore = false;
+
     const fetch = async () => {
       const usernameObj = {
         newUsername: username,
         userId: currentUser.user_id,
       };
 
-      try {
-        await httpUpdateUsername(usernameObj);
+      if (!ignore) {
+        const response = await httpUpdateUsername(usernameObj);
 
-        setCurrentUser({
-          ...currentUser,
-          user_name: username,
-        });
-
-        localStorage.setItem(
-          'currentUser',
-          JSON.stringify({
+        if (response.ok) {
+          setCurrentUser({
             ...currentUser,
             user_name: username,
-          })
-        );
+          });
 
-        setConfirm(true);
-        setIsOpen(false);
-      } catch (e) {
-        console.error(e.message);
+          localStorage.setItem(
+            'currentUser',
+            JSON.stringify({
+              ...currentUser,
+              user_name: username,
+            })
+          );
+
+          setConfirm(true);
+          setIsOpen(false);
+        }
       }
+
+      // try {
+      // } catch (e) {
+      //   console.error(e.message);
+      // }
     };
 
     if (submit) {
       fetch();
     }
 
-    return () => setSubmit(false);
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
   }, [currentUser, currentUser.user_id, setConfirm, setCurrentUser, setIsOpen, submit, username]);
 
   useEffect(() => {
