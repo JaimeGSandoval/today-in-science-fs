@@ -16,10 +16,12 @@ export const SignupView = () => {
   });
   const usernameRef = useRef();
 
-  const [email, setEmail] = useState('');
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailErr, setEmailErr] = useState(false);
-  const [emailTaken, setEmailTaken] = useState(false);
+  const [emailData, setEmailData] = useState({
+    email: '',
+    validEmail: false,
+    emailErr: false,
+    emailTaken: false,
+  });
   const emailRef = useRef();
 
   const [password, setPassword] = useState('');
@@ -35,13 +37,6 @@ export const SignupView = () => {
   const [validSuccess, setValidSuccess] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-
-  const handleChange = (e, formData, setFn) => {
-    setFn({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
@@ -94,10 +89,13 @@ export const SignupView = () => {
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);
 
   useEffect(() => {
-    setEmailErr(false);
-    setEmailTaken(false);
+    setEmailData((emailData) => ({
+      ...emailData,
+      emailErr: false,
+      emailTaken: false,
+    }));
 
-    const emailTrimmed = email.trim();
+    const emailTrimmed = emailData.email.trim();
 
     if (!emailTrimmed.length) {
       emailRef.current.classList.remove(styles.validField);
@@ -107,15 +105,24 @@ export const SignupView = () => {
 
     if (!isEmail(emailTrimmed)) {
       emailRef.current.classList.add(styles.invalidField);
-      setEmailErr(true);
-      setValidEmail(false);
+
+      setEmailData((emailData) => ({
+        ...emailData,
+        emailErr: true,
+        validEmail: false,
+      }));
+
       return;
     }
 
     addValidOutline(emailRef);
-    setValidEmail(true);
-    setEmailErr(false);
-  }, [email]);
+
+    setEmailData((emailData) => ({
+      ...emailData,
+      emailErr: false,
+      validEmail: true,
+    }));
+  }, [emailData.email]);
 
   useEffect(() => {
     setPasswordErr(false);
@@ -169,22 +176,24 @@ export const SignupView = () => {
 
   useEffect(() => {
     const { validUsername } = usernameData;
+    const { validEmail } = emailData;
+
     if (validUsername && validEmail && validPassword && validConfirm) {
       setValidSuccess(true);
     } else {
       setValidSuccess(false);
     }
-  }, [validEmail, validPassword, validConfirm, usernameData]);
+  }, [validPassword, validConfirm, usernameData, emailData]);
 
   const userData = useMemo(
     () => ({
       userName: usernameData.username.trim(),
-      email: email.trim(),
+      email: emailData.email.trim(),
       password: password.trim(),
       passwordConfirm: confirmPassword.trim(),
       role: 'user',
     }),
-    [confirmPassword, email, password, usernameData.username]
+    [confirmPassword, emailData.email, password, usernameData.username]
   );
 
   useEffect(() => {
@@ -203,7 +212,10 @@ export const SignupView = () => {
         }
 
         if (response.error && response.type === 'email') {
-          setEmailTaken(true);
+          setEmailData({
+            ...emailData,
+            emailTaken: true,
+          });
           return;
         }
 
@@ -211,7 +223,11 @@ export const SignupView = () => {
           ...usernameData,
           username: '',
         });
-        setEmail('');
+
+        setEmailData((emailData) => ({
+          ...emailData,
+          email: '',
+        }));
         setPassword('');
         setConfirmPassword('');
         setSubmitSuccess(true);
@@ -227,7 +243,14 @@ export const SignupView = () => {
       ignore = true;
       setSubmit(false);
     };
-  }, [submit, userData, usernameData]);
+  }, [emailData, submit, userData, usernameData]);
+
+  const handleChange = (e, formData, setFn) => {
+    setFn({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -277,12 +300,12 @@ export const SignupView = () => {
 
             <div className={styles.errBox}>
               <span
-                className={`${styles.errMessage} ${emailTaken && styles.show} ${
-                  emailErr && styles.show
+                className={`${styles.errMessage} ${emailData.emailTaken && styles.show} ${
+                  emailData.emailErr && styles.show
                 }`}
               >
-                {emailTaken && 'Email already registered'}
-                {emailErr && 'Must be a valid email'}
+                {emailData.emailTaken && 'Email already registered'}
+                {emailData.emailErr && 'Must be a valid email'}
               </span>
             </div>
 
@@ -299,10 +322,12 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                // onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => handleChange(e, emailData, setEmailData)}
+                value={emailData.email}
                 ref={emailRef}
-                onBlur={(e) => removeOutline(e, validEmail)}
+                onBlur={(e) => removeOutline(e, emailData.validEmail)}
+                name='email'
               />
             </div>
 
