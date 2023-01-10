@@ -22,7 +22,7 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
   useEffect(() => {
     let ignore = false;
 
-    const fetch = async () => {
+    const fetchData = async () => {
       if (!ignore) {
         const response = await httpLogoutUser();
 
@@ -33,7 +33,7 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
     };
 
     if (logout) {
-      fetch();
+      fetchData();
     }
 
     return () => {
@@ -45,7 +45,7 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
     let ignore = false;
     const storageKeys = ['favorite-articles', 'read-later-articles', 'articles'];
 
-    const fetch = async () => {
+    const fetchDeleteUser = async () => {
       if (!ignore && currentUser) {
         const response = await httpDeleteUserAccount(currentUser.user_id);
 
@@ -59,7 +59,7 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
     };
 
     if (deleteUser) {
-      fetch();
+      fetchDeleteUser();
     }
 
     return () => {

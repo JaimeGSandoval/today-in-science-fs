@@ -36,7 +36,6 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    console.log('I can');
   };
 
   useEffect(() => {

@@ -28,6 +28,7 @@ export const ArticlesContainer = () => {
 
   useEffect(() => {
     let ignore = false;
+
     const fetchArticles = async () => {
       try {
         if (!ignore) {
@@ -43,6 +44,7 @@ export const ArticlesContainer = () => {
           }
 
           const retrievedArticles = await response.json();
+
           if (retrievedArticles.data.favoriteArticles) {
             if (retrievedArticles.data.favoriteArticles.length) {
               setFavArticles(retrievedArticles.data.favoriteArticles);
@@ -81,7 +83,9 @@ export const ArticlesContainer = () => {
         setReadLaterAvailable(true);
       }
     } else {
-      fetchArticles();
+      (async () => {
+        await fetchArticles();
+      })();
     }
 
     setIsLoading(false);

@@ -169,7 +169,7 @@ export const SignupView = () => {
   useEffect(() => {
     let ignore = false;
 
-    const fetch = async () => {
+    const fetchData = async () => {
       if (!ignore) {
         const response = await httpSignupUser(userData);
 
@@ -193,7 +193,7 @@ export const SignupView = () => {
     };
 
     if (submit) {
-      fetch();
+      fetchData();
     }
 
     return () => {

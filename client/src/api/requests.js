@@ -33,7 +33,7 @@ export const httpSignupUser = async (userData) => {
         };
       }
 
-      throw new Error('issue');
+      throw new Error('That email or username has already been taken');
     }
 
     const signUpResponse = await response.json();

@@ -16,25 +16,45 @@ export const LoginView = () => {
   const currentUserContext = useContext(UserContext);
   const { setCurrentUser } = currentUserContext;
 
-  const userData = {
-    email: userEmail,
-    password: userPassword,
-  };
+  const [submit, setSubmit] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmit(true);
+  };
 
-    const response = await httpLoginUser(userData);
+  useEffect(() => {
+    let ignore = false;
 
-    if (!response) {
-      setLoginFail(true);
-      return;
+    const userData = {
+      email: userEmail,
+      password: userPassword,
+    };
+
+    const fetchData = async () => {
+      if (!ignore) {
+        const response = await httpLoginUser(userData);
+
+        if (!response) {
+          setLoginFail(true);
+          return;
+        }
+
+        setCurrentUser(response.data.user);
+        setLoginSuccess(true);
+        localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+      }
+    };
+
+    if (submit) {
+      fetchData();
     }
 
-    setCurrentUser(response.data.user);
-    setLoginSuccess(true);
-    localStorage.setItem('currentUser', JSON.stringify(response.data.user));
-  };
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
+  }, [setCurrentUser, submit, userEmail, userPassword]);
 
   useEffect(() => {
     setUserLoggedOut(true);
