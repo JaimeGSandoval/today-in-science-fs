@@ -31,9 +31,11 @@ export const SignupView = () => {
   });
   const passwordRef = useRef();
 
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [validConfirm, setValidConfirm] = useState(false);
-  const [confirmErr, setConfirmErr] = useState(false);
+  const [confirmPasswordData, setConfirmPasswordData] = useState({
+    confirmPassword: '',
+    validConfirm: false,
+    confirmErr: false,
+  });
   const confirmRef = useRef();
 
   const [validSuccess, setValidSuccess] = useState(false);
@@ -171,50 +173,67 @@ export const SignupView = () => {
   }, [passwordData.password]);
 
   useEffect(() => {
-    setConfirmErr(false);
+    setConfirmPasswordData((confirmPasswordData) => ({
+      ...confirmPasswordData,
+      confirmErr: false,
+    }));
 
-    if (!confirmPassword.length) {
+    if (!confirmPasswordData.confirmPassword.length) {
       confirmRef.current.classList.remove(styles.validField);
       confirmRef.current.classList.remove(styles.invalidField);
       return;
     }
 
     if (
-      passwordData.password.trim() !== confirmPassword ||
-      passwordData.password.trim().length !== confirmPassword.length
+      passwordData.password.trim() !== confirmPasswordData.confirmPassword ||
+      passwordData.password.trim().length !== confirmPasswordData.confirmPassword.length
     ) {
       confirmRef.current.classList.add(styles.invalidField);
-      setConfirmErr(true);
-      setValidConfirm(false);
+
+      setConfirmPasswordData((confirmPasswordData) => ({
+        ...confirmPasswordData,
+        confirmErr: true,
+        validConfirm: false,
+      }));
       return;
     }
 
     addValidOutline(confirmRef);
-    setConfirmErr(false);
-    setValidConfirm(true);
-  }, [confirmPassword, passwordData.password]);
+
+    setConfirmPasswordData((confirmPasswordData) => ({
+      ...confirmPasswordData,
+      confirmErr: false,
+      validConfirm: true,
+    }));
+  }, [confirmPasswordData.confirmPassword, passwordData.password]);
 
   useEffect(() => {
     const { validUsername } = usernameData;
     const { validEmail } = emailData;
     const { validPassword } = passwordData;
+    const { validConfirm } = confirmPasswordData;
 
     if (validUsername && validEmail && validPassword && validConfirm) {
       setValidSuccess(true);
     } else {
       setValidSuccess(false);
     }
-  }, [validConfirm, usernameData, emailData, passwordData]);
+  }, [usernameData, emailData, passwordData, confirmPasswordData]);
 
   const userData = useMemo(
     () => ({
       userName: usernameData.username.trim(),
       email: emailData.email.trim(),
       password: passwordData.password.trim(),
-      passwordConfirm: confirmPassword.trim(),
+      passwordConfirm: confirmPasswordData.confirmPassword.trim(),
       role: 'user',
     }),
-    [confirmPassword, emailData.email, passwordData.password, usernameData.username]
+    [
+      confirmPasswordData.confirmPassword,
+      emailData.email,
+      passwordData.password,
+      usernameData.username,
+    ]
   );
 
   useEffect(() => {
@@ -254,7 +273,12 @@ export const SignupView = () => {
           ...passwordData,
           password: '',
         });
-        setConfirmPassword('');
+
+        setConfirmPasswordData({
+          ...confirmPasswordData,
+          confirmPassword: '',
+        });
+
         setSubmitSuccess(true);
         setSubmit(false);
       }
@@ -268,7 +292,7 @@ export const SignupView = () => {
       ignore = true;
       setSubmit(false);
     };
-  }, [emailData, passwordData, submit, userData, usernameData]);
+  }, [confirmPasswordData, emailData, passwordData, submit, userData, usernameData]);
 
   const handleChange = (e, formData, setFn) => {
     setFn({
@@ -382,7 +406,9 @@ export const SignupView = () => {
             </div>
 
             <div className={styles.errBox}>
-              <span className={`${styles.errMessage} ${confirmErr && styles.show}`}>
+              <span
+                className={`${styles.errMessage} ${confirmPasswordData.confirmErr && styles.show}`}
+              >
                 Passwords do not match
               </span>
             </div>
@@ -399,10 +425,11 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                value={confirmPassword}
+                onChange={(e) => handleChange(e, confirmPasswordData, setConfirmPasswordData)}
+                value={confirmPasswordData.confirmPassword}
                 ref={confirmRef}
-                onBlur={(e) => removeOutline(e, validConfirm)}
+                onBlur={(e) => removeOutline(e, confirmPasswordData.validConfirm)}
+                name='confirmPassword'
               />
             </div>
 
