@@ -8,26 +8,34 @@ import { Header } from '../../components/Header';
 import styles from './_forms.module.scss';
 
 export const SignupView = () => {
-  const [username, setUsername] = useState('');
-  const [validUsername, setValidUsername] = useState(false);
-  const [usernameErr, setUsernameErr] = useState(false);
-  const [usernameTaken, setUsernameTaken] = useState(false);
+  const [usernameData, setUsernameData] = useState({
+    username: '',
+    validUsername: false,
+    usernameErr: false,
+    usernameTaken: false,
+  });
   const usernameRef = useRef();
 
-  const [email, setEmail] = useState('');
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailErr, setEmailErr] = useState(false);
-  const [emailTaken, setEmailTaken] = useState(false);
+  const [emailData, setEmailData] = useState({
+    email: '',
+    validEmail: false,
+    emailErr: false,
+    emailTaken: false,
+  });
   const emailRef = useRef();
 
-  const [password, setPassword] = useState('');
-  const [validPassword, setValidPassword] = useState(false);
-  const [passwordErr, setPasswordErr] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    password: '',
+    validPassword: false,
+    passwordErr: false,
+  });
   const passwordRef = useRef();
 
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [validConfirm, setValidConfirm] = useState(false);
-  const [confirmErr, setConfirmErr] = useState(false);
+  const [confirmPasswordData, setConfirmPasswordData] = useState({
+    confirmPassword: '',
+    validConfirm: false,
+    confirmErr: false,
+  });
   const confirmRef = useRef();
 
   const [validSuccess, setValidSuccess] = useState(false);
@@ -46,10 +54,13 @@ export const SignupView = () => {
   };
 
   useEffect(() => {
-    setUsernameErr(false);
-    setUsernameTaken(false);
+    setUsernameData((usernameData) => ({
+      ...usernameData,
+      usernameErr: false,
+      usernameTaken: false,
+    }));
 
-    const usernameTrimmed = username.trim();
+    const usernameTrimmed = usernameData.username.trim();
 
     if (!usernameTrimmed.length) {
       usernameRef.current.classList.remove(styles.validField);
@@ -59,25 +70,36 @@ export const SignupView = () => {
 
     if (/\s/.test(usernameTrimmed) || usernameTrimmed.length < 6 || usernameTrimmed.length > 20) {
       usernameRef.current.classList.add(styles.invalidField);
-      setUsernameErr(true);
-      setValidUsername(false);
+
+      setUsernameData((usernameData) => ({
+        ...usernameData,
+        usernameErr: true,
+        validUsername: false,
+      }));
       return;
     }
 
     if (/[a-zA-Z0-9]/.test(usernameTrimmed)) {
       addValidOutline(usernameRef);
-      setUsernameErr(false);
-      setValidUsername(true);
+
+      setUsernameData((usernameData) => ({
+        ...usernameData,
+        usernameErr: false,
+        validUsername: true,
+      }));
     }
-  }, [username]);
+  }, [usernameData.username]);
 
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);
 
   useEffect(() => {
-    setEmailErr(false);
-    setEmailTaken(false);
+    setEmailData((emailData) => ({
+      ...emailData,
+      emailErr: false,
+      emailTaken: false,
+    }));
 
-    const emailTrimmed = email.trim();
+    const emailTrimmed = emailData.email.trim();
 
     if (!emailTrimmed.length) {
       emailRef.current.classList.remove(styles.validField);
@@ -87,20 +109,32 @@ export const SignupView = () => {
 
     if (!isEmail(emailTrimmed)) {
       emailRef.current.classList.add(styles.invalidField);
-      setEmailErr(true);
-      setValidEmail(false);
+
+      setEmailData((emailData) => ({
+        ...emailData,
+        emailErr: true,
+        validEmail: false,
+      }));
+
       return;
     }
 
     addValidOutline(emailRef);
-    setValidEmail(true);
-    setEmailErr(false);
-  }, [email]);
+
+    setEmailData((emailData) => ({
+      ...emailData,
+      emailErr: false,
+      validEmail: true,
+    }));
+  }, [emailData.email]);
 
   useEffect(() => {
-    setPasswordErr(false);
+    setPasswordData((passwordData) => ({
+      ...passwordData,
+      passwordErr: false,
+    }));
 
-    const passwordTrimmed = password.trim();
+    const passwordTrimmed = passwordData.password.trim();
 
     if (!passwordTrimmed.length) {
       passwordRef.current.classList.remove(styles.validField);
@@ -110,60 +144,96 @@ export const SignupView = () => {
 
     if (/\s/.test(passwordTrimmed)) {
       passwordRef.current.classList.add(styles.invalidField);
-      setPasswordErr(true);
-      setValidPassword(false);
+
+      setPasswordData((passwordData) => ({
+        ...passwordData,
+        passwordErr: true,
+        validPassword: false,
+      }));
       return;
     }
 
     if (passwordTrimmed.length < 6 || passwordTrimmed.length > 100) {
       passwordRef.current.classList.add(styles.invalidField);
-      setValidPassword(false);
+
+      setPasswordData((passwordData) => ({
+        ...passwordData,
+        validPassword: false,
+      }));
       return;
     }
 
     addValidOutline(passwordRef);
-    setPasswordErr(false);
-    setValidPassword(true);
-  }, [password]);
+
+    setPasswordData((passwordData) => ({
+      ...passwordData,
+      passwordErr: false,
+      validPassword: true,
+    }));
+  }, [passwordData.password]);
 
   useEffect(() => {
-    setConfirmErr(false);
+    setConfirmPasswordData((confirmPasswordData) => ({
+      ...confirmPasswordData,
+      confirmErr: false,
+    }));
 
-    if (!confirmPassword.length) {
+    if (!confirmPasswordData.confirmPassword.length) {
       confirmRef.current.classList.remove(styles.validField);
       confirmRef.current.classList.remove(styles.invalidField);
       return;
     }
 
-    if (password.trim() !== confirmPassword || password.trim().length !== confirmPassword.length) {
+    if (
+      passwordData.password.trim() !== confirmPasswordData.confirmPassword ||
+      passwordData.password.trim().length !== confirmPasswordData.confirmPassword.length
+    ) {
       confirmRef.current.classList.add(styles.invalidField);
-      setConfirmErr(true);
-      setValidConfirm(false);
+
+      setConfirmPasswordData((confirmPasswordData) => ({
+        ...confirmPasswordData,
+        confirmErr: true,
+        validConfirm: false,
+      }));
       return;
     }
 
     addValidOutline(confirmRef);
-    setConfirmErr(false);
-    setValidConfirm(true);
-  }, [confirmPassword, password]);
+
+    setConfirmPasswordData((confirmPasswordData) => ({
+      ...confirmPasswordData,
+      confirmErr: false,
+      validConfirm: true,
+    }));
+  }, [confirmPasswordData.confirmPassword, passwordData.password]);
 
   useEffect(() => {
+    const { validUsername } = usernameData;
+    const { validEmail } = emailData;
+    const { validPassword } = passwordData;
+    const { validConfirm } = confirmPasswordData;
+
     if (validUsername && validEmail && validPassword && validConfirm) {
       setValidSuccess(true);
     } else {
       setValidSuccess(false);
     }
-  }, [validUsername, validEmail, validPassword, validConfirm]);
+  }, [usernameData, emailData, passwordData, confirmPasswordData]);
 
   const userData = useMemo(
     () => ({
-      userName: username.trim(),
-      email: email.trim(),
-      password: password.trim(),
-      passwordConfirm: confirmPassword.trim(),
+      userName: usernameData.username.trim(),
+      email: emailData.email.trim(),
+      password: passwordData.password.trim(),
+      passwordConfirm: confirmPasswordData.confirmPassword.trim(),
       role: 'user',
     }),
-    [confirmPassword, email, password, username]
+    [
+      confirmPasswordData.confirmPassword,
+      emailData.email,
+      passwordData.password,
+      usernameData.username,
+    ]
   );
 
   useEffect(() => {
@@ -174,19 +244,41 @@ export const SignupView = () => {
         const response = await httpSignupUser(userData);
 
         if (response.error && response.type === 'username') {
-          setUsernameTaken(true);
+          setUsernameData({
+            ...usernameData,
+            usernameTaken: true,
+          });
           return;
         }
 
         if (response.error && response.type === 'email') {
-          setEmailTaken(true);
+          setEmailData({
+            ...emailData,
+            emailTaken: true,
+          });
           return;
         }
 
-        setUsername('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
+        setUsernameData({
+          ...usernameData,
+          username: '',
+        });
+
+        setEmailData({
+          ...emailData,
+          email: '',
+        });
+
+        setPasswordData({
+          ...passwordData,
+          password: '',
+        });
+
+        setConfirmPasswordData({
+          ...confirmPasswordData,
+          confirmPassword: '',
+        });
+
         setSubmitSuccess(true);
         setSubmit(false);
       }
@@ -200,7 +292,14 @@ export const SignupView = () => {
       ignore = true;
       setSubmit(false);
     };
-  }, [submit, userData]);
+  }, [confirmPasswordData, emailData, passwordData, submit, userData, usernameData]);
+
+  const handleChange = (e, formData, setFn) => {
+    setFn({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,12 +317,12 @@ export const SignupView = () => {
           <div className={styles.fieldsWrapper}>
             <div className={styles.errBox}>
               <span
-                className={`${styles.errMessage} ${usernameErr && styles.show} ${
-                  usernameTaken && styles.show
+                className={`${styles.errMessage} ${usernameData.usernameErr && styles.show} ${
+                  usernameData.usernameTaken && styles.show
                 }`}
               >
-                {usernameTaken && 'Username taken'}
-                {usernameErr && '6 to 20 letters or numbers and no spaces'}
+                {usernameData.usernameTaken && 'Username taken'}
+                {usernameData.usernameErr && '6 to 20 letters or numbers and no spaces'}
               </span>
             </div>
             <div className={styles.fieldBox}>
@@ -240,21 +339,22 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                onChange={(e) => handleChange(e, usernameData, setUsernameData)}
+                value={usernameData.username}
                 ref={usernameRef}
-                onBlur={(e) => removeOutline(e, validUsername)}
+                onBlur={(e) => removeOutline(e, usernameData.validUsername)}
+                name={'username'}
               />
             </div>
 
             <div className={styles.errBox}>
               <span
-                className={`${styles.errMessage} ${emailTaken && styles.show} ${
-                  emailErr && styles.show
+                className={`${styles.errMessage} ${emailData.emailTaken && styles.show} ${
+                  emailData.emailErr && styles.show
                 }`}
               >
-                {emailTaken && 'Email already registered'}
-                {emailErr && 'Must be a valid email'}
+                {emailData.emailTaken && 'Email already registered'}
+                {emailData.emailErr && 'Must be a valid email'}
               </span>
             </div>
 
@@ -271,15 +371,16 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                onChange={(e) => handleChange(e, emailData, setEmailData)}
+                value={emailData.email}
                 ref={emailRef}
-                onBlur={(e) => removeOutline(e, validEmail)}
+                onBlur={(e) => removeOutline(e, emailData.validEmail)}
+                name='email'
               />
             </div>
 
             <div className={styles.errBox}>
-              <span className={`${styles.errMessage} ${passwordErr && styles.show}`}>
+              <span className={`${styles.errMessage} ${passwordData.passwordErr && styles.show}`}>
                 Password cannot contain spaces
               </span>
             </div>
@@ -296,15 +397,18 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                onChange={(e) => handleChange(e, passwordData, setPasswordData)}
+                value={passwordData.password}
                 ref={passwordRef}
-                onBlur={(e) => removeOutline(e, validPassword)}
+                onBlur={(e) => removeOutline(e, passwordData.validPassword)}
+                name='password'
               />
             </div>
 
             <div className={styles.errBox}>
-              <span className={`${styles.errMessage} ${confirmErr && styles.show}`}>
+              <span
+                className={`${styles.errMessage} ${confirmPasswordData.confirmErr && styles.show}`}
+              >
                 Passwords do not match
               </span>
             </div>
@@ -321,10 +425,11 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                value={confirmPassword}
+                onChange={(e) => handleChange(e, confirmPasswordData, setConfirmPasswordData)}
+                value={confirmPasswordData.confirmPassword}
                 ref={confirmRef}
-                onBlur={(e) => removeOutline(e, validConfirm)}
+                onBlur={(e) => removeOutline(e, confirmPasswordData.validConfirm)}
+                name='confirmPassword'
               />
             </div>
 
