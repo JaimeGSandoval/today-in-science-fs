@@ -6,17 +6,6 @@ export const httpHealthCheck = async () => {
   console.log(data);
 };
 
-export const httpFeed = async () => {
-  const response = await fetch(`${API}/news/`, {
-    headers: {
-      credentials: 'include',
-    },
-  });
-
-  const data = await response.json();
-  console.log(data);
-};
-
 export const httpSignupUser = async (userData) => {
   try {
     const response = await fetch(`${API}/signup`, {
@@ -28,30 +17,30 @@ export const httpSignupUser = async (userData) => {
     });
 
     if (!response.ok) {
-      const data = await response.json();
+      const errorResponse = await response.json();
 
-      if (data.statusCode === 409 && data.message === 'username taken') {
+      if (errorResponse.statusCode === 409 && errorResponse.message === 'username taken') {
         return {
           error: true,
           type: 'username',
         };
       }
 
-      if (data.statusCode === 409 && data.message === 'email exists') {
+      if (errorResponse.statusCode === 409 && errorResponse.message === 'email exists') {
         return {
           error: true,
           type: 'email',
         };
       }
 
-      throw new Error('Network response was not ok');
+      throw new Error('That email or username has already been taken');
     }
 
-    const data = await response.json();
+    const signUpResponse = await response.json();
 
-    return data;
+    return signUpResponse;
   } catch (e) {
-    console.error('There was a problem signing you up', e);
+    console.error(e.message);
   }
 };
 
@@ -69,14 +58,14 @@ export const httpLoginUser = async (userData) => {
     if (!response.ok && response.status === 400) return false;
 
     if (!response.ok) {
-      throw new Error('Network error');
+      throw new Error('There was a problem logging you in.');
     }
 
-    const data = await response.json();
+    const userDataResponse = await response.json();
 
-    return data;
+    return userDataResponse;
   } catch (e) {
-    console.error('There was a problem signing you up', e);
+    console.error(e.message);
   }
 };
 
@@ -88,7 +77,7 @@ export const httpLogoutUser = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('There was a problem logging you out');
+      throw new Error('There was a problem logging you out.');
     }
 
     return response;
@@ -109,12 +98,12 @@ export const httpAddArticle = async (articleData) => {
     });
 
     if (!response.ok) {
-      throw new Error('Network error');
+      throw new Error('There was a problem adding the article to list.');
     }
 
-    return true;
+    return response;
   } catch (e) {
-    console.error('There was a problem add the article to your favorites list', e);
+    console.error(e.message);
   }
 };
 
@@ -130,12 +119,12 @@ export const httpDeleteArticle = async (articleData) => {
     });
 
     if (!response.ok) {
-      throw new Error('Network error');
+      throw new Error('There was a problem deleting the article to your list.');
     }
 
-    return true;
+    return response;
   } catch (e) {
-    console.error('There was a problem deleting the article to your favorites list', e);
+    console.error(e.message);
   }
 };
 
@@ -152,13 +141,9 @@ export const httpUpdateUsername = async (usernameObj) => {
       body: JSON.stringify(usernameObj),
     });
 
-    if (!response.ok) {
-      throw new Error('Network error');
-    }
-
-    return true;
+    return response;
   } catch (e) {
-    console.error('There was a problem updating your username', e);
+    console.error(e.message);
   }
 };
 
@@ -175,11 +160,7 @@ export const httpUpdateEmailRequest = async (emailObj) => {
       body: JSON.stringify(emailObj),
     });
 
-    if (!response.ok) {
-      throw new Error('There was a problem updating your email');
-    }
-
-    return true;
+    return response;
   } catch (e) {
     console.error(e.message);
   }
@@ -199,10 +180,10 @@ export const httpUpdatePasswordRequest = async (emailObj) => {
     });
 
     if (!response.ok) {
-      throw new Error('There was a problem updating your password');
+      throw new Error('There was a problem updating your password.');
     }
 
-    return true;
+    return response;
   } catch (e) {
     console.error(e.message);
   }

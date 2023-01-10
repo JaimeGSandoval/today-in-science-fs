@@ -12,6 +12,7 @@ module.exports = {
         articleUrl,
         provider,
       ]);
+
       return addedUrlResult;
     }
 
@@ -21,6 +22,7 @@ module.exports = {
       articleUrl,
       provider,
     ]);
+
     return addedUrlResult;
   },
 

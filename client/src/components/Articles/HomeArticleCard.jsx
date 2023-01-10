@@ -47,7 +47,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
       if (type === 'favorite') {
         const response = await httpAddArticle(favoriteArticleData);
 
-        if (response) {
+        if (response.ok) {
           updatedArticles = updateSessionStorage(
             type,
             sessionArticles,
@@ -63,7 +63,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
       const response = await httpAddArticle(readLaterArticleData);
 
-      if (response) {
+      if (response.ok) {
         updatedArticles = updateSessionStorage(
           type,
           sessionArticles,

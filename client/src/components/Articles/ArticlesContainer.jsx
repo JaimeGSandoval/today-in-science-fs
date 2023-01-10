@@ -27,35 +27,48 @@ export const ArticlesContainer = () => {
   sessionStorage.setItem('read-later-articles', JSON.stringify([]));
 
   useEffect(() => {
+    let ignore = false;
+
     const fetchArticles = async () => {
-      const response = await fetch(
-        `http://localhost:8000/articles/${articlesType}/${currentUser.user_id}`,
-        {
-          credentials: 'include',
-        }
-      );
-      const retrievedArticles = await response.json();
-
-      if (retrievedArticles.data.favoriteArticles) {
-        if (retrievedArticles.data.favoriteArticles.length) {
-          setFavArticles(retrievedArticles.data.favoriteArticles);
-          setFavsAvailable(true);
-          sessionStorage.setItem(
-            'favorite-articles',
-            JSON.stringify(retrievedArticles.data.favoriteArticles)
+      try {
+        if (!ignore) {
+          const response = await fetch(
+            `http://localhost:8000/articles/${articlesType}/${currentUser.user_id}`,
+            {
+              credentials: 'include',
+            }
           );
-        }
-      }
 
-      if (retrievedArticles.data.readLaterArticles) {
-        if (retrievedArticles.data.readLaterArticles.length) {
-          setReadLaterArticles(retrievedArticles.data.readLaterArticles);
-          setReadLaterAvailable(true);
-          sessionStorage.setItem(
-            'read-later-articles',
-            JSON.stringify(retrievedArticles.data.readLaterArticles)
-          );
+          if (!response.ok) {
+            throw new Error('There was a problem retrieving articles.');
+          }
+
+          const retrievedArticles = await response.json();
+
+          if (retrievedArticles.data.favoriteArticles) {
+            if (retrievedArticles.data.favoriteArticles.length) {
+              setFavArticles(retrievedArticles.data.favoriteArticles);
+              setFavsAvailable(true);
+              sessionStorage.setItem(
+                'favorite-articles',
+                JSON.stringify(retrievedArticles.data.favoriteArticles)
+              );
+            }
+          }
+
+          if (retrievedArticles.data.readLaterArticles) {
+            if (retrievedArticles.data.readLaterArticles.length) {
+              setReadLaterArticles(retrievedArticles.data.readLaterArticles);
+              setReadLaterAvailable(true);
+              sessionStorage.setItem(
+                'read-later-articles',
+                JSON.stringify(retrievedArticles.data.readLaterArticles)
+              );
+            }
+          }
         }
+      } catch (e) {
+        console.error(e.message);
       }
     };
 
@@ -70,10 +83,16 @@ export const ArticlesContainer = () => {
         setReadLaterAvailable(true);
       }
     } else {
-      fetchArticles();
+      (async () => {
+        await fetchArticles();
+      })();
     }
 
     setIsLoading(false);
+
+    return () => {
+      ignore = false;
+    };
   }, [articlesType, currentUser]);
 
   useEffect(() => {

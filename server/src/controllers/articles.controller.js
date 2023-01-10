@@ -84,7 +84,6 @@ module.exports = {
       //   return next(new AppError('Article not found. It may have been deleted already', 404));
       // }
 
-      // await articlesModel.deleteArticle(parseInt(articleId, 10), articleType);
       await articlesModel.deleteArticle(userId, articleTitle, articleType);
 
       return res.sendStatus(204);

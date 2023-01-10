@@ -8,7 +8,6 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  //   z-index: 20;
 }
 
 .innerContainer {
@@ -91,13 +90,12 @@
 .saveButton,
 .deleteButton {
   font-size: 0.9rem;
-  // padding: 0.4rem 0.6rem;
   border-radius: 0.2rem;
   outline: none;
   border: none;
   color: white;
-  width: 70px;
-  height: 42px;
+  width: 4.375rem;
+  height: 2.625rem;
 }
 
 .deleteButton {
@@ -105,16 +103,10 @@
   color: white;
   border: none;
   border-radius: 5px;
-  // padding: 0.8rem 0.8rem;
 }
 
 .cancelButton {
-  // margin-right: 1rem;
   background-color: rgb(162, 162, 162);
-  // position: relative;
-  // right: 1rem;
-  // padding: 0.6rem 0.8rem;
-  // height: 71px;
 }
 
 .saveButton {
@@ -160,7 +152,9 @@
 .disabledBtn {
   background-color: rgb(214, 214, 214);
   font-size: 0.9rem;
-  padding: 0.4rem 0.6rem;
+  // padding: 0.4rem 0.6rem;
+  width: 4.375rem;
+
   border-radius: 0.2rem;
   outline: none;
   border: none;

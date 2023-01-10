@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { httpUpdateUsername } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
+import { fetchUpdate } from '../../utils/helpers';
 import styles from './_settingsModal.module.scss';
 
 export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
@@ -32,40 +33,35 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
   };
 
   useEffect(() => {
-    const fetch = async () => {
+    let ignore = false;
+
+    const fetchData = async () => {
       const usernameObj = {
+        type: 'username',
+        httpFn: httpUpdateUsername,
+        currentUser,
+        setCurrentUser,
         newUsername: username,
         userId: currentUser.user_id,
+        setSubmit,
+        setIsOpen,
+        setConfirm,
+        setUsernameTaken,
       };
 
-      try {
-        await httpUpdateUsername(usernameObj);
-
-        setCurrentUser({
-          ...currentUser,
-          user_name: username,
-        });
-
-        localStorage.setItem(
-          'currentUser',
-          JSON.stringify({
-            ...currentUser,
-            user_name: username,
-          })
-        );
-
-        setConfirm(true);
-        setIsOpen(false);
-      } catch (e) {
-        console.error(e.message);
+      if (!ignore) {
+        fetchUpdate(usernameObj);
       }
     };
 
     if (submit) {
-      fetch();
+      fetchData();
     }
 
-    return () => setSubmit(false);
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
   }, [currentUser, currentUser.user_id, setConfirm, setCurrentUser, setIsOpen, submit, username]);
 
   useEffect(() => {

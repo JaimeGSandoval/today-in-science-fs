@@ -16,6 +16,7 @@ export const HomeView = () => {
   useEffect(() => {
     let options;
     let user = localStorage.getItem('currentUser');
+    let ignore = false;
 
     const checkAuth = async () => {
       try {
@@ -47,19 +48,18 @@ export const HomeView = () => {
 
     const getArticles = async () => {
       try {
-        await checkAuth();
+        if (!ignore) {
+          await checkAuth();
 
-        const response = await fetch('http://localhost:8000/news/initiate', options);
-
-        if (!response.ok) {
-          throw new Error('Error retrieving data');
+          const response = await fetch('http://localhost:8000/news/initiate', options);
+          if (!response.ok) {
+            throw new Error('Error retrieving data');
+          }
+          const parsedData = await response.json();
+          setArticles(parsedData.data.finalArticles);
+          setIsLoading(false);
+          sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
         }
-
-        const parsedData = await response.json();
-
-        setArticles(parsedData.data.finalArticles);
-        setIsLoading(false);
-        sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
       } catch (e) {
         setHttpError(true);
         console.error(e);
@@ -67,14 +67,20 @@ export const HomeView = () => {
     };
 
     if (sessionStorage.getItem('articles')) {
-      checkAuth();
+      (async () => {
+        await checkAuth();
+      })();
+
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {
       getArticles();
     }
 
-    return () => setHttpError(false);
+    return () => {
+      ignore = true;
+      setHttpError(false);
+    };
   }, [setCurrentUser]);
 
   let heroArticle;

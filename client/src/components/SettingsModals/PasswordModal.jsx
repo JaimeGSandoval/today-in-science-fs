@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { httpUpdatePasswordRequest } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
+import { fetchUpdate } from '../../utils/helpers';
 import styles from './_settingsModal.module.scss';
 
 export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
@@ -35,33 +36,36 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    console.log('I can');
   };
 
   useEffect(() => {
-    const fetch = async () => {
+    let ignore = false;
+
+    const fetchData = async () => {
       const passwordObj = {
+        type: 'password',
+        httpFn: httpUpdatePasswordRequest,
         newPassword: password,
         userEmail: currentUser.email,
         updateType: 'reset',
         userId: currentUser.user_id,
+        setConfirm,
+        setIsOpen,
       };
 
-      try {
-        await httpUpdatePasswordRequest(passwordObj);
-
-        setConfirm(true);
-        setIsOpen(false);
-      } catch (e) {
-        console.error(e.message);
+      if (!ignore) {
+        fetchUpdate(passwordObj);
       }
     };
 
     if (submit) {
-      fetch();
+      fetchData();
     }
 
-    return () => setSubmit(false);
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
   }, [currentUser, password, setConfirm, setIsOpen, submit]);
 
   useEffect(() => {

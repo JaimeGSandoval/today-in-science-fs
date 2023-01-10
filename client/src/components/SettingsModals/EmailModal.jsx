@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { httpUpdateEmailRequest } from '../../api/requests';
 import { UserContext } from '../../context/User.context';
+import { fetchUpdate } from '../../utils/helpers';
 import styles from './_settingsModal.module.scss';
 
 export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
@@ -32,27 +33,32 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
   };
 
   useEffect(() => {
-    const fetch = async () => {
+    let ignore = false;
+
+    const fetchData = async () => {
       const emailObj = {
+        type: 'email',
         newEmail: email,
         userId: currentUser.user_id,
+        httpFn: httpUpdateEmailRequest,
+        setConfirm,
+        setIsOpen,
+        setEmailTaken,
       };
 
-      try {
-        await httpUpdateEmailRequest(emailObj);
-
-        setConfirm(true);
-        setIsOpen(false);
-      } catch (e) {
-        console.error(e.message);
+      if (!ignore) {
+        fetchUpdate(emailObj);
       }
     };
 
     if (submit) {
-      fetch();
+      fetchData();
     }
 
-    return () => setSubmit(false);
+    return () => {
+      ignore = true;
+      setSubmit(false);
+    };
   }, [currentUser, setIsOpen, submit, email, setConfirm]);
 
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);

@@ -35,7 +35,7 @@ export const ArticleCard = ({ articleData, type, setFavArticles, setReadLaterArt
         try {
           const response = await httpDeleteArticle(favoriteArticleData);
 
-          if (!response) {
+          if (!response.ok) {
             throw new Error(errMessage);
           }
 
@@ -47,7 +47,7 @@ export const ArticleCard = ({ articleData, type, setFavArticles, setReadLaterArt
         try {
           const response = await httpDeleteArticle(readLaterArticleData);
 
-          if (!response) {
+          if (!response.ok) {
             throw new Error(errMessage);
           }
 
