@@ -24,9 +24,11 @@ export const SignupView = () => {
   });
   const emailRef = useRef();
 
-  const [password, setPassword] = useState('');
-  const [validPassword, setValidPassword] = useState(false);
-  const [passwordErr, setPasswordErr] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    password: '',
+    validPassword: false,
+    passwordErr: false,
+  });
   const passwordRef = useRef();
 
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -125,9 +127,12 @@ export const SignupView = () => {
   }, [emailData.email]);
 
   useEffect(() => {
-    setPasswordErr(false);
+    setPasswordData((passwordData) => ({
+      ...passwordData,
+      passwordErr: false,
+    }));
 
-    const passwordTrimmed = password.trim();
+    const passwordTrimmed = passwordData.password.trim();
 
     if (!passwordTrimmed.length) {
       passwordRef.current.classList.remove(styles.validField);
@@ -137,21 +142,33 @@ export const SignupView = () => {
 
     if (/\s/.test(passwordTrimmed)) {
       passwordRef.current.classList.add(styles.invalidField);
-      setPasswordErr(true);
-      setValidPassword(false);
+
+      setPasswordData((passwordData) => ({
+        ...passwordData,
+        passwordErr: true,
+        validPassword: false,
+      }));
       return;
     }
 
     if (passwordTrimmed.length < 6 || passwordTrimmed.length > 100) {
       passwordRef.current.classList.add(styles.invalidField);
-      setValidPassword(false);
+
+      setPasswordData((passwordData) => ({
+        ...passwordData,
+        validPassword: false,
+      }));
       return;
     }
 
     addValidOutline(passwordRef);
-    setPasswordErr(false);
-    setValidPassword(true);
-  }, [password]);
+
+    setPasswordData((passwordData) => ({
+      ...passwordData,
+      passwordErr: false,
+      validPassword: true,
+    }));
+  }, [passwordData.password]);
 
   useEffect(() => {
     setConfirmErr(false);
@@ -162,7 +179,10 @@ export const SignupView = () => {
       return;
     }
 
-    if (password.trim() !== confirmPassword || password.trim().length !== confirmPassword.length) {
+    if (
+      passwordData.password.trim() !== confirmPassword ||
+      passwordData.password.trim().length !== confirmPassword.length
+    ) {
       confirmRef.current.classList.add(styles.invalidField);
       setConfirmErr(true);
       setValidConfirm(false);
@@ -172,28 +192,29 @@ export const SignupView = () => {
     addValidOutline(confirmRef);
     setConfirmErr(false);
     setValidConfirm(true);
-  }, [confirmPassword, password]);
+  }, [confirmPassword, passwordData.password]);
 
   useEffect(() => {
     const { validUsername } = usernameData;
     const { validEmail } = emailData;
+    const { validPassword } = passwordData;
 
     if (validUsername && validEmail && validPassword && validConfirm) {
       setValidSuccess(true);
     } else {
       setValidSuccess(false);
     }
-  }, [validPassword, validConfirm, usernameData, emailData]);
+  }, [validConfirm, usernameData, emailData, passwordData]);
 
   const userData = useMemo(
     () => ({
       userName: usernameData.username.trim(),
       email: emailData.email.trim(),
-      password: password.trim(),
+      password: passwordData.password.trim(),
       passwordConfirm: confirmPassword.trim(),
       role: 'user',
     }),
-    [confirmPassword, emailData.email, password, usernameData.username]
+    [confirmPassword, emailData.email, passwordData.password, usernameData.username]
   );
 
   useEffect(() => {
@@ -224,11 +245,15 @@ export const SignupView = () => {
           username: '',
         });
 
-        setEmailData((emailData) => ({
+        setEmailData({
           ...emailData,
           email: '',
-        }));
-        setPassword('');
+        });
+
+        setPasswordData({
+          ...passwordData,
+          password: '',
+        });
         setConfirmPassword('');
         setSubmitSuccess(true);
         setSubmit(false);
@@ -243,7 +268,7 @@ export const SignupView = () => {
       ignore = true;
       setSubmit(false);
     };
-  }, [emailData, submit, userData, usernameData]);
+  }, [emailData, passwordData, submit, userData, usernameData]);
 
   const handleChange = (e, formData, setFn) => {
     setFn({
@@ -322,7 +347,6 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                // onChange={(e) => setEmail(e.target.value)}
                 onChange={(e) => handleChange(e, emailData, setEmailData)}
                 value={emailData.email}
                 ref={emailRef}
@@ -332,7 +356,7 @@ export const SignupView = () => {
             </div>
 
             <div className={styles.errBox}>
-              <span className={`${styles.errMessage} ${passwordErr && styles.show}`}>
+              <span className={`${styles.errMessage} ${passwordData.passwordErr && styles.show}`}>
                 Password cannot contain spaces
               </span>
             </div>
@@ -349,10 +373,11 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                onChange={(e) => handleChange(e, passwordData, setPasswordData)}
+                value={passwordData.password}
                 ref={passwordRef}
-                onBlur={(e) => removeOutline(e, validPassword)}
+                onBlur={(e) => removeOutline(e, passwordData.validPassword)}
+                name='password'
               />
             </div>
 
