@@ -26,6 +26,11 @@ export const fetchUpdate = async (dataObj) => {
   if (dataObj.type === 'username') {
     const response = await dataObj.httpFn(dataObj);
 
+    if (response.status === 409) {
+      dataObj.setUsernameTaken(true);
+      return;
+    }
+
     if (response.ok) {
       dataObj.setCurrentUser({
         ...dataObj.currentUser,
@@ -49,6 +54,11 @@ export const fetchUpdate = async (dataObj) => {
 
   if (dataObj.type === 'email' || dataObj.type === 'password') {
     const response = await dataObj.httpFn(dataObj);
+
+    if (response.status === 409) {
+      dataObj.setEmailTaken(true);
+      return;
+    }
 
     if (response.ok) {
       dataObj.setConfirm(true);

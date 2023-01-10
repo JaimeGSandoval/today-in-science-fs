@@ -141,10 +141,6 @@ export const httpUpdateUsername = async (usernameObj) => {
       body: JSON.stringify(usernameObj),
     });
 
-    if (!response.ok) {
-      throw new Error('There was a problem updating your username.');
-    }
-
     return response;
   } catch (e) {
     console.error(e.message);
@@ -163,10 +159,6 @@ export const httpUpdateEmailRequest = async (emailObj) => {
       credentials: 'include',
       body: JSON.stringify(emailObj),
     });
-
-    if (!response.ok) {
-      throw new Error('There was a problem updating your email.');
-    }
 
     return response;
   } catch (e) {

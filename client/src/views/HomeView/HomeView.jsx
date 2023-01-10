@@ -67,7 +67,10 @@ export const HomeView = () => {
     };
 
     if (sessionStorage.getItem('articles')) {
-      checkAuth();
+      (async () => {
+        await checkAuth();
+      })();
+
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {

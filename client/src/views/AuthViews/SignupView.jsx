@@ -198,6 +198,7 @@ export const SignupView = () => {
 
     return () => {
       ignore = true;
+      setSubmit(false);
     };
   }, [submit, userData]);
 

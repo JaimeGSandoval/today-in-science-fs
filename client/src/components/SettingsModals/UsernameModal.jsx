@@ -46,6 +46,7 @@ export const UsernameModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
         setSubmit,
         setIsOpen,
         setConfirm,
+        setUsernameTaken,
       };
 
       if (!ignore) {

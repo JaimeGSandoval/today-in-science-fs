@@ -43,6 +43,7 @@ export const EmailModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => {
         httpFn: httpUpdateEmailRequest,
         setConfirm,
         setIsOpen,
+        setEmailTaken,
       };
 
       if (!ignore) {
