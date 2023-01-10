@@ -8,10 +8,12 @@ import { Header } from '../../components/Header';
 import styles from './_forms.module.scss';
 
 export const SignupView = () => {
-  const [username, setUsername] = useState('');
-  const [validUsername, setValidUsername] = useState(false);
-  const [usernameErr, setUsernameErr] = useState(false);
-  const [usernameTaken, setUsernameTaken] = useState(false);
+  const [usernameData, setUsernameData] = useState({
+    username: '',
+    validUsername: false,
+    usernameErr: false,
+    usernameTaken: false,
+  });
   const usernameRef = useRef();
 
   const [email, setEmail] = useState('');
@@ -34,6 +36,13 @@ export const SignupView = () => {
   const [submit, setSubmit] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  const handleChange = (e, formData, setFn) => {
+    setFn({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
     refVal.current.classList.add(styles.validField);
@@ -46,10 +55,13 @@ export const SignupView = () => {
   };
 
   useEffect(() => {
-    setUsernameErr(false);
-    setUsernameTaken(false);
+    setUsernameData((usernameData) => ({
+      ...usernameData,
+      usernameErr: false,
+      usernameTaken: false,
+    }));
 
-    const usernameTrimmed = username.trim();
+    const usernameTrimmed = usernameData.username.trim();
 
     if (!usernameTrimmed.length) {
       usernameRef.current.classList.remove(styles.validField);
@@ -59,17 +71,25 @@ export const SignupView = () => {
 
     if (/\s/.test(usernameTrimmed) || usernameTrimmed.length < 6 || usernameTrimmed.length > 20) {
       usernameRef.current.classList.add(styles.invalidField);
-      setUsernameErr(true);
-      setValidUsername(false);
+
+      setUsernameData((usernameData) => ({
+        ...usernameData,
+        usernameErr: true,
+        validUsername: false,
+      }));
       return;
     }
 
     if (/[a-zA-Z0-9]/.test(usernameTrimmed)) {
       addValidOutline(usernameRef);
-      setUsernameErr(false);
-      setValidUsername(true);
+
+      setUsernameData((usernameData) => ({
+        ...usernameData,
+        usernameErr: false,
+        validUsername: true,
+      }));
     }
-  }, [username]);
+  }, [usernameData.username]);
 
   const isEmail = (emailVal) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(emailVal);
 
@@ -148,22 +168,23 @@ export const SignupView = () => {
   }, [confirmPassword, password]);
 
   useEffect(() => {
+    const { validUsername } = usernameData;
     if (validUsername && validEmail && validPassword && validConfirm) {
       setValidSuccess(true);
     } else {
       setValidSuccess(false);
     }
-  }, [validUsername, validEmail, validPassword, validConfirm]);
+  }, [validEmail, validPassword, validConfirm, usernameData]);
 
   const userData = useMemo(
     () => ({
-      userName: username.trim(),
+      userName: usernameData.username.trim(),
       email: email.trim(),
       password: password.trim(),
       passwordConfirm: confirmPassword.trim(),
       role: 'user',
     }),
-    [confirmPassword, email, password, username]
+    [confirmPassword, email, password, usernameData.username]
   );
 
   useEffect(() => {
@@ -174,7 +195,10 @@ export const SignupView = () => {
         const response = await httpSignupUser(userData);
 
         if (response.error && response.type === 'username') {
-          setUsernameTaken(true);
+          setUsernameData({
+            ...usernameData,
+            usernameTaken: true,
+          });
           return;
         }
 
@@ -183,7 +207,10 @@ export const SignupView = () => {
           return;
         }
 
-        setUsername('');
+        setUsernameData({
+          ...usernameData,
+          username: '',
+        });
         setEmail('');
         setPassword('');
         setConfirmPassword('');
@@ -200,7 +227,7 @@ export const SignupView = () => {
       ignore = true;
       setSubmit(false);
     };
-  }, [submit, userData]);
+  }, [submit, userData, usernameData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -218,12 +245,12 @@ export const SignupView = () => {
           <div className={styles.fieldsWrapper}>
             <div className={styles.errBox}>
               <span
-                className={`${styles.errMessage} ${usernameErr && styles.show} ${
-                  usernameTaken && styles.show
+                className={`${styles.errMessage} ${usernameData.usernameErr && styles.show} ${
+                  usernameData.usernameTaken && styles.show
                 }`}
               >
-                {usernameTaken && 'Username taken'}
-                {usernameErr && '6 to 20 letters or numbers and no spaces'}
+                {usernameData.usernameTaken && 'Username taken'}
+                {usernameData.usernameErr && '6 to 20 letters or numbers and no spaces'}
               </span>
             </div>
             <div className={styles.fieldBox}>
@@ -240,10 +267,11 @@ export const SignupView = () => {
                 required
                 aria-required
                 tabIndex={0}
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                onChange={(e) => handleChange(e, usernameData, setUsernameData)}
+                value={usernameData.username}
                 ref={usernameRef}
-                onBlur={(e) => removeOutline(e, validUsername)}
+                onBlur={(e) => removeOutline(e, usernameData.validUsername)}
+                name={'username'}
               />
             </div>
 
