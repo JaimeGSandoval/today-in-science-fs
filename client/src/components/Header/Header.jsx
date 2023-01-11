@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { GiAtom } from 'react-icons/gi';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
 import { UserLogo } from '../UserLogo';
@@ -20,9 +21,9 @@ export const Header = () => {
         <div className={`${styles.headerBottom} ${!currentUser && styles.bottomBorder}`}>
           <div className={styles.logoBox}>
             <GiAtom className={styles.logoIcon} />
-            <a href='/' className={styles.logoText}>
+            <Link to='/' className={styles.logoText}>
               TODAY IN SCIENCE
-            </a>
+            </Link>
           </div>
           <MobileNavBtn setFn={setIsOpen} styles={styles} />
         </div>

@@ -6,6 +6,9 @@
   width: 100vw;
   max-width: 100%;
   background-color: $primaryBackground;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .signupFormBox {
@@ -24,12 +27,30 @@
   }
 }
 
+.innerContainer {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    margin: 8rem 0 7rem;
+  }
+}
+
 .loginFormBox {
   @include formBox;
   padding: 4rem 0;
+  margin-top: 1.5rem;
 
   @include mobileMd {
     width: 84vw;
+  }
+
+  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    width: 62vw;
+    width: 22rem;
+    margin: 9rem 0 5rem;
   }
 }
 
