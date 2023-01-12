@@ -25,9 +25,14 @@
   @include mobileXlg {
     padding: 4rem 0;
   }
+
+  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    width: 22rem;
+  }
 }
 
-.innerContainer {
+.innerContainer,
+.signupInnerContainer {
   height: 100vh;
   position: relative;
   display: flex;
@@ -35,6 +40,24 @@
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin: 8rem 0 7rem;
+  }
+}
+
+.signupInnerContainer {
+  margin-top: 2rem;
+
+  @media screen and (min-width: 428px) and (orientation: portrait) {
+    margin-top: 1rem;
+  }
+
+  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    margin: 12rem 0 7rem;
+  }
+}
+
+.ChromeSafariMargin {
+  @media screen and (min-width: 428px) and (orientation: portrait) {
+    margin-top: -1.5rem;
   }
 }
 
@@ -48,7 +71,6 @@
   }
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
-    width: 62vw;
     width: 22rem;
     margin: 9rem 0 5rem;
   }
