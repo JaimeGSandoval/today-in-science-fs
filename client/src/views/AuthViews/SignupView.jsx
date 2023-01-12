@@ -5,6 +5,7 @@ import { MdEmail } from 'react-icons/md';
 import { httpSignupUser } from '../../api/requests';
 import { SignupSuccessModal } from './SignupSuccessModal';
 import { Header } from '../../components/Header';
+import bowser from 'bowser';
 import styles from './_forms.module.scss';
 
 export const SignupView = () => {
@@ -52,6 +53,16 @@ export const SignupView = () => {
       e.target.classList.remove(styles.validField);
     }
   };
+
+  let customMargin = false;
+
+  var result = bowser.getParser(window.navigator.userAgent);
+  if (
+    result.parsedResult.browser.name === 'Safari' ||
+    result.parsedResult.browser.name === 'Chrome'
+  ) {
+    customMargin = true;
+  }
 
   useEffect(() => {
     setUsernameData((usernameData) => ({
@@ -307,151 +318,159 @@ export const SignupView = () => {
   };
 
   return (
-    <section className={styles.container}>
-      {submitSuccess && <SignupSuccessModal />}
+    <>
       <Header />
-      <div className={styles.signupFormBox}>
-        <h1 className={styles.headline}>Sign up</h1>
+      <section className={styles.container}>
+        {submitSuccess && <SignupSuccessModal />}
+        <div className={`${styles.signupInnerContainer} ${customMargin && styles.customMargin}`}>
+          <div className={styles.signupFormBox}>
+            <h1 className={styles.headline}>Sign up</h1>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.fieldsWrapper}>
-            <div className={styles.errBox}>
-              <span
-                className={`${styles.errMessage} ${usernameData.usernameErr && styles.show} ${
-                  usernameData.usernameTaken && styles.show
-                }`}
-              >
-                {usernameData.usernameTaken && 'Username taken'}
-                {usernameData.usernameErr && '6 to 20 letters or numbers and no spaces'}
-              </span>
-            </div>
-            <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='username'>
-                username (6 - 20) characters
-              </label>
-              <FaUser className={styles.icon} />
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.fieldsWrapper}>
+                <div className={styles.errBox}>
+                  <span
+                    className={`${styles.errMessage} ${usernameData.usernameErr && styles.show} ${
+                      usernameData.usernameTaken && styles.show
+                    }`}
+                  >
+                    {usernameData.usernameTaken && 'Username taken'}
+                    {usernameData.usernameErr && '6 to 20 letters or numbers and no spaces'}
+                  </span>
+                </div>
+                <div className={styles.fieldBox}>
+                  <label className={styles.screenReaderText} htmlFor='username'>
+                    username (6 - 20) characters
+                  </label>
+                  <FaUser className={styles.icon} />
 
-              <input
-                id='username'
-                className={styles.field}
-                type='text'
-                placeholder='Username (6 - 20) characters'
-                required
-                aria-required
-                tabIndex={0}
-                onChange={(e) => handleChange(e, usernameData, setUsernameData)}
-                value={usernameData.username}
-                ref={usernameRef}
-                onBlur={(e) => removeOutline(e, usernameData.validUsername)}
-                name={'username'}
-              />
-            </div>
+                  <input
+                    id='username'
+                    className={styles.field}
+                    type='text'
+                    placeholder='Username (6 - 20) characters'
+                    required
+                    aria-required
+                    tabIndex={0}
+                    onChange={(e) => handleChange(e, usernameData, setUsernameData)}
+                    value={usernameData.username}
+                    ref={usernameRef}
+                    onBlur={(e) => removeOutline(e, usernameData.validUsername)}
+                    name={'username'}
+                  />
+                </div>
 
-            <div className={styles.errBox}>
-              <span
-                className={`${styles.errMessage} ${emailData.emailTaken && styles.show} ${
-                  emailData.emailErr && styles.show
-                }`}
-              >
-                {emailData.emailTaken && 'Email already registered'}
-                {emailData.emailErr && 'Must be a valid email'}
-              </span>
-            </div>
+                <div className={styles.errBox}>
+                  <span
+                    className={`${styles.errMessage} ${emailData.emailTaken && styles.show} ${
+                      emailData.emailErr && styles.show
+                    }`}
+                  >
+                    {emailData.emailTaken && 'Email already registered'}
+                    {emailData.emailErr && 'Must be a valid email'}
+                  </span>
+                </div>
 
-            <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='email'>
-                email
-              </label>
-              <MdEmail className={styles.icon} />
-              <input
-                id='email'
-                className={styles.field}
-                type='email'
-                placeholder='Email'
-                required
-                aria-required
-                tabIndex={0}
-                onChange={(e) => handleChange(e, emailData, setEmailData)}
-                value={emailData.email}
-                ref={emailRef}
-                onBlur={(e) => removeOutline(e, emailData.validEmail)}
-                name='email'
-              />
-            </div>
+                <div className={styles.fieldBox}>
+                  <label className={styles.screenReaderText} htmlFor='email'>
+                    email
+                  </label>
+                  <MdEmail className={styles.icon} />
+                  <input
+                    id='email'
+                    className={styles.field}
+                    type='email'
+                    placeholder='Email'
+                    required
+                    aria-required
+                    tabIndex={0}
+                    onChange={(e) => handleChange(e, emailData, setEmailData)}
+                    value={emailData.email}
+                    ref={emailRef}
+                    onBlur={(e) => removeOutline(e, emailData.validEmail)}
+                    name='email'
+                  />
+                </div>
 
-            <div className={styles.errBox}>
-              <span className={`${styles.errMessage} ${passwordData.passwordErr && styles.show}`}>
-                Password cannot contain spaces
-              </span>
-            </div>
-            <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='password'>
-                password (min 6 characters)
-              </label>
-              <FaLock className={styles.icon} />
-              <input
-                id='password'
-                className={styles.field}
-                type='password'
-                placeholder='Password (min 6 characters)'
-                required
-                aria-required
-                tabIndex={0}
-                onChange={(e) => handleChange(e, passwordData, setPasswordData)}
-                value={passwordData.password}
-                ref={passwordRef}
-                onBlur={(e) => removeOutline(e, passwordData.validPassword)}
-                name='password'
-              />
-            </div>
+                <div className={styles.errBox}>
+                  <span
+                    className={`${styles.errMessage} ${passwordData.passwordErr && styles.show}`}
+                  >
+                    Password cannot contain spaces
+                  </span>
+                </div>
+                <div className={styles.fieldBox}>
+                  <label className={styles.screenReaderText} htmlFor='password'>
+                    password (min 6 characters)
+                  </label>
+                  <FaLock className={styles.icon} />
+                  <input
+                    id='password'
+                    className={styles.field}
+                    type='password'
+                    placeholder='Password (min 6 characters)'
+                    required
+                    aria-required
+                    tabIndex={0}
+                    onChange={(e) => handleChange(e, passwordData, setPasswordData)}
+                    value={passwordData.password}
+                    ref={passwordRef}
+                    onBlur={(e) => removeOutline(e, passwordData.validPassword)}
+                    name='password'
+                  />
+                </div>
 
-            <div className={styles.errBox}>
-              <span
-                className={`${styles.errMessage} ${confirmPasswordData.confirmErr && styles.show}`}
-              >
-                Passwords do not match
-              </span>
-            </div>
-            <div className={styles.fieldBox}>
-              <label className={styles.screenReaderText} htmlFor='confirmPassword'>
-                confirm password
-              </label>
-              <FaKey className={styles.icon} />
-              <input
-                id='confirmPassword'
-                className={styles.field}
-                type='password'
-                placeholder='Confirm password'
-                required
-                aria-required
-                tabIndex={0}
-                onChange={(e) => handleChange(e, confirmPasswordData, setConfirmPasswordData)}
-                value={confirmPasswordData.confirmPassword}
-                ref={confirmRef}
-                onBlur={(e) => removeOutline(e, confirmPasswordData.validConfirm)}
-                name='confirmPassword'
-              />
-            </div>
+                <div className={styles.errBox}>
+                  <span
+                    className={`${styles.errMessage} ${
+                      confirmPasswordData.confirmErr && styles.show
+                    }`}
+                  >
+                    Passwords do not match
+                  </span>
+                </div>
+                <div className={styles.fieldBox}>
+                  <label className={styles.screenReaderText} htmlFor='confirmPassword'>
+                    confirm password
+                  </label>
+                  <FaKey className={styles.icon} />
+                  <input
+                    id='confirmPassword'
+                    className={styles.field}
+                    type='password'
+                    placeholder='Confirm password'
+                    required
+                    aria-required
+                    tabIndex={0}
+                    onChange={(e) => handleChange(e, confirmPasswordData, setConfirmPasswordData)}
+                    value={confirmPasswordData.confirmPassword}
+                    ref={confirmRef}
+                    onBlur={(e) => removeOutline(e, confirmPasswordData.validConfirm)}
+                    name='confirmPassword'
+                  />
+                </div>
 
-            <div className={styles.forgotPasswordBox}>
-              <small>
-                Already a member? &nbsp;
-                <Link to='/login' className={styles.loginText} tabIndex={0}>
-                  Login
-                </Link>
-              </small>
-            </div>
+                <div className={styles.forgotPasswordBox}>
+                  <small>
+                    Already a member? &nbsp;
+                    <Link to='/login' className={styles.loginText} tabIndex={0}>
+                      Login
+                    </Link>
+                  </small>
+                </div>
 
-            <button
-              className={validSuccess ? styles.submitBtn : styles.disabledSubmitBtn}
-              tabIndex={0}
-              disabled={validSuccess ? false : true}
-            >
-              Sign Up
-            </button>
+                <button
+                  className={validSuccess ? styles.submitBtn : styles.disabledSubmitBtn}
+                  tabIndex={0}
+                  disabled={validSuccess ? false : true}
+                >
+                  Sign Up
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
