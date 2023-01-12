@@ -73,79 +73,84 @@ export const LoginView = () => {
   }, [userEmail, userPassword]);
 
   return (
-    <section className={styles.container}>
-      {loginSuccess && <Navigate to='/' replace={true} />}
+    <>
       <Header />
-      <div className={styles.innerContainer}>
-        <div className={styles.loginFormBox}>
-          <h1 className={styles.headline}>Login</h1>
+      <section className={styles.container}>
+        {loginSuccess && <Navigate to='/' replace={true} />}
+        <div className={styles.innerContainer}>
+          <div className={styles.loginFormBox}>
+            <h1 className={styles.headline}>Login</h1>
 
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.fieldsWrapper}>
-              <div className={styles.errBox}>
-                <span className={`${styles.errMessage} ${loginFail && styles.show}`}>
-                  {loginFail && 'Email or password is invalid'}
-                </span>
-              </div>
-              <div className={`${styles.fieldBox} ${styles.fieldBoxLogin}`}>
-                <label className={styles.screenReaderText} htmlFor='email'>
-                  email
-                </label>
-                <MdEmail className={styles.icon} />
-                <input
-                  className={styles.field}
-                  type='email'
-                  id='email'
-                  placeholder='Email'
-                  required
-                  aria-required
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.fieldsWrapper}>
+                <div className={styles.errBox}>
+                  <span className={`${styles.errMessage} ${loginFail && styles.show}`}>
+                    {loginFail && 'Email or password is invalid'}
+                  </span>
+                </div>
+                <div className={`${styles.fieldBox} ${styles.fieldBoxLogin}`}>
+                  <label className={styles.screenReaderText} htmlFor='email'>
+                    email
+                  </label>
+                  <MdEmail className={styles.icon} />
+                  <input
+                    className={styles.field}
+                    type='email'
+                    id='email'
+                    placeholder='Email'
+                    required
+                    aria-required
+                    tabIndex={0}
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                  />
+                </div>
+
+                <div className={styles.fieldBox}>
+                  <label className={styles.screenReaderText} htmlFor='password'>
+                    password
+                  </label>
+                  <FaKey className={styles.icon} />
+                  <input
+                    className={styles.field}
+                    type='password'
+                    id='password'
+                    placeholder='Password'
+                    required
+                    aria-required
+                    tabIndex={0}
+                    value={userPassword}
+                    onChange={(e) => setUserPassword(e.target.value)}
+                  />
+                </div>
+
+                <div className={styles.forgotPasswordBox}>
+                  <small>
+                    <Link to='/' className={styles.forgotText} tabIndex={0}>
+                      Forgot password
+                    </Link>{' '}
+                    &nbsp;or&nbsp;
+                    <Link to='/signup' className={styles.loginText} tabIndex={0}>
+                      Sign up
+                    </Link>
+                  </small>
+                </div>
+
+                <button
+                  className={
+                    userEmail && userPassword ? styles.submitBtn : styles.disabledSubmitBtn
+                  }
+                  disabled={!userEmail || !userPassword ? true : false}
                   tabIndex={0}
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
-                />
+                >
+                  Login
+                </button>
               </div>
-
-              <div className={styles.fieldBox}>
-                <label className={styles.screenReaderText} htmlFor='password'>
-                  password
-                </label>
-                <FaKey className={styles.icon} />
-                <input
-                  className={styles.field}
-                  type='password'
-                  id='password'
-                  placeholder='Password'
-                  required
-                  aria-required
-                  tabIndex={0}
-                  value={userPassword}
-                  onChange={(e) => setUserPassword(e.target.value)}
-                />
-              </div>
-
-              <div className={styles.forgotPasswordBox}>
-                <small>
-                  <Link to='/' className={styles.forgotText} tabIndex={0}>
-                    Forgot password
-                  </Link>{' '}
-                  &nbsp;or&nbsp;
-                  <Link to='/signup' className={styles.loginText} tabIndex={0}>
-                    Sign up
-                  </Link>
-                </small>
-              </div>
-
-              <button
-                className={userEmail && userPassword ? styles.submitBtn : styles.disabledSubmitBtn}
-                disabled={!userEmail || !userPassword ? true : false}
-                tabIndex={0}
-              >
-                Login
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+        {/* <div className={styles.spacer}></div> */}
+      </section>
+    </>
   );
 };
