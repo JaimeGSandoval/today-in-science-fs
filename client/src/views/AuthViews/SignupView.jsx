@@ -55,7 +55,6 @@ export const SignupView = () => {
   };
 
   let customMargin = false;
-
   var result = bowser.getParser(window.navigator.userAgent);
   if (
     result.parsedResult.browser.name === 'Safari' ||
