@@ -92,6 +92,15 @@
     width: 22rem;
     margin: 9rem 0 5rem;
   }
+
+  @include tablet768 {
+    padding: 5rem 0;
+  }
+
+  @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    width: 473px;
+    padding: 5rem 0;
+  }
 }
 
 .headline {
