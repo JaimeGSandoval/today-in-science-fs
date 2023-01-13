@@ -3,30 +3,36 @@
 @import '../../sass/media-queries';
 
 .container {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.9);
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  // position: fixed;
+  // background: rgba(0, 0, 0, 0.9);
+  // top: 0;
+  // left: 0;
+  // width: 100vw;
+  // height: 100vh;
+  @include modalContainer;
 }
 
 .innerContainer {
-  width: 88vw;
-  height: fit-content;
+  @include modalInnerContainer;
   padding: 2rem 1rem;
-  background-color: rgb(55, 54, 54);
-  border-radius: 0.6rem;
-  position: fixed;
   bottom: 1rem;
-  top: 50%;
-  left: 50%;
-  transform: translate((-50%, -55%));
 
   @include landscapeXs {
     max-width: 36rem;
     transform: translate((-50%, -50%));
   }
+}
+
+.confirmUpdateInner {
+  @include modalInnerContainer;
+  max-width: 330px;
+  padding: 0 1rem 5rem;
+}
+
+.confirmUpdateInnerPasswordEmail {
+  @include modalInnerContainer;
+  max-width: 330px;
+  padding: 0 1rem 2rem;
 }
 
 .infoBox,
