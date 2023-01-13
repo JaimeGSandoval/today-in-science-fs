@@ -1,4 +1,5 @@
 @import '../../sass/variables';
+@import '../../sass/media-queries';
 
 .container {
   margin-top: 100px;
@@ -31,6 +32,11 @@
 
 .articlesOuterContainer {
   margin-top: 4rem;
+
+  // @include tablet768 {
+  //   max-width: 67rem;
+  //   margin: 4rem auto 0;
+  // }
 }
 
 .noArticles {
@@ -42,7 +48,7 @@
 }
 
 .articlesContainer {
-  width: 97%;
+  width: 100%;
   margin-top: 1rem;
 }
 

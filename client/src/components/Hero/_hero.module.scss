@@ -33,20 +33,16 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  // transition: height 1000s steps(1);
 }
 
 .heroInfoBox {
-  width: 92%;
+  // width: 92%;
+  width: 90vw;
   color: white;
   font-family: $primaryFont;
   z-index: 20;
   position: relative;
   margin-top: 4rem;
-
-  @include mobileLg {
-    // bottom: 0.5rem;
-  }
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin-top: 4rem;
@@ -74,6 +70,10 @@
 
   @include mobileLg {
     padding-top: 2.2rem;
+  }
+
+  @include tablet1024 {
+    width: 80%;
   }
 }
 

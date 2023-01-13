@@ -1,5 +1,12 @@
+@import '../../sass/media-queries';
+
 .container {
   min-height: 100%;
-  width: 94vw;
+  width: 90vw;
   margin: auto;
+
+  @include tablet768 {
+    max-width: 67rem;
+    // width: 92vw;
+  }
 }
