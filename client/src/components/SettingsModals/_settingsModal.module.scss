@@ -1,5 +1,6 @@
 @import '../../sass//mixins';
 @import '../../sass/variables';
+@import '../../sass/media-queries';
 
 .container {
   position: fixed;
@@ -11,10 +12,21 @@
 }
 
 .innerContainer {
-  @include formBox;
+  width: 88vw;
+  height: fit-content;
+  padding: 2rem 1rem;
+  background-color: rgb(55, 54, 54);
+  border-radius: 0.6rem;
   position: fixed;
   bottom: 1rem;
+  top: 50%;
+  left: 50%;
   transform: translate((-50%, -55%));
+
+  @include landscapeXs {
+    max-width: 36rem;
+    transform: translate((-50%, -50%));
+  }
 }
 
 .infoBox,
@@ -43,12 +55,21 @@
   margin: 0.2rem 0;
 }
 
-.titleText {
+.inputField::placeholder {
+  font-size: 0.8rem;
+}
+
+.titleText,
+.passwordTitle {
   display: block;
   text-align: left;
   font-size: 1.2rem;
   line-height: 2.7rem;
-  padding: 1rem 0;
+  padding-bottom: 1rem;
+}
+
+.passwordTitle {
+  padding-bottom: 0;
 }
 
 .emailText,
@@ -75,6 +96,7 @@
 .btnBox {
   margin-top: 3rem;
   width: 100%;
+  display: flex;
 }
 
 .btnBoxInner {
@@ -152,7 +174,6 @@
 .disabledBtn {
   background-color: rgb(214, 214, 214);
   font-size: 0.9rem;
-  // padding: 0.4rem 0.6rem;
   width: 4.375rem;
 
   border-radius: 0.2rem;
@@ -165,8 +186,10 @@
   padding: 1rem 0;
 }
 
-.customHeight {
-  height: 330px;
+.customPasswordPadding {
+  @media screen and (max-width: 640px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    padding: 0;
+  }
 }
 
 .screenReaderText {

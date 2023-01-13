@@ -31,13 +31,12 @@
 .deleteFieldBtn {
   color: white;
   display: block;
-  color: $secondaryFontColor;
   margin: 3rem 0;
   font-size: 1.2rem;
   background-color: transparent;
   border: none;
   padding-left: 0;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .fieldItem {
@@ -55,6 +54,8 @@
 }
 
 .deleteFieldBtn {
-  color: red;
-  font-size: 1.2rem;
+  background-color: firebrick;
+  font-size: 1rem;
+  padding: 0.7rem;
+  border-radius: 5px;
 }

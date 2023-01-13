@@ -125,12 +125,12 @@ export const PasswordModal = ({ isOpen, setIsOpen, updateType, setConfirm }) => 
           <div className={styles.container} onClick={() => setIsOpen(false)}></div>
           <form
             className={`${styles.innerContainer} ${
-              updateType === 'password' && styles.customHeight
+              updateType === 'password' && styles.customPasswordPadding
             }`}
             onSubmit={(e) => handleSubmit(e)}
           >
             <div className={styles.infoBox}>
-              <h1 className={styles.titleText}>Reset Password</h1>
+              <h1 className={styles.passwordTitle}>Reset Password</h1>
 
               <div className={styles.errBox}>
                 <span

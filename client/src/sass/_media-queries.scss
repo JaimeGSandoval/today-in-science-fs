@@ -15,3 +15,9 @@
     @content;
   }
 }
+
+@mixin landscapeXs {
+  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    @content;
+  }
+}

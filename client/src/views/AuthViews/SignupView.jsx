@@ -321,9 +321,7 @@ export const SignupView = () => {
       <Header />
       <section className={styles.container}>
         {submitSuccess && <SignupSuccessModal />}
-        <div
-          className={`${styles.signupInnerContainer} ${customMargin && styles.ChromeSafariMargin}`}
-        >
+        <div className={`${styles.signupInnerContainer} ${customMargin && styles.customMargin}`}>
           <div className={styles.signupFormBox}>
             <h1 className={styles.headline}>Sign up</h1>
 
