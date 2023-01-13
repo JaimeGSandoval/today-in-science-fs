@@ -29,6 +29,15 @@
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     width: 22rem;
   }
+
+  @include tablet768 {
+    padding: 5rem 0;
+  }
+
+  @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    width: 473px;
+    padding: 5rem 0;
+  }
 }
 
 .innerContainer,
@@ -37,6 +46,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  max-width: 473px;
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin: 8rem 0 7rem;
@@ -52,6 +62,10 @@
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin: 12rem 0 7rem;
+  }
+
+  @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    margin-top: 7rem;
   }
 }
 
@@ -77,6 +91,15 @@
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     width: 22rem;
     margin: 9rem 0 5rem;
+  }
+
+  @include tablet768 {
+    padding: 5rem 0;
+  }
+
+  @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+    width: 473px;
+    padding: 5rem 0;
   }
 }
 

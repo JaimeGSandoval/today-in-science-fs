@@ -11,8 +11,8 @@ export const SignupModal = ({ isOpen, setIsOpen }) => {
           <div className={styles.innerContainer}>
             <div className={styles.infoBox}>
               <span className={styles.text}>
-                You must be logged in to add an article to favorites or read later. Would you like
-                to{' '}
+                You must be logged in to add an article to a favorites or read later list. Would you
+                like to{' '}
                 <Link className={styles.link} to='/login'>
                   login
                 </Link>{' '}
