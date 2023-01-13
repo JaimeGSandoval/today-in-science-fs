@@ -1,8 +1,15 @@
 @import '../../sass/variables';
+@import '../../sass/media-queries';
 
 .container {
-  width: 88vw;
+  // width: 88vw;
+  width: 100%;
   margin: 0 auto 2rem;
+
+  // @include tablet768 {
+  //   max-width: 67rem;
+  //   margin-top: 5rem;
+  // }
 }
 
 .headline {
