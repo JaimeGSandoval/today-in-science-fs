@@ -31,7 +31,14 @@ export const ConfirmModal = ({ setConfirm, updateType }) => {
     <>
       {
         <div className={styles.container} onClick={handleClose}>
-          <div className={styles.innerContainer} data-inner={'inner'}>
+          <div
+            className={`${
+              updateType === 'username'
+                ? styles.confirmUpdateInner
+                : styles.confirmUpdateInnerPasswordEmail
+            }`}
+            data-inner={'inner'}
+          >
             <div className={styles.closeBox}>
               <RiCloseFill style={closeStyle} onClick={handleClose}></RiCloseFill>
             </div>

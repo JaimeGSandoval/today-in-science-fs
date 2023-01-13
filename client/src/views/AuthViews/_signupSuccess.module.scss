@@ -1,15 +1,18 @@
 @import '../../sass//mixins';
 @import '../../sass/variables';
+@import '../../sass/media-queries';
 
 .container {
   @include modalContainer;
 }
 
 .innerContainer {
-  @include formBox;
-  position: relative;
-  bottom: 1rem;
-  transform: translate((-50%, -55%));
+  @include modalInnerContainer;
+  max-width: 330px;
+
+  @include landscapeXs {
+    max-width: 499px;
+  }
 }
 
 .infoBox {

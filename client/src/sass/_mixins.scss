@@ -22,6 +22,17 @@
   // transform: translate((-50%, -45%));
 }
 
+@mixin modalInnerContainer {
+  width: 88vw;
+  position: fixed;
+  transform: translate((-50%, -50%));
+  background-color: rgb(55, 54, 54);
+  top: 50%;
+  left: 50%;
+  height: fit-content;
+  border-radius: 0.6rem;
+}
+
 @mixin logoText {
   margin-left: 0.3rem;
   text-decoration: none;
@@ -42,5 +53,5 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 20;
+  // z-index: 20;
 }
