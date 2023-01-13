@@ -21,3 +21,10 @@
     @content;
   }
 }
+
+// and (orientation: portrait)
+@mixin tablet768 {
+  @media screen and (min-width: 768px) and (pointer: coarse) and (hover: none) {
+    @content;
+  }
+}

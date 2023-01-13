@@ -13,6 +13,10 @@
   @include landscapeXs {
     max-width: 499px;
   }
+
+  @include tablet768 {
+    max-width: 441px;
+  }
 }
 
 .infoBox {
@@ -29,6 +33,12 @@
   font-size: 1.2rem;
   line-height: 2.7rem;
   padding: 1rem 0.5rem;
+
+  @include tablet768 {
+    font-size: 1.4rem;
+    padding: 4rem 2rem;
+    line-height: 3rem;
+  }
 }
 
 .link {
