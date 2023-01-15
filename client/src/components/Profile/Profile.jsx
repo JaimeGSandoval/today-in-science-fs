@@ -21,6 +21,7 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
 
   useEffect(() => {
     let ignore = false;
+    const storageKeys = ['favorite-articles', 'read-later-articles', 'articles'];
 
     const fetchData = async () => {
       if (!ignore) {
@@ -28,6 +29,9 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
 
         if (response.ok) {
           setLogoutSuccess(true);
+          localStorage.removeItem('currentUser');
+          storageKeys.forEach((key) => sessionStorage.removeItem(key));
+          setCurrentUser(null);
         }
       }
     };
@@ -39,7 +43,7 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
     return () => {
       ignore = true;
     };
-  }, [logout]);
+  }, [logout, setCurrentUser]);
 
   useEffect(() => {
     let ignore = false;
