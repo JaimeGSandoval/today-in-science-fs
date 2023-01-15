@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
-import { DesktopNav } from '../DesktopNav/DesktopNav';
+import { DesktopNav } from '../DesktopNav';
 import { UserLogo } from '../UserLogo';
 import styles from './_headerLogo.module.scss';
 
