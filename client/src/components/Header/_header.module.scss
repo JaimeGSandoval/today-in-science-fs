@@ -91,4 +91,8 @@
   @include mobileLg {
     font-size: 1.2rem;
   }
+
+  @include laptop992 {
+    font-size: 1.4rem;
+  }
 }

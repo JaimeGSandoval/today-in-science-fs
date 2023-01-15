@@ -43,6 +43,7 @@
   z-index: 20;
   position: relative;
   margin-top: 4rem;
+  max-width: 87.5rem;
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin-top: 4rem;
@@ -87,6 +88,10 @@
   @include mobileLg {
     font-size: 1.4rem;
     line-height: 2.6rem;
+  }
+
+  @include laptop992 {
+    font-size: 1.3rem;
   }
 }
 
