@@ -1,8 +1,10 @@
 export const checkUser = (user, val, setVal) => {
   if (!user) {
     setVal(!val);
-    return;
+    return false;
   }
+
+  return true;
 };
 
 export const updateSessionStorage = (type, articles, title, bool) => {

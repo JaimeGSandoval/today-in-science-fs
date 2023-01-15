@@ -40,9 +40,20 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
   const addArticle = useCallback(
     async (type) => {
-      checkUser(currentUser, isOpen, setIsOpen);
       const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
       let updatedArticles;
+      const isLoggedIn = checkUser(currentUser, isOpen, setIsOpen);
+
+      if (!isLoggedIn) {
+        if (type === 'favorite') {
+          setAddFavArticle(false);
+        } else {
+          setAddReadArticle(false);
+        }
+
+        setIsOpen(true);
+        return;
+      }
 
       if (type === 'favorite') {
         const response = await httpAddArticle(favoriteArticleData);

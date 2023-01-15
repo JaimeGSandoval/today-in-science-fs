@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
-import { UserContext } from '../../context/User.context';
+import { DesktopNav } from '../DesktopNav/DesktopNav';
 import { UserLogo } from '../UserLogo';
 import styles from './_headerLogo.module.scss';
 
 export const HeaderLogo = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const currentUserContext = useContext(UserContext);
-  const { currentUser } = currentUserContext;
+  const currentUser = localStorage.getItem('currentUser');
 
   return (
     <>
@@ -16,6 +15,7 @@ export const HeaderLogo = () => {
           <div className={styles.innerContainer}>
             <div className={styles.logoBox}>{currentUser && <UserLogo styles={styles} />}</div>
             <MobileNavBtn setFn={setIsOpen} />
+            <DesktopNav />
           </div>
         </div>
         <MobileNavMenu isOpen={isOpen} setIsOpen={setIsOpen} />

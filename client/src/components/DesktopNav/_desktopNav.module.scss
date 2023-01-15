@@ -1,0 +1,23 @@
+@import '../../sass//media-queries';
+
+.desktopNav {
+  width: 300px;
+  display: none;
+  justify-content: flex-end;
+
+  @include laptop992 {
+    display: flex;
+  }
+}
+
+.navList {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navLink {
+  color: white;
+  text-decoration: none;
+  margin-left: 2rem;
+}

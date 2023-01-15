@@ -12,6 +12,10 @@
   margin: auto;
   overflow: scroll;
   z-index: 20;
+
+  @include laptop992 {
+    display: none;
+  }
 }
 
 .innerContainer {
@@ -97,8 +101,12 @@
   color: #222;
   text-decoration: none;
 
-  @media screen and (orientation: landscape) {
+  @include landscapeXs {
     margin-top: 0;
+  }
+
+  @include tablet768 {
+    font-size: 1.6rem;
   }
 }
 
@@ -113,6 +121,10 @@
   outline: 0;
   border: none;
   height: 21px;
+
+  @include laptop992 {
+    display: none;
+  }
 }
 
 .navBtnBox span:nth-of-type(2) {
@@ -144,6 +156,10 @@
   display: block;
   width: 100%;
   text-transform: capitalize;
+
+  @include tablet768 {
+    font-size: 1.4rem;
+  }
 }
 
 .modalOpen {

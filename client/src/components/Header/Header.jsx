@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiAtom } from 'react-icons/gi';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
+import { DesktopNav } from '../DesktopNav/DesktopNav';
 import { UserLogo } from '../UserLogo';
 import styles from './_header.module.scss';
 
@@ -26,6 +27,7 @@ export const Header = () => {
             </Link>
           </div>
           <MobileNavBtn setFn={setIsOpen} styles={styles} />
+          <DesktopNav />
         </div>
       </div>
       <MobileNavMenu isOpen={isOpen} setIsOpen={setIsOpen} />
