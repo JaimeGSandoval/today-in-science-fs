@@ -33,3 +33,9 @@
     @content;
   }
 }
+
+@mixin laptop992 {
+  @media screen and (min-width: 992px) {
+    @content;
+  }
+}
