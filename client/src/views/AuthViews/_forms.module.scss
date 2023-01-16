@@ -15,7 +15,7 @@
   @include formBox;
   overflow: hidden;
   padding: 3rem 0.3rem;
-  max-width: 22rem;
+  max-width: 18rem;
   width: 80vw;
 
   @include mobileMd {
@@ -29,10 +29,12 @@
 
   @include tablet768 {
     padding: 5rem 1rem;
+    max-width: 22rem;
   }
 
   @include laptop992 {
     padding: 5rem 1rem;
+    max-width: 22rem;
   }
 
   @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
@@ -47,7 +49,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  max-width: 473px;
+  // max-width: 29.5rem;
 
   @include landscapeXs {
     margin: 8rem 0 7rem;
@@ -88,10 +90,9 @@
   @include formBox;
   padding: 4rem 0;
   margin-top: 1.5rem;
+  max-width: 18rem;
 
-  @include mobileMd {
-    width: 84vw;
-  }
+  width: 81vw;
 
   @include landscapeXs {
     width: 22rem;
@@ -100,6 +101,11 @@
 
   @include tablet768 {
     padding: 5rem 0;
+    max-width: 22rem;
+  }
+
+  @include laptop992 {
+    max-width: 22rem;
   }
 
   @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
