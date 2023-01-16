@@ -93,6 +93,10 @@
   line-height: 1.9rem;
   font-size: 1.3rem;
   margin-bottom: 1rem;
+
+  @include desktop1200 {
+    font-size: 1.5rem;
+  }
 }
 
 .cardText {
@@ -100,6 +104,11 @@
   color: $secondaryFontColor;
   line-height: 1.7rem;
   margin-bottom: 1.3rem;
+
+  @include desktop1200 {
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
 }
 
 .cardDate,
@@ -123,6 +132,10 @@
   padding: 11px 17px;
   background-color: $primaryBlue;
   border-radius: 5px;
+
+  &:hover {
+    background: #65affe;
+  }
 }
 
 .cardFooter {
@@ -163,4 +176,14 @@
 
 .bookmarkFill {
   color: $iconGold;
+}
+
+.outlineStar,
+.fillStar,
+.bookmarkOutline,
+.bookmarkFill,
+.trashIcon {
+  &:hover {
+    cursor: pointer;
+  }
 }
