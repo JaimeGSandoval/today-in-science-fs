@@ -8,7 +8,8 @@
   font-family: $primaryFont;
   align-self: center;
   margin-top: 2rem;
-  padding: 1rem 2.3rem;
+  // padding: 1rem 2.3rem;
+  padding: 0.8rem 1.4rem;
 }
 
 @mixin formBox {
@@ -16,10 +17,6 @@
   width: 88vw;
   background-color: rgb(55, 54, 54);
   border-radius: 0.6rem;
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate((-50%, -45%));
 }
 
 @mixin modalInnerContainer {

@@ -12,18 +12,15 @@
 }
 
 .signupFormBox {
-  overflow: hidden;
-
   @include formBox;
-  padding: 2rem 0;
+  overflow: hidden;
+  padding: 3rem 0.3rem;
+  max-width: 22rem;
+  width: 80vw;
 
   @include mobileMd {
-    width: 84vw;
-    padding: 2.5rem 0;
-  }
-
-  @include mobileXlg {
-    padding: 4rem 0;
+    width: 77vw;
+    padding: 4rem 0.5rem;
   }
 
   @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
@@ -31,12 +28,16 @@
   }
 
   @include tablet768 {
-    padding: 5rem 0;
+    padding: 5rem 1rem;
+  }
+
+  @include laptop992 {
+    padding: 5rem 1rem;
   }
 
   @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
-    width: 473px;
-    padding: 5rem 0;
+    // width: 473px;
+    padding: 5rem 1rem;
   }
 }
 
@@ -48,7 +49,7 @@
   align-items: center;
   max-width: 473px;
 
-  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+  @include landscapeXs {
     margin: 8rem 0 7rem;
   }
 }
@@ -56,16 +57,20 @@
 .signupInnerContainer {
   margin-top: 2rem;
 
-  @media screen and (min-width: 428px) and (orientation: portrait) {
+  @include mobileXlg {
     margin-top: 1rem;
   }
 
-  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+  @include landscapeXs {
     margin: 12rem 0 7rem;
   }
 
   @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
     margin-top: 7rem;
+  }
+
+  @include laptop992 {
+    margin-top: 0;
   }
 }
 
@@ -88,7 +93,7 @@
     width: 84vw;
   }
 
-  @media screen and (orientation: landscape) and (pointer: coarse) and (hover: none) {
+  @include landscapeXs {
     width: 22rem;
     margin: 9rem 0 5rem;
   }
@@ -98,7 +103,7 @@
   }
 
   @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {
-    width: 473px;
+    width: 29rem;
     padding: 5rem 0;
   }
 }
@@ -107,7 +112,15 @@
   font-family: $primaryFont;
   font-weight: 500;
   text-align: center;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
+
+  @include tablet768 {
+    font-size: 1.5rem;
+  }
+
+  @include laptop992 {
+    font-size: 1.5rem;
+  }
 }
 
 .fieldsWrapper {
@@ -135,7 +148,7 @@
   border-radius: 0.2rem;
   outline: 2px solid transparent;
   border: 1px solid transparent;
-  padding: 0.5rem 0.4rem;
+  padding: 0.3rem 0.4rem;
   font-family: $primaryFont;
 }
 
