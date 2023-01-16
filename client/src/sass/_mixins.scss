@@ -9,6 +9,11 @@
   align-self: center;
   margin-top: 2rem;
   padding: 0.8rem 1.4rem;
+
+  &:hover {
+    cursor: pointer;
+    background: $hoverBlue;
+  }
 }
 
 @mixin formBox {

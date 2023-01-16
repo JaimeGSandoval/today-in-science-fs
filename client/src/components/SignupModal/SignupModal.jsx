@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { RiCloseFill } from 'react-icons/ri';
 import { createPortal } from 'react-dom';
 import styles from './_signupModal.module.scss';
 
@@ -15,11 +16,22 @@ export const SignupModal = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
+  const closeStyle = {
+    color: 'white',
+    fontSize: '2rem',
+    cursor: 'pointer',
+    marginTop: '0.5rem',
+    marginRight: '0.5rem',
+  };
+
   return createPortal(
     <>
       {isOpen && (
         <div className={styles.container} onClick={handleClose}>
           <div className={styles.innerContainer} data-inner={'inner'}>
+            <div className={styles.closeBox}>
+              <RiCloseFill style={closeStyle}></RiCloseFill>
+            </div>
             <div className={styles.infoBox} data-infobox={'infoBox'}>
               <span className={styles.text} data-inner={'text'}>
                 You must be logged in to add an article to a favorites or read later list. Would you

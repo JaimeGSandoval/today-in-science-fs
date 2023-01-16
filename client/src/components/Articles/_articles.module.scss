@@ -28,16 +28,11 @@
   display: grid;
   grid-template-columns: 1fr;
   margin: 1rem auto 0 auto;
-  // width: 94%;
+  max-width: 70rem;
 }
 
 .articlesOuterContainer {
   margin-top: 4rem;
-
-  // @include tablet768 {
-  //   max-width: 67rem;
-  //   margin: 4rem auto 0;
-  // }
 }
 
 .noArticles {
@@ -134,7 +129,7 @@
   border-radius: 5px;
 
   &:hover {
-    background: #65affe;
+    background: $hoverBlue;
   }
 }
 
