@@ -18,7 +18,6 @@
   bottom: 0;
   background-position: 50% 50%;
   object-fit: cover;
-  // transition: height 1000s steps(1);
 }
 
 .overlay {
@@ -36,7 +35,6 @@
 }
 
 .heroInfoBox {
-  // width: 92%;
   width: 90vw;
   color: white;
   font-family: $primaryFont;
@@ -64,6 +62,10 @@
   @include mobileLg {
     font-size: 1.2rem;
   }
+
+  @include desktop1200 {
+    font-size: 1.1rem;
+  }
 }
 
 .titleContainer {
@@ -75,6 +77,10 @@
 
   @include tablet1024 {
     width: 80%;
+  }
+
+  @include desktop1200 {
+    padding-top: 2rem;
   }
 }
 
@@ -93,6 +99,10 @@
   @include laptop992 {
     font-size: 1.3rem;
   }
+
+  @include desktop1200 {
+    font-size: 1.5rem;
+  }
 }
 
 .articleDate {
@@ -100,6 +110,11 @@
   color: $secondaryFontColor;
   margin: 1.5rem 0 1.9rem;
   font-size: 0.8rem;
+
+  @include desktop1200 {
+    font-size: 1rem;
+    margin: 2rem 0 1.9rem;
+  }
 }
 
 .cardBtn {
@@ -121,4 +136,12 @@
   background-color: $primaryBlue;
   border-radius: 5px;
   font-size: 0.9rem;
+
+  &:hover {
+    background: #65affe;
+  }
+
+  @include desktop1200 {
+    font-size: 1rem;
+  }
 }
