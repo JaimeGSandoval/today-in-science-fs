@@ -149,7 +149,6 @@ export const LoginView = () => {
             </form>
           </div>
         </div>
-        {/* <div className={styles.spacer}></div> */}
       </section>
     </>
   );

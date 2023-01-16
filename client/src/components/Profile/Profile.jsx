@@ -19,6 +19,23 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
   const [deleteUser, setDeleteUser] = useState(false);
   const [deleteUserSuccess, setDeleteUserSuccess] = useState(false);
 
+  const settingsFields = [
+    {
+      text: 'Username',
+      updateType: 'username',
+      fieldProp: currentUser && currentUser.user_name,
+    },
+    {
+      text: 'Email',
+      updateType: 'email',
+      fieldProp: currentUser && currentUser.email,
+    },
+    {
+      text: 'Reset Password',
+      updateType: 'password',
+    },
+  ];
+
   useEffect(() => {
     let ignore = false;
     const storageKeys = ['favorite-articles', 'read-later-articles', 'articles'];
@@ -87,10 +104,16 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
           <section className={styles.section}>
             <h1 className={styles.sectionTitle}>Lists</h1>
             <div className={styles.fieldBox}>
-              <Link to='/articles/favorite-articles' className={styles.fieldLink}>
+              <Link
+                to='/articles/favorite-articles'
+                className={`${styles.fieldLink} ${styles.listLink}`}
+              >
                 Favorite Articles
               </Link>
-              <Link to='/articles/read-later-articles' className={styles.fieldLink}>
+              <Link
+                to='/articles/read-later-articles'
+                className={`${styles.fieldLink} ${styles.listLink}`}
+              >
                 Read Later Articles
               </Link>
             </div>
@@ -99,7 +122,23 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
           <section className={styles.section}>
             <h1 className={styles.sectionTitle}>Settings</h1>
             <div className={styles.fieldsContainer}>
-              <div className={styles.fieldItem}>
+              {settingsFields.map((field) => (
+                <div className={styles.fieldItem} key={field.text}>
+                  <span className={styles.fieldBtn}>{`${field.text}${
+                    field.updateType !== 'password' ? ':' : ''
+                  } ${
+                    currentUser && field.updateType !== 'password' ? field.fieldProp : ''
+                  }`}</span>{' '}
+                  <MdOutlineModeEditOutline
+                    className={styles.editIcon}
+                    onClick={() => {
+                      setIsOpen(true);
+                      setUpdateType(field.updateType);
+                    }}
+                  />
+                </div>
+              ))}
+              {/* <div className={styles.fieldItem}>
                 <span className={styles.fieldBtn}>{`Username: ${
                   currentUser && currentUser.user_name
                 }`}</span>{' '}
@@ -110,8 +149,8 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
                     setUpdateType('username');
                   }}
                 />
-              </div>
-              <div className={styles.fieldItem}>
+              </div> */}
+              {/* <div className={styles.fieldItem}>
                 <span className={styles.fieldBtn}>{`Email: ${
                   currentUser && currentUser.email
                 }`}</span>{' '}
@@ -122,8 +161,8 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
                     setUpdateType('email');
                   }}
                 />
-              </div>
-              <div className={styles.fieldItem}>
+              </div> */}
+              {/* <div className={styles.fieldItem}>
                 <span className={styles.fieldBtn}>Reset Password</span>{' '}
                 <MdOutlineModeEditOutline
                   className={styles.editIcon}
@@ -132,8 +171,11 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
                     setUpdateType('password');
                   }}
                 />
-              </div>
-              <span className={styles.fieldItem} onClick={() => setLogout(true)}>
+              </div> */}
+              <span
+                className={`${styles.fieldItem} ${styles.logoutBtn}`}
+                onClick={() => setLogout(true)}
+              >
                 Log Out
               </span>
             </div>

@@ -5,6 +5,10 @@
   margin-top: 2rem;
   font-family: $primaryFont;
   border-bottom: 1px solid $primaryBlue;
+
+  max-width: 60rem;
+  margin: auto;
+  padding: 2rem 0;
 }
 
 .sectionTitle {
@@ -24,6 +28,12 @@
   display: inline-block;
   color: $secondaryFontColor;
   margin-right: 0.5rem;
+
+  @include laptop992 {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .fieldItem,
@@ -46,6 +56,21 @@
   justify-content: space-between;
 }
 
+.listLink,
+.logoutBtn {
+  @include laptop992 {
+    &:hover {
+      color: $hoverBlue;
+      cursor: pointer;
+    }
+  }
+}
+
+.logoutBtn {
+  display: inline-block;
+  margin-top: 0;
+}
+
 .field {
   text-decoration: none;
 }
@@ -59,4 +84,9 @@
   font-size: 1rem;
   padding: 0.7rem;
   border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background: rgb(209, 89, 89);
+  }
 }

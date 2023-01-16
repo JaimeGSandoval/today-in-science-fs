@@ -5,9 +5,10 @@
 .header {
   position: static;
   font-family: $primaryFont;
-  // width: 94vw;
   width: 90vw;
   z-index: 10;
+  border-bottom: 1px solid white;
+  padding-bottom: 1rem;
 
   @include mobileXlg {
     padding: 1rem 0;
