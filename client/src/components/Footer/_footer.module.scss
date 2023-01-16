@@ -2,14 +2,17 @@
 @import '../../sass/media-queries';
 
 .container {
-  // width: 88vw;
   width: 100%;
   margin: 0 auto 2rem;
+}
 
-  // @include tablet768 {
-  //   max-width: 67rem;
-  //   margin-top: 5rem;
-  // }
+.nav {
+  @include laptop992 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 0;
+  }
 }
 
 .headline {
@@ -17,6 +20,10 @@
   font-size: 1.2rem;
   color: white;
   margin: 2rem 0 1rem 0;
+
+  @include laptop992 {
+    text-align: center;
+  }
 }
 
 .navLink {

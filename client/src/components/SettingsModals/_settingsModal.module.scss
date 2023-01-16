@@ -3,12 +3,6 @@
 @import '../../sass/media-queries';
 
 .container {
-  // position: fixed;
-  // background: rgba(0, 0, 0, 0.9);
-  // top: 0;
-  // left: 0;
-  // width: 100vw;
-  // height: 100vh;
   @include modalContainer;
 }
 
@@ -20,6 +14,10 @@
   @include landscapeXs {
     max-width: 36rem;
     transform: translate((-50%, -50%));
+  }
+
+  @include laptop992 {
+    max-width: 25rem;
   }
 }
 

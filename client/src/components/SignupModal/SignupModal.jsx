@@ -4,13 +4,24 @@ import { createPortal } from 'react-dom';
 import styles from './_signupModal.module.scss';
 
 export const SignupModal = ({ isOpen, setIsOpen }) => {
+  const handleClose = async (e) => {
+    if (
+      e.target.attributes.getNamedItem('data-inner') ||
+      e.target.attributes.getNamedItem('data-text') ||
+      e.target.attributes.getNamedItem('data-infoBox')
+    )
+      return;
+
+    setIsOpen(false);
+  };
+
   return createPortal(
     <>
       {isOpen && (
-        <div className={styles.container} onClick={() => setIsOpen(!isOpen)}>
-          <div className={styles.innerContainer}>
-            <div className={styles.infoBox}>
-              <span className={styles.text}>
+        <div className={styles.container} onClick={handleClose}>
+          <div className={styles.innerContainer} data-inner={'inner'}>
+            <div className={styles.infoBox} data-infobox={'infoBox'}>
+              <span className={styles.text} data-inner={'text'}>
                 You must be logged in to add an article to a favorites or read later list. Would you
                 like to{' '}
                 <Link className={styles.link} to='/login'>
