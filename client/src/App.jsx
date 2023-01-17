@@ -4,12 +4,14 @@ import { HomeView } from './views/HomeView';
 import { ArticlesView } from './views/ArticlesView/ArticlesView';
 import { DashboardView } from './views/DashboardView';
 import { SignupView, LoginView } from './views/AuthViews';
+import { Header } from './components/Header';
 import { NoRouteView } from './views/NoRouteView/NoRouteView';
 
 function App() {
   return (
     <div className='App'>
       <Centered>
+        <Header />
         <main>
           <Routes>
             <Route path='/' element={<HomeView />} />

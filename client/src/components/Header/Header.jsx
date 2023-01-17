@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GiAtom } from 'react-icons/gi';
 import { MobileNavMenu, MobileNavBtn } from '../MobileNav';
 import { DesktopNav } from '../DesktopNav';
 import { UserLogo } from '../UserLogo';
+import { UserContext } from '../../context/User.context';
 import styles from './_header.module.scss';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const currentUser = localStorage.getItem('currentUser');
+  const { currentUser } = useContext(UserContext);
 
   return (
     <header className={styles.header}>
@@ -27,7 +28,7 @@ export const Header = () => {
             </Link>
           </div>
           <MobileNavBtn setFn={setIsOpen} styles={styles} />
-          <DesktopNav />
+          {<DesktopNav />}
         </div>
       </div>
       <MobileNavMenu isOpen={isOpen} setIsOpen={setIsOpen} />

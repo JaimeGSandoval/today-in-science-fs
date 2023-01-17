@@ -16,6 +16,12 @@
 
   @include tablet768 {
     max-width: 441px;
+    max-height: 264px;
+  }
+
+  @include laptop992 {
+    max-width: 441px;
+    max-height: 264px;
   }
 }
 
@@ -36,7 +42,14 @@
 
   @include tablet768 {
     font-size: 1.4rem;
-    padding: 4rem 2rem;
+    padding: 2rem 2rem 4rem;
+    padding-top: 33px;
+    line-height: 3rem;
+  }
+
+  @include laptop992 {
+    font-size: 1.4rem;
+    padding: 2rem 2rem 4rem;
     line-height: 3rem;
   }
 }

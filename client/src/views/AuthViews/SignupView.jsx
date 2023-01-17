@@ -4,7 +4,7 @@ import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { httpSignupUser } from '../../api/requests';
 import { SignupSuccessModal } from './SignupSuccessModal';
-import { Header } from '../../components/Header';
+// import { Header } from '../../components/Header';
 import bowser from 'bowser';
 import styles from './_forms.module.scss';
 
@@ -319,7 +319,6 @@ export const SignupView = () => {
 
   return (
     <>
-      <Header />
       <section className={styles.container}>
         {successModalOpen && <SignupSuccessModal setSuccessModalOpen={setSuccessModalOpen} />}
         <div className={`${styles.signupInnerContainer} ${customMargin && styles.customMargin}`}>

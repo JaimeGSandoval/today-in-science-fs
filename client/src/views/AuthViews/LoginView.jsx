@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { UserContext } from '../../context/User.context';
-import { Header } from '../../components/Header';
+// import { Header } from '../../components/Header';
 import { httpLoginUser } from '../../api/requests';
 import styles from './_forms.module.scss';
 
@@ -74,7 +74,6 @@ export const LoginView = () => {
 
   return (
     <>
-      <Header />
       <section className={styles.container}>
         {loginSuccess && <Navigate to='/' replace={true} />}
         <div className={styles.innerContainer}>

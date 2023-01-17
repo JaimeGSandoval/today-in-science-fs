@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Header } from '../../components/Header';
+// import { Header } from '../../components/Header';
 import { Hero } from '../../components/Hero';
 import { HomeArticlesContainer as Articles } from '../../components/Articles';
 import { ScrollToTop } from '../../components/ScrollToTop';
@@ -89,7 +89,6 @@ export const HomeView = () => {
 
   return (
     <>
-      <Header />
       {!httpError && <Hero heroArticle={heroArticle} isLoading={isLoading} />}
       {httpError && (
         <div className={styles.errorTextBox}>
