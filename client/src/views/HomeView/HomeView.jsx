@@ -73,8 +73,8 @@ export const HomeView = () => {
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {
-      // getArticles();
-      console.log('no api call');
+      getArticles();
+      // console.log('no api call');
     }
 
     return () => {
