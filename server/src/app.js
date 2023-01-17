@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const session = require('express-session');
+const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
@@ -21,6 +22,14 @@ const { errorResponder, invalidPathHandler } = require('./middleware/error-handl
 const app = express();
 
 app.use(helmet());
+
+// Limit requests from same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour.',
+});
+app.use('/api', limiter);
 app.use(xss());
 
 app.use(

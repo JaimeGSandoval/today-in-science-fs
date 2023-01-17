@@ -15,6 +15,15 @@
     max-width: 60rem;
     margin: auto;
   }
+
+  @include laptop992 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 0;
+    max-width: 60rem;
+    margin: auto;
+  }
 }
 
 .headline {
@@ -24,6 +33,10 @@
   margin: 2rem 0 1rem 0;
 
   @include tablet768 {
+    text-align: center;
+  }
+
+  @include laptop992 {
     text-align: center;
   }
 }
