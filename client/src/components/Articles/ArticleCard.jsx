@@ -72,18 +72,18 @@ export const ArticleCard = ({ articleData, type, setFavArticles, setReadLaterArt
           (a) => a.article_title !== articleData.articleTitle
         );
 
-        // homeArticles = JSON.parse(sessionStorage.getItem('articles'));
-        // updatedHomeArticles = homeArticles.map((a) => {
-        //   if (a.name === articleData.articleTitle) {
-        //     if (articleType === 'favorite-articles') {
-        //       a.isFavorite = false;
-        //     } else {
-        //       a.isReadLater = false;
-        //     }
-        //   }
+        homeArticles = JSON.parse(sessionStorage.getItem('articles'));
+        updatedHomeArticles = homeArticles.map((a) => {
+          if (a.name === articleData.articleTitle) {
+            if (articleType === 'favorite-articles') {
+              a.isFavorite = false;
+            } else {
+              a.isReadLater = false;
+            }
+          }
 
-        //   return a;
-        // });
+          return a;
+        });
 
         sessionStorage.setItem(articleType, JSON.stringify(updatedArticles));
         sessionStorage.setItem('articles', JSON.stringify(updatedHomeArticles));
