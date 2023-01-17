@@ -41,7 +41,7 @@ export const SignupView = () => {
 
   const [validSuccess, setValidSuccess] = useState(false);
   const [submit, setSubmit] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
@@ -289,7 +289,8 @@ export const SignupView = () => {
           confirmPassword: '',
         });
 
-        setSubmitSuccess(true);
+        // setSubmitSuccess(true);
+        setSuccessModalOpen(true);
         setSubmit(false);
       }
     };
@@ -320,7 +321,7 @@ export const SignupView = () => {
     <>
       <Header />
       <section className={styles.container}>
-        {submitSuccess && <SignupSuccessModal />}
+        {successModalOpen && <SignupSuccessModal setSuccessModalOpen={setSuccessModalOpen} />}
         <div className={`${styles.signupInnerContainer} ${customMargin && styles.customMargin}`}>
           <div className={styles.signupFormBox}>
             <h1 className={styles.headline}>Sign up</h1>

@@ -41,7 +41,7 @@ export const ConfirmModal = ({ setConfirm, updateType }) => {
             data-inner={'inner'}
           >
             <div className={styles.closeBox}>
-              <RiCloseFill style={closeStyle} onClick={handleClose}></RiCloseFill>
+              <RiCloseFill style={closeStyle}></RiCloseFill>
             </div>
             <div className={styles.infoBox}>
               <span

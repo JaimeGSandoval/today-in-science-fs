@@ -24,7 +24,7 @@
   color: white;
   width: 98%;
   margin: auto;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
 }
 
 .text {
@@ -43,4 +43,13 @@
 
 .link {
   color: $primaryBlue;
+}
+
+.closeBox {
+  display: flex;
+  margin-left: auto;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0.5rem 0 auto;
 }
