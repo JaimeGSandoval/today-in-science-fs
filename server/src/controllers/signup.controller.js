@@ -4,7 +4,6 @@ const signupModel = require('../models/signup.modal');
 const usersModel = require('../models/users.model');
 
 const httpSignupUser = async (req, res, next) => {
-  console.log(req.body);
   const { userName, email, password, passwordConfirm, role } = req.body;
 
   if (password !== passwordConfirm) {

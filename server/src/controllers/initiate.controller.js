@@ -8,7 +8,12 @@ const httpInitiate = async (req, res, next) => {
   async function getAllArticles() {
     const options = {
       method: 'GET',
-      params: { category: 'science', safeSearch: 'Strict', textFormat: 'Raw' },
+      params: {
+        count: 30,
+        category: 'science',
+        safeSearch: 'Strict',
+        textFormat: 'Raw',
+      },
       headers: {
         'X-BingApis-SDK': 'true',
         'X-RapidAPI-Key': process.env.BING_SEARCH_API_KEY,

@@ -54,7 +54,9 @@ const httpUpdateEmailRequest = async (req, res, next) => {
 
     const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
 
-    const updateEmailUrl = `${req.protocol}://${req.get('host')}/settings/update-email/${token}`;
+    const updateEmailUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/api/settings/update-email/${token}`;
 
     const updateEmailHtml = `
   <p> Please click the link below to verify this new email and complete the update process. It will take you back to Today in Science and you will be required to log in again.\nIf you didn't request an email change please ignore this email.</p>\n<br/>
@@ -131,7 +133,7 @@ const httpUpdatePasswordRequest = async (req, res, next) => {
 
     const updatePasswordUrl = `${req.protocol}://${req.get(
       'host'
-    )}/settings/update-password/${token}`;
+    )}/api/settings/update-password/${token}`;
 
     const updatePasswordHtml = `
     <p> Please click the link below to verify this email and complete the password update process. It will take you back to Today in Science and you will be required to log in again with your new password.\nIf you didn't request an password change please ignore this email.</p>\n<br/>

@@ -33,7 +33,7 @@ export const ArticlesContainer = () => {
       try {
         if (!ignore) {
           const response = await fetch(
-            `http://localhost:8000/articles/${articlesType}/${currentUser.user_id}`,
+            `http://localhost:8000/api/articles/${articlesType}/${currentUser.user_id}`,
             {
               credentials: 'include',
             }

@@ -1,4 +1,4 @@
-const API = 'http://localhost:8000';
+const API = 'http://localhost:8000/api';
 
 export const httpHealthCheck = async () => {
   const response = await fetch(`${API}/health-check`);

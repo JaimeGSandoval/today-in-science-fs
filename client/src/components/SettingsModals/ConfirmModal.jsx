@@ -25,6 +25,7 @@ export const ConfirmModal = ({ setConfirm, updateType }) => {
   const closeStyle = {
     color: 'white',
     fontSize: '2rem',
+    cursor: 'pointer',
   };
 
   return createPortal(

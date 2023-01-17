@@ -20,7 +20,7 @@ export const HomeView = () => {
 
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:8000/auth/checkExpiredCookie', {
+        const response = await fetch('http://localhost:8000/api/auth/checkExpiredCookie', {
           credentials: 'include',
         });
 
@@ -51,7 +51,7 @@ export const HomeView = () => {
         if (!ignore) {
           await checkAuth();
 
-          const response = await fetch('http://localhost:8000/news/initiate', options);
+          const response = await fetch('http://localhost:8000/api/news/initiate', options);
           if (!response.ok) {
             throw new Error('Error retrieving data');
           }
@@ -74,7 +74,8 @@ export const HomeView = () => {
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {
-      getArticles();
+      // getArticles();
+      console.log('no api call');
     }
 
     return () => {
