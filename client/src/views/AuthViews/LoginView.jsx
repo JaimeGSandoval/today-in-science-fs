@@ -3,20 +3,23 @@ import { Link, Navigate } from 'react-router-dom';
 import { FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { UserContext } from '../../context/User.context';
+import { FooterContext } from '../../context/Footer.context';
 // import { Header } from '../../components/Header';
 import { httpLoginUser } from '../../api/requests';
 import styles from './_forms.module.scss';
 
 export const LoginView = () => {
+  console.log('login', window.location.href);
+
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginFail, setLoginFail] = useState(false);
   const [userLoggedOut, setUserLoggedOut] = useState(false);
+  const [submit, setSubmit] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { setCurrentUser } = currentUserContext;
-
-  const [submit, setSubmit] = useState(false);
+  const { setShowFooter } = useContext(FooterContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +61,10 @@ export const LoginView = () => {
 
   useEffect(() => {
     setUserLoggedOut(true);
-  }, []);
+    setShowFooter(false);
+
+    return () => setShowFooter(true);
+  }, [setShowFooter]);
 
   useEffect(() => {
     const localUser = localStorage.getItem('currentUser');

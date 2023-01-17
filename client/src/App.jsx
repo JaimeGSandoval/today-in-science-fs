@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Centered from './components/Centered/Centered';
 import { HomeView } from './views/HomeView';
@@ -5,6 +6,7 @@ import { ArticlesView } from './views/ArticlesView/ArticlesView';
 import { DashboardView } from './views/DashboardView';
 import { SignupView, LoginView } from './views/AuthViews';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { NoRouteView } from './views/NoRouteView/NoRouteView';
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
             <Route path='*' element={<NoRouteView />} />
           </Routes>
         </main>
+        <Footer />
       </Centered>
     </div>
   );

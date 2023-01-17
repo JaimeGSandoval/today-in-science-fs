@@ -32,10 +32,11 @@
 }
 
 .articlesOuterContainer {
-  margin-top: 4rem;
   margin-top: 9rem;
+  min-height: 67vh;
 
   @include laptop992 {
+    min-height: 70vh;
     margin-top: 12rem;
   }
 }

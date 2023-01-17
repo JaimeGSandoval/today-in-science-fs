@@ -7,7 +7,7 @@
 }
 
 .nav {
-  @include laptop992 {
+  @include tablet768 {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -23,7 +23,7 @@
   color: white;
   margin: 2rem 0 1rem 0;
 
-  @include laptop992 {
+  @include tablet768 {
     text-align: center;
   }
 }
@@ -42,7 +42,6 @@
   font-family: $primaryFont;
   text-align: center;
   margin-top: 2rem;
-  // border-top: 1px solid $secondaryFontColor;
 }
 
 .logo {
