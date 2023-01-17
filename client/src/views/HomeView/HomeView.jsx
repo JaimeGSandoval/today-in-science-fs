@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Hero } from '../../components/Hero';
 import { HomeArticlesContainer as Articles } from '../../components/Articles';
 import { ScrollToTop } from '../../components/ScrollToTop';
-import { Footer } from '../../components/Footer';
 import { UserContext } from '../../context/User.context';
 import styles from './_homeView.module.scss';
 
@@ -97,7 +96,6 @@ export const HomeView = () => {
       )}
       {!httpError && <Articles articles={articles.slice(1)} isLoading={isLoading} />}
       <ScrollToTop />
-      <Footer />
     </>
   );
 };

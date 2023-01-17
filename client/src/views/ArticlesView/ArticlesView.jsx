@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { ScrollToTop } from '../../components/ScrollToTop';
-import { Footer } from '../../components/Footer';
 import { ArticlesContainer as Articles } from '../../components/Articles';
 
 export const ArticlesView = () => {
@@ -13,7 +12,6 @@ export const ArticlesView = () => {
     <>
       <Articles articles={articles} subject={subject} />
       <ScrollToTop />
-      <Footer />
     </>
   );
 };

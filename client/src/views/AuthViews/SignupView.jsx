@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { httpSignupUser } from '../../api/requests';
 import { SignupSuccessModal } from './SignupSuccessModal';
+import { FooterContext } from '../../context/Footer.context';
 // import { Header } from '../../components/Header';
 import bowser from 'bowser';
 import styles from './_forms.module.scss';
@@ -42,6 +43,7 @@ export const SignupView = () => {
   const [validSuccess, setValidSuccess] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const { setShowFooter } = useContext(FooterContext);
 
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
@@ -304,6 +306,11 @@ export const SignupView = () => {
       setSubmit(false);
     };
   }, [confirmPasswordData, emailData, passwordData, submit, userData, usernameData]);
+
+  useEffect(() => {
+    setShowFooter(false);
+    return () => setShowFooter(true);
+  }, [setShowFooter]);
 
   const handleChange = (e, formData, setFn) => {
     setFn({
