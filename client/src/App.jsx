@@ -10,8 +10,6 @@ import { Footer } from './components/Footer';
 import { NoRouteView } from './views/NoRouteView/NoRouteView';
 
 function App() {
-  console.log('app', window.location.href);
-
   return (
     <div className='App'>
       <Centered>
