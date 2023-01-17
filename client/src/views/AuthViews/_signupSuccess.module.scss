@@ -16,6 +16,12 @@
 
   @include tablet768 {
     max-width: 441px;
+    max-height: 264px;
+  }
+
+  @include laptop992 {
+    max-width: 441px;
+    max-height: 264px;
   }
 }
 
@@ -24,7 +30,7 @@
   color: white;
   width: 98%;
   margin: auto;
-  padding: 1rem;
+  padding: 0 1rem 1rem;
 }
 
 .text {
@@ -36,11 +42,27 @@
 
   @include tablet768 {
     font-size: 1.4rem;
-    padding: 4rem 2rem;
+    padding: 2rem 2rem 4rem;
+    padding-top: 33px;
+    line-height: 3rem;
+  }
+
+  @include laptop992 {
+    font-size: 1.4rem;
+    padding: 2rem 2rem 4rem;
     line-height: 3rem;
   }
 }
 
 .link {
   color: $primaryBlue;
+}
+
+.closeBox {
+  display: flex;
+  margin-left: auto;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0.5rem 0 auto;
 }

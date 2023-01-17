@@ -122,6 +122,16 @@
   color: white;
   width: 4.375rem;
   height: 2.625rem;
+
+  @include laptop992 {
+    cursor: pointer;
+  }
+}
+
+.saveButton {
+  &:hover {
+    background-color: $hoverBlue;
+  }
 }
 
 .deleteButton {

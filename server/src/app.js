@@ -63,7 +63,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: Number(process.env.SESSION_MAX_AGE),
+      maxAge: Number(process.env.SESSION_MAX_AGE) * 24 * 60 * 60 * 1000,
       SameSite: 'none',
       path: '/',
       httpOnly: true,
@@ -76,13 +76,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/health-check', (req, res) => res.status(200).json('Health check passed'));
-app.use('/signup', signupRouter);
-app.use('/auth', authRouter);
-app.use('/news', initiateRouter);
-app.use('/settings', settingsRouter);
-app.use('/articles', articlesRouter);
-app.use('/users', usersRouter);
+app.get('/api/health-check', (req, res) => res.status(200).json('Health check passed'));
+app.use('/api/signup', signupRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/news', initiateRouter);
+app.use('/api/settings', settingsRouter);
+app.use('/api/articles', articlesRouter);
+app.use('/api/users', usersRouter);
 
 app.use(errorResponder);
 app.use(invalidPathHandler);

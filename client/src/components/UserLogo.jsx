@@ -15,7 +15,7 @@ export const UserLogo = ({ styles }) => {
         </Link>
       </div>
 
-      <span className={styles.username}>{currentUser.user_name}</span>
+      <span className={styles.username}>{currentUser && currentUser.user_name}</span>
     </div>
   );
 };

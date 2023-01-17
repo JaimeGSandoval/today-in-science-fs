@@ -33,6 +33,11 @@
 
 .articlesOuterContainer {
   margin-top: 4rem;
+  margin-top: 9rem;
+
+  @include laptop992 {
+    margin-top: 12rem;
+  }
 }
 
 .noArticles {

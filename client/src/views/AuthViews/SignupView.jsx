@@ -4,7 +4,7 @@ import { FaUser, FaLock, FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { httpSignupUser } from '../../api/requests';
 import { SignupSuccessModal } from './SignupSuccessModal';
-import { Header } from '../../components/Header';
+// import { Header } from '../../components/Header';
 import bowser from 'bowser';
 import styles from './_forms.module.scss';
 
@@ -41,7 +41,7 @@ export const SignupView = () => {
 
   const [validSuccess, setValidSuccess] = useState(false);
   const [submit, setSubmit] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const addValidOutline = (refVal) => {
     refVal.current.classList.remove(styles.invalidField);
@@ -289,7 +289,8 @@ export const SignupView = () => {
           confirmPassword: '',
         });
 
-        setSubmitSuccess(true);
+        // setSubmitSuccess(true);
+        setSuccessModalOpen(true);
         setSubmit(false);
       }
     };
@@ -318,9 +319,8 @@ export const SignupView = () => {
 
   return (
     <>
-      <Header />
       <section className={styles.container}>
-        {submitSuccess && <SignupSuccessModal />}
+        {successModalOpen && <SignupSuccessModal setSuccessModalOpen={setSuccessModalOpen} />}
         <div className={`${styles.signupInnerContainer} ${customMargin && styles.customMargin}`}>
           <div className={styles.signupFormBox}>
             <h1 className={styles.headline}>Sign up</h1>

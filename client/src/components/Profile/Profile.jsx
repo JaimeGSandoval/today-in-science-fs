@@ -138,40 +138,6 @@ export const Profile = ({ currentUser, setCurrentUser }) => {
                   />
                 </div>
               ))}
-              {/* <div className={styles.fieldItem}>
-                <span className={styles.fieldBtn}>{`Username: ${
-                  currentUser && currentUser.user_name
-                }`}</span>{' '}
-                <MdOutlineModeEditOutline
-                  className={styles.editIcon}
-                  onClick={() => {
-                    setIsOpen(true);
-                    setUpdateType('username');
-                  }}
-                />
-              </div> */}
-              {/* <div className={styles.fieldItem}>
-                <span className={styles.fieldBtn}>{`Email: ${
-                  currentUser && currentUser.email
-                }`}</span>{' '}
-                <MdOutlineModeEditOutline
-                  className={styles.editIcon}
-                  onClick={() => {
-                    setIsOpen(true);
-                    setUpdateType('email');
-                  }}
-                />
-              </div> */}
-              {/* <div className={styles.fieldItem}>
-                <span className={styles.fieldBtn}>Reset Password</span>{' '}
-                <MdOutlineModeEditOutline
-                  className={styles.editIcon}
-                  onClick={() => {
-                    setIsOpen(true);
-                    setUpdateType('password');
-                  }}
-                />
-              </div> */}
               <span
                 className={`${styles.fieldItem} ${styles.logoutBtn}`}
                 onClick={() => setLogout(true)}
