@@ -2,14 +2,25 @@
 @import '../../sass//media-queries';
 
 .heroContainer {
-  height: 100vh;
+  height: 37.5rem;
+  margin-bottom: 5rem;
+
+  @include mobileLg {
+    height: 42rem;
+  }
+
+  @include laptop992 {
+    height: 50rem;
+    margin-bottom: 8rem;
+  }
+
+  @include desktop1440 {
+    height: 60rem;
+  }
 }
 
-// This will let you maintain the initial height with the address bar excluded, and won't let it change when the bar disappears. Steps timing function is to avoid costly layout calculations.
-// transition: height 1000s steps(1);
-
 .heroImg {
-  height: 100vh;
+  height: 37.5rem;
   width: 100vw;
   max-width: 100%;
   position: absolute;
@@ -18,6 +29,18 @@
   bottom: 0;
   background-position: 50% 50%;
   object-fit: cover;
+
+  @include mobileLg {
+    height: 42rem;
+  }
+
+  @include laptop992 {
+    height: 50rem;
+  }
+
+  @include desktop1440 {
+    height: 60rem;
+  }
 }
 
 .overlay {
@@ -26,12 +49,24 @@
   position: absolute;
   width: 100vw;
   max-width: 100%;
-  height: 100vh;
+  height: 37.5rem;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  @include mobileLg {
+    height: 42rem;
+  }
+
+  @include laptop992 {
+    height: 50rem;
+  }
+
+  @include desktop1440 {
+    height: 60rem;
+  }
 }
 
 .heroInfoBox {
