@@ -4,13 +4,10 @@ import { FaKey } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { UserContext } from '../../context/User.context';
 import { FooterContext } from '../../context/Footer.context';
-// import { Header } from '../../components/Header';
 import { httpLoginUser } from '../../api/requests';
 import styles from './_forms.module.scss';
 
 export const LoginView = () => {
-  console.log('login', window.location.href);
-
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
@@ -46,6 +43,7 @@ export const LoginView = () => {
         setCurrentUser(response.data.user);
         setLoginSuccess(true);
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+        localStorage.setItem('test', JSON.stringify('test'));
       }
     };
 

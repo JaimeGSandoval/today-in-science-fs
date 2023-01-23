@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { Header } from '../../components/Header';
 import { Hero } from '../../components/Hero';
 import { HomeArticlesContainer as Articles } from '../../components/Articles';
 import { ScrollToTop } from '../../components/ScrollToTop';
@@ -36,6 +35,7 @@ export const HomeView = () => {
               }
             : {};
         } else {
+          console.log('removed');
           localStorage.removeItem('currentUser');
           setCurrentUser(null);
         }
@@ -57,6 +57,8 @@ export const HomeView = () => {
           const parsedData = await response.json();
           setArticles(parsedData.data.finalArticles);
           setIsLoading(false);
+          localStorage.setItem('chidori', JSON.stringify('chidori'));
+
           sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
         }
       } catch (e) {
@@ -70,11 +72,11 @@ export const HomeView = () => {
         await checkAuth();
       })();
 
+      console.log(JSON.parse(sessionStorage.getItem('articles')));
       setArticles(JSON.parse(sessionStorage.getItem('articles')));
       setIsLoading(false);
     } else {
-      // getArticles();
-      console.log('no api call');
+      getArticles();
     }
 
     return () => {
