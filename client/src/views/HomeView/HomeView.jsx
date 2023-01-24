@@ -35,7 +35,6 @@ export const HomeView = () => {
               }
             : {};
         } else {
-          console.log('removed');
           localStorage.removeItem('currentUser');
           setCurrentUser(null);
         }
@@ -54,10 +53,10 @@ export const HomeView = () => {
           if (!response.ok) {
             throw new Error('Error retrieving data');
           }
+
           const parsedData = await response.json();
           setArticles(parsedData.data.finalArticles);
           setIsLoading(false);
-          localStorage.setItem('chidori', JSON.stringify('chidori'));
 
           sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
         }
@@ -67,17 +66,18 @@ export const HomeView = () => {
       }
     };
 
-    if (sessionStorage.getItem('articles')) {
-      (async () => {
-        await checkAuth();
-      })();
+    // if (sessionStorage.getItem('articles')) {
+    //   (async () => {
+    //     await checkAuth();
+    //   })();
 
-      console.log(JSON.parse(sessionStorage.getItem('articles')));
-      setArticles(JSON.parse(sessionStorage.getItem('articles')));
-      setIsLoading(false);
-    } else {
-      getArticles();
-    }
+    //   setArticles(JSON.parse(sessionStorage.getItem('articles')));
+    //   setIsLoading(false);
+    // } else {
+    //   getArticles();
+    // }
+
+    getArticles();
 
     return () => {
       ignore = true;

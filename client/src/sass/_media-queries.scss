@@ -51,3 +51,9 @@
     @content;
   }
 }
+
+@mixin desktop1680 {
+  @media screen and (min-width: 1680px) {
+    @content;
+  }
+}
