@@ -5,7 +5,6 @@ import { MdEmail } from 'react-icons/md';
 import { httpSignupUser } from '../../api/requests';
 import { SignupSuccessModal } from './SignupSuccessModal';
 import { FooterContext } from '../../context/Footer.context';
-// import { Header } from '../../components/Header';
 import bowser from 'bowser';
 import styles from './_forms.module.scss';
 
