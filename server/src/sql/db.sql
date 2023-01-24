@@ -18,7 +18,7 @@ CREATE TABLE users.refresh_tokens (
     user_id INT,
     valid_until TIMESTAMP DEFAULT NOW()+INTERVAL '1 day',
     token VARCHAR(512),
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
+    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE users.read_later_articles (
@@ -27,7 +27,8 @@ CREATE TABLE users.read_later_articles (
     date_added TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     article_url TEXT NOT NULL,
     article_title VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
+    provider TEXT NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE users.favorite_articles (
@@ -36,7 +37,8 @@ CREATE TABLE users.favorite_articles (
     date_added TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
     article_url TEXT NOT NULL,
     article_title VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id)
+    provider TEXT NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 SELECT articles_read_later.added_on, articles_read_later.article_link FROM articles_read_later JOIN users ON users.user_id = articles_read_later.user_id;

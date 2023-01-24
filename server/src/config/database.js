@@ -11,8 +11,20 @@ dotenv.config({ path: path.join(__dirname, '..', '..', '..', '/.env') });
 //   database: process.env.PG_DEV_DB,
 // });
 
+// const pool = new Pool({
+//   user: '****',
+//   database: '****',
+//   password: '****',
+//   port: 5432,
+//   host: '****',
+//   max: 5,
+//   idleTimeoutMillis: 30000,
+//   connectionTimeoutMillis: 5000,
+// });
+
 const db = new Pool({
   connectionString: process.env.DATABASE_URL,
+  password: process.env.PG_PASSWORD,
 });
 
 module.exports = db;
