@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
@@ -39,6 +40,8 @@ app.use(
   })
 );
 
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 // Passport config
 require('./config/passport')(passport);
 
@@ -76,7 +79,7 @@ app.use(
       SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: false, // change this to true when changing over to https
+      secure: true, // change this to true when changing over to https
     },
   })
 );

@@ -24,7 +24,7 @@ export const Hero = ({ heroArticle, isLoading }) => {
           <img className={styles.heroImg} src={medium} alt='' />
         </picture>
         <div className={styles.overlay}>
-          {isLoading && <h1 style={{ color: 'white' }}>Loading ...</h1>}
+          {isLoading && <h1 className={styles.loadingText}>Loading ...</h1>}
           {!isLoading && (
             <div className={styles.heroInfoBox}>
               <div className={styles.headlineContainer}>

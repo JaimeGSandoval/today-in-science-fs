@@ -30,14 +30,12 @@ export const ArticlesContainer = () => {
     let ignore = false;
 
     const fetchArticles = async () => {
+      // `http://localhost:8000/api/articles/${articlesType}/${currentUser.user_id}`
       try {
         if (!ignore) {
-          const response = await fetch(
-            `http://localhost:8000/api/articles/${articlesType}/${currentUser.user_id}`,
-            {
-              credentials: 'include',
-            }
-          );
+          const response = await fetch(`/api/articles/${articlesType}/${currentUser.user_id}`, {
+            credentials: 'include',
+          });
 
           if (!response.ok) {
             throw new Error('There was a problem retrieving articles.');
