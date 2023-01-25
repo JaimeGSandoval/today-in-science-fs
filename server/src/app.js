@@ -68,6 +68,7 @@ app.use(methodOverride('_method'));
 app.set('trust proxy', 1);
 app.use(
   session({
+    proxy: true,
     store: new PgSession({
       pool: pgPool,
       createTableIfMissing: true,
