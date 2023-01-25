@@ -65,6 +65,7 @@ app.use(logger('dev'));
 app.use(methodOverride('_method'));
 
 // Setup Sessions - stored in Postgres
+app.set('trust proxy', 1);
 app.use(
   session({
     store: new PgSession({
@@ -79,7 +80,7 @@ app.use(
       SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: false, // change this to true when changing over to https
+      secure: true, // change this to true when changing over to https
     },
   })
 );
