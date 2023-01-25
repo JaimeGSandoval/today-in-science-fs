@@ -79,7 +79,7 @@ app.use(
       SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: true, // change this to true when changing over to https
+      secure: false, // change this to true when changing over to https
     },
   })
 );
