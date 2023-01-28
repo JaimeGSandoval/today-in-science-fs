@@ -40,8 +40,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
   const addArticle = useCallback(
     async (type) => {
-      const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
-      let updatedArticles;
+      // const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
+      // let updatedArticles;
       const isLoggedIn = checkUser(currentUser, isOpen, setIsOpen);
 
       if (!isLoggedIn) {
@@ -59,14 +59,14 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         const response = await httpAddArticle(favoriteArticleData);
 
         if (response.ok) {
-          updatedArticles = updateSessionStorage(
-            type,
-            sessionArticles,
-            favoriteArticleData.articleTitle,
-            true
-          );
+          // updatedArticles = updateSessionStorage(
+          //   type,
+          //   sessionArticles,
+          //   favoriteArticleData.articleTitle,
+          //   true
+          // );
 
-          sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+          // sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
 
           return setIsFavorite(true);
         }
@@ -75,14 +75,14 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
       const response = await httpAddArticle(readLaterArticleData);
 
       if (response.ok) {
-        updatedArticles = updateSessionStorage(
-          type,
-          sessionArticles,
-          readLaterArticleData.articleTitle,
-          true
-        );
+        // updatedArticles = updateSessionStorage(
+        //   type,
+        //   sessionArticles,
+        //   readLaterArticleData.articleTitle,
+        //   true
+        // );
 
-        sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
+        // sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
 
         return setIsReadLater(true);
       }

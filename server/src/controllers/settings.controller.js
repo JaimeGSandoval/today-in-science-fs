@@ -54,10 +54,6 @@ const httpUpdateEmailRequest = async (req, res, next) => {
 
     const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
 
-    // const updateEmailUrl = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/settings/update-email/${token}`;
-
     const updateEmailUrl = `https://todayinscience.jamessandoval.dev/api/settings/update-email/${token}`;
 
     const updateEmailHtml = `
@@ -105,7 +101,6 @@ const httpUpdateUserEmail = async (req, res, next) => {
       if (err) {
         return next(new AppError('Error : Failed to destroy the session during logout.', err));
       }
-      // 'http://localhost:3000/login'
 
       res.status(204).redirect('https://todayinscience.jamessandoval.dev/login');
     });
@@ -134,9 +129,6 @@ const httpUpdatePasswordRequest = async (req, res, next) => {
 
     const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
 
-    // const updatePasswordUrl = `${req.protocol}://${req.get(
-    //   'host'
-    // )}/api/settings/update-password/${token}`;
     const updatePasswordUrl = `https://todayinscience.jamessandoval.dev/api/settings/update-password/${token}`;
 
     const updatePasswordHtml = `
@@ -189,7 +181,7 @@ const httpUpdateUserPassword = async (req, res, next) => {
       if (err) {
         return next(new AppError('Error : Failed to destroy the session during logout.', err));
       }
-      // 'http://localhost:3000/login'
+
       res.status(204).redirect('https://todayinscience.jamessandoval.dev/login');
     });
   } catch (e) {
