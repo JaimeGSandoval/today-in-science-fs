@@ -4,7 +4,7 @@ CREATE SCHEMA users;
 
 SET search_path TO users, public;
 
-CREATE TABLE users.users (
+CREATE TABLE users (
     user_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
     user_name VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(254) UNIQUE NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE users.users (
     created_on TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE users.refresh_tokens (
+CREATE TABLE refresh_tokens (
     token_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
     user_id INT,
     valid_until TIMESTAMP DEFAULT NOW()+INTERVAL '1 day',
@@ -21,7 +21,7 @@ CREATE TABLE users.refresh_tokens (
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE users.read_later_articles (
+CREATE TABLE read_later_articles (
     article_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
     user_id INT,
     date_added TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE users.read_later_articles (
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-CREATE TABLE users.favorite_articles (
+CREATE TABLE favorite_articles (
     article_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
     user_id INT,
     date_added TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP NOT NULL,
