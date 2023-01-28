@@ -17,7 +17,6 @@ export const HomeView = () => {
     let ignore = false;
 
     const checkAuth = async () => {
-      // 'http://localhost:3001/api/auth/checkExpiredCookie'
       try {
         const response = await fetch('/api/auth/checkExpiredCookie', {
           credentials: 'include',
@@ -49,8 +48,6 @@ export const HomeView = () => {
       try {
         if (!ignore) {
           await checkAuth();
-
-          // 'http://localhost:3001/api/news/initiate'
           const response = await fetch('/api/news/initiate', options);
           if (!response.ok) {
             throw new Error('Error retrieving data');

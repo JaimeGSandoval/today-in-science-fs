@@ -65,10 +65,10 @@ app.use(logger('dev'));
 app.use(methodOverride('_method'));
 
 // Setup Sessions - stored in Postgres
-app.set('trust proxy', 1);
+app.set('trust proxy', 1); // for use with nginx and sending cookie back to browser
 app.use(
   session({
-    proxy: true,
+    proxy: true, // set to true for production for nginx to send back cookie
     store: new PgSession({
       pool: pgPool,
       createTableIfMissing: true,
@@ -81,7 +81,7 @@ app.use(
       SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: true, // change this to true when changing over to https
+      secure: true, // change this to true when changing over to  https and production
     },
   })
 );
