@@ -54,9 +54,11 @@ const httpUpdateEmailRequest = async (req, res, next) => {
 
     const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
 
-    const updateEmailUrl = `${req.protocol}://${req.get(
-      'host'
-    )}/api/settings/update-email/${token}`;
+    // const updateEmailUrl = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/settings/update-email/${token}`;
+
+    const updateEmailUrl = `https://todayinscience.jamessandoval.dev/api/settings/update-email/${token}`;
 
     const updateEmailHtml = `
   <p> Please click the link below to verify this new email and complete the update process. It will take you back to Today in Science and you will be required to log in again.\nIf you didn't request an email change please ignore this email.</p>\n<br/>
@@ -103,8 +105,9 @@ const httpUpdateUserEmail = async (req, res, next) => {
       if (err) {
         return next(new AppError('Error : Failed to destroy the session during logout.', err));
       }
+      // 'http://localhost:3000/login'
 
-      res.status(204).redirect('http://localhost:3000/login');
+      res.status(204).redirect('https://todayinscience.jamessandoval.dev/login');
     });
   } catch (e) {
     return next(new AppError(e.message, 500));
@@ -131,9 +134,10 @@ const httpUpdatePasswordRequest = async (req, res, next) => {
 
     const token = signJWT(updateData, process.env.ACCESS_TOKEN_SECRET, 240);
 
-    const updatePasswordUrl = `${req.protocol}://${req.get(
-      'host'
-    )}/api/settings/update-password/${token}`;
+    // const updatePasswordUrl = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/api/settings/update-password/${token}`;
+    const updatePasswordUrl = `https://todayinscience.jamessandoval.dev/api/settings/update-password/${token}`;
 
     const updatePasswordHtml = `
     <p> Please click the link below to verify this email and complete the password update process. It will take you back to Today in Science and you will be required to log in again with your new password.\nIf you didn't request an password change please ignore this email.</p>\n<br/>
@@ -185,8 +189,8 @@ const httpUpdateUserPassword = async (req, res, next) => {
       if (err) {
         return next(new AppError('Error : Failed to destroy the session during logout.', err));
       }
-
-      res.status(204).redirect('http://localhost:3000/login');
+      // 'http://localhost:3000/login'
+      res.status(204).redirect('https://todayinscience.jamessandoval.dev/login');
     });
   } catch (e) {
     return next(new AppError(e.message, 500));
