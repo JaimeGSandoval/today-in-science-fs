@@ -48,6 +48,7 @@ export const HomeView = () => {
       try {
         if (!ignore) {
           await checkAuth();
+
           const response = await fetch('/api/news/initiate', options);
           if (!response.ok) {
             throw new Error('Error retrieving data');
