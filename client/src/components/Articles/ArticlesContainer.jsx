@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/User.context';
 import { useParams } from 'react-router-dom';
-import styles from './_articles.module.scss';
 import { ArticleCard } from './ArticleCard';
+import styles from './_articles.module.scss';
 
 const NoArticles = () => {
   return (
@@ -30,8 +30,6 @@ export const ArticlesContainer = () => {
     let ignore = false;
 
     const fetchArticles = async () => {
-      // `http://localhost:3001/api/articles/${articlesType}/${currentUser.user_id}`
-      // `/api/articles/${articlesType}/${currentUser.user_id}`
       try {
         if (!ignore) {
           const response = await fetch(`/api/articles/${articlesType}/${currentUser.user_id}`, {

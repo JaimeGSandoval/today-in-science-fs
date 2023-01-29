@@ -78,12 +78,6 @@ module.exports = {
     const { articleTitle, userId, articleType } = req.body;
 
     try {
-      // const foundArticle = await articlesModel.getArticleById(parseInt(articleId, 10), articleType);
-
-      // if (!foundArticle.rows.length) {
-      //   return next(new AppError('Article not found. It may have been deleted already', 404));
-      // }
-
       await articlesModel.deleteArticle(userId, articleTitle, articleType);
 
       return res.sendStatus(204);

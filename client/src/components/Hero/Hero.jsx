@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './_hero.module.scss';
+import { Spinner } from '../Spinner';
 import medium from '../../assets/images/jpg/artificial-intelligence-md.png';
 import large from '../../assets/images/jpg/artificial-intelligence-lg.png';
 import aiWebp from '../../assets/images/webp/artificial-intelligence.webp';
+import styles from './_hero.module.scss';
 
 export const Hero = ({ heroArticle, isLoading }) => {
   let article;
@@ -24,7 +25,7 @@ export const Hero = ({ heroArticle, isLoading }) => {
           <img className={styles.heroImg} src={medium} alt='' />
         </picture>
         <div className={styles.overlay}>
-          {isLoading && <h1 className={styles.loadingText}>Loading ...</h1>}
+          {isLoading && <Spinner styles={styles} />}
           {!isLoading && (
             <div className={styles.heroInfoBox}>
               <div className={styles.headlineContainer}>

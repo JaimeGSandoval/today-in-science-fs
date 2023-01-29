@@ -38,8 +38,6 @@ const httpUpdateEmailRequest = async (req, res, next) => {
   const { userId } = req.params;
   const { newEmail } = req.body;
 
-  console.log(userId, newEmail);
-
   try {
     const emailExists = await usersModel.getUserByEmail(newEmail);
 

@@ -66,17 +66,6 @@ export const HomeView = () => {
       }
     };
 
-    // if (sessionStorage.getItem('articles')) {
-    //   (async () => {
-    //     await checkAuth();
-    //   })();
-
-    //   setArticles(JSON.parse(sessionStorage.getItem('articles')));
-    //   setIsLoading(false);
-    // } else {
-    //   getArticles();
-    // }
-
     getArticles();
 
     return () => {
