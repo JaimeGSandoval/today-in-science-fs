@@ -26,7 +26,7 @@ app.use(helmet());
 
 // Limit requests from same API
 const limiter = rateLimit({
-  max: 1000,
+  max: 100,
   windowMs: 60 * 60 * 1000, // 1 hour
   message: 'Too many requests from this IP, please try again in an hour.',
 });
@@ -68,7 +68,7 @@ app.use(methodOverride('_method'));
 app.set('trust proxy', 1); // for use with nginx and sending cookie back to browser
 app.use(
   session({
-    proxy: false, // set to true for production for nginx to send back cookie
+    proxy: true, // set to true for production for nginx to send back cookie
     store: new PgSession({
       pool: pgPool,
       createTableIfMissing: true,
@@ -81,7 +81,7 @@ app.use(
       SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: false, // change this to true when changing over to  https and production
+      secure: true, // change this to true when changing over to  https and production
     },
   })
 );
