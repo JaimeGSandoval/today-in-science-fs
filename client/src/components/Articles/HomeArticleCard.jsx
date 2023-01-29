@@ -40,9 +40,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
 
   const addArticle = useCallback(
     async (type) => {
-      // const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
-      // let updatedArticles;
-      const isLoggedIn = checkUser(currentUser, isOpen, setIsOpen);
+      const isLoggedIn = checkUser(currentUser, setIsOpen);
 
       if (!isLoggedIn) {
         if (type === 'favorite') {
@@ -59,15 +57,6 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         const response = await httpAddArticle(favoriteArticleData);
 
         if (response.ok) {
-          // updatedArticles = updateSessionStorage(
-          //   type,
-          //   sessionArticles,
-          //   favoriteArticleData.articleTitle,
-          //   true
-          // );
-
-          // sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
-
           return setIsFavorite(true);
         }
       }
@@ -75,25 +64,16 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
       const response = await httpAddArticle(readLaterArticleData);
 
       if (response.ok) {
-        // updatedArticles = updateSessionStorage(
-        //   type,
-        //   sessionArticles,
-        //   readLaterArticleData.articleTitle,
-        //   true
-        // );
-
-        // sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
-
         return setIsReadLater(true);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser, favoriteArticleData, readLaterArticleData]
+
+    [currentUser, favoriteArticleData, readLaterArticleData, setIsOpen]
   );
 
   const deleteArticle = useCallback(
     async (type) => {
-      checkUser(currentUser, isOpen, setIsOpen);
+      checkUser(currentUser, setIsOpen);
 
       const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
       let updatedArticles;
@@ -129,8 +109,8 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         return setIsReadLater(false);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser, favoriteArticleData, readLaterArticleData]
+
+    [currentUser, favoriteArticleData, readLaterArticleData, setIsOpen]
   );
 
   useEffect(() => {

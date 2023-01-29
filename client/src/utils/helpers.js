@@ -1,6 +1,6 @@
-export const checkUser = (user, val, setVal) => {
+export const checkUser = (user, setVal) => {
   if (!user) {
-    setVal(!val);
+    setVal((val) => !val);
     return false;
   }
 

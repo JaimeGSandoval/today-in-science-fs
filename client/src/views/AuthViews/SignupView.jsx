@@ -290,7 +290,6 @@ export const SignupView = () => {
           confirmPassword: '',
         });
 
-        // setSubmitSuccess(true);
         setSuccessModalOpen(true);
         setSubmit(false);
       }
