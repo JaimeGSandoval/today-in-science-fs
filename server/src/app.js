@@ -68,7 +68,7 @@ app.use(methodOverride('_method'));
 app.set('trust proxy', 1); // for use with nginx and sending cookie back to browser
 app.use(
   session({
-    proxy: true, // set to true for production for nginx to send back cookie
+    proxy: false, // set to true for production for nginx to send back cookie
     store: new PgSession({
       pool: pgPool,
       createTableIfMissing: true,
@@ -81,7 +81,7 @@ app.use(
       SameSite: 'none',
       path: '/',
       httpOnly: true,
-      secure: true, // change this to true when changing over to  https and production
+      secure: false, // change this to true when changing over to  https and production
     },
   })
 );
