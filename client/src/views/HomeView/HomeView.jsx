@@ -17,8 +17,9 @@ export const HomeView = () => {
     let ignore = false;
 
     const checkAuth = async () => {
+      // '/api/auth/checkExpiredCookie'
       try {
-        const response = await fetch('/api/auth/checkExpiredCookie', {
+        const response = await fetch('http://localhost:3001/api/auth/checkExpiredCookie', {
           credentials: 'include',
         });
 
@@ -48,17 +49,19 @@ export const HomeView = () => {
       try {
         if (!ignore) {
           await checkAuth();
+          // '/api/news/initiate'
 
-          const response = await fetch('/api/news/initiate', options);
+          const response = await fetch('http://localhost:3001/api/news/initiate', options);
           if (!response.ok) {
             throw new Error('Error retrieving data');
           }
 
           const parsedData = await response.json();
+          // console.log('parsed data', parsedData.data.finalArticles);
           setArticles(parsedData.data.finalArticles);
           setIsLoading(false);
 
-          sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
+          // sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
         }
       } catch (e) {
         setHttpError(true);
@@ -74,6 +77,7 @@ export const HomeView = () => {
     };
   }, [setCurrentUser]);
 
+  // console.log(articles);
   let heroArticle;
   if (!isLoading) heroArticle = articles[0];
 

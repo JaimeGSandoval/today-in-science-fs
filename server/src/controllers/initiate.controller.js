@@ -6,27 +6,42 @@ const httpInitiate = async (req, res, next) => {
   const { user_id } = req.body;
 
   async function getAllArticles() {
+    // const options = {
+    //   method: 'GET',
+    //   params: {
+    //     count: 30,
+    //     category: 'science',
+    //     safeSearch: 'Strict',
+    //     textFormat: 'Raw',
+    //   },
+    //   headers: {
+    //     'X-BingApis-SDK': 'true',
+    //     'X-RapidAPI-Key': process.env.BING_SEARCH_API_KEY,
+    //     'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
+    //   },
+    // };
+
     const options = {
       method: 'GET',
-      params: {
-        count: 30,
-        category: 'science',
-        safeSearch: 'Strict',
-        textFormat: 'Raw',
-      },
+      params: { cat: 'Science' },
       headers: {
-        'X-BingApis-SDK': 'true',
-        'X-RapidAPI-Key': process.env.BING_SEARCH_API_KEY,
-        'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
+        'X-RapidAPI-Key': process.env.MOKA_NEWS_API_KEY,
+        'X-RapidAPI-Host': 'moka-news.p.rapidapi.com',
       },
     };
 
     try {
+      // const newsResponse = await axios.get(
+      //   'https://bing-news-search1.p.rapidapi.com/news',
+      //   options
+      // );
+
       const newsResponse = await axios.get(
-        'https://bing-news-search1.p.rapidapi.com/news',
+        'https://moka-news.p.rapidapi.com/category.php',
         options
       );
 
+      console.log('BANKAI', newsResponse.data);
       return newsResponse.data;
     } catch (e) {
       console.error(e);
@@ -49,16 +64,32 @@ const httpInitiate = async (req, res, next) => {
     readHash[a.article_title] = a.article_title;
   });
 
-  const finalArticles = fetchedArticles.value.map((a) => {
+  // const finalArticles = fetchedArticles.value.map((a) => {
+  //   const temp = { ...a };
+  //   temp.isFavorite = false;
+  //   temp.isReadLater = false;
+
+  //   if (a.name === favHash[a.name]) {
+  //     temp.isFavorite = true;
+  //   }
+
+  //   if (a.name === readHash[a.name]) {
+  //     temp.isReadLater = true;
+  //   }
+
+  //   return temp;
+  // });
+
+  const finalArticles = fetchedArticles.map((a) => {
     const temp = { ...a };
     temp.isFavorite = false;
     temp.isReadLater = false;
 
-    if (a.name === favHash[a.name]) {
+    if (a.title === favHash[a.title]) {
       temp.isFavorite = true;
     }
 
-    if (a.name === readHash[a.name]) {
+    if (a.title === readHash[a.title]) {
       temp.isReadLater = true;
     }
 

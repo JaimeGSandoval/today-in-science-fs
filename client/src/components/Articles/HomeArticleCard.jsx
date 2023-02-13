@@ -7,24 +7,26 @@ import { checkUser, updateSessionStorage } from '../../utils/helpers';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
+  console.log('article data', articleData);
   const [addFavArticle, setAddFavArticle] = useState(false);
   const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isReadLater, setIsReadLater] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
-  const articleDate = new Date(articleData.datePublished).toDateString();
-  const articleProvider = articleData.provider[0].name;
+  const articleDate = new Date(articleData.pubDate).toDateString();
+  const articleProvider = articleData.source;
 
   const favoriteArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
       articleTitle: articleData.name,
       articleUrl: articleData.url,
-      provider: articleData.provider[0].name,
+      provider: articleData.source,
+
       articleType: 'favorite',
     }),
-    [articleData.url, articleData.name, articleData.provider, currentUser]
+    [articleData.url, articleData.name, articleData.source, currentUser]
   );
 
   const readLaterArticleData = useMemo(
@@ -32,10 +34,11 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
       userId: currentUser && currentUser.user_id,
       articleTitle: articleData.name,
       articleUrl: articleData.url,
-      provider: articleData.provider[0].name,
+      provider: articleData.source,
+
       articleType: 'read-later',
     }),
-    [articleData.url, articleData.name, articleData.provider, currentUser]
+    [articleData.url, articleData.name, articleData.source, currentUser]
   );
 
   const addArticle = useCallback(
@@ -151,7 +154,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     <div className={styles.articleCard}>
       <div className={styles.cardBody}>
         <span className={styles.cardProvider}>{articleProvider}</span>
-        <h3 className={styles.cardTitle}>{articleData.name}</h3>
+        <h3 className={styles.cardTitle}>{articleData.title}</h3>
         <p className={styles.cardText}>{articleData.description}</p>
         <span className={styles.cardDate}>{articleDate}</span>
         <div className={styles.cardFooter}>
