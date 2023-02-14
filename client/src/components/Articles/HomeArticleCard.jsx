@@ -3,11 +3,10 @@ import { UserContext } from '../../context/User.context';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsBookmarkFill, BsBookmark } from 'react-icons/bs';
 import { httpAddArticle, httpDeleteArticle } from '../../api/requests';
-import { checkUser, updateSessionStorage } from '../../utils/helpers';
+import { checkUser } from '../../utils/helpers';
 import styles from './_articles.module.scss';
 
 export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
-  console.log('article data', articleData);
   const [addFavArticle, setAddFavArticle] = useState(false);
   const [addReadArticle, setAddReadArticle] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -20,25 +19,23 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const favoriteArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.name,
-      articleUrl: articleData.url,
+      articleTitle: articleData.title,
+      articleUrl: articleData.link,
       provider: articleData.source,
-
       articleType: 'favorite',
     }),
-    [articleData.url, articleData.name, articleData.source, currentUser]
+    [articleData.link, articleData.title, articleData.source, currentUser]
   );
 
   const readLaterArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.name,
-      articleUrl: articleData.url,
+      articleTitle: articleData.title,
+      articleUrl: articleData.link,
       provider: articleData.source,
-
       articleType: 'read-later',
     }),
-    [articleData.url, articleData.name, articleData.source, currentUser]
+    [articleData.link, articleData.title, articleData.source, currentUser]
   );
 
   const addArticle = useCallback(
@@ -78,22 +75,10 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     async (type) => {
       checkUser(currentUser, setIsOpen);
 
-      const sessionArticles = JSON.parse(sessionStorage.getItem('articles'));
-      let updatedArticles;
-
       if (type === 'favorite') {
         const response = await httpDeleteArticle(favoriteArticleData);
 
         if (response) {
-          updatedArticles = updateSessionStorage(
-            type,
-            sessionArticles,
-            favoriteArticleData.articleTitle,
-            false
-          );
-
-          sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
-
           return setIsFavorite(false);
         }
       }
@@ -101,14 +86,6 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
       const response = await httpDeleteArticle(readLaterArticleData);
 
       if (response) {
-        updatedArticles = updateSessionStorage(
-          type,
-          sessionArticles,
-          readLaterArticleData.articleTitle,
-          false
-        );
-
-        sessionStorage.setItem('articles', JSON.stringify(updatedArticles));
         return setIsReadLater(false);
       }
     },
@@ -158,7 +135,7 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
         <p className={styles.cardText}>{articleData.description}</p>
         <span className={styles.cardDate}>{articleDate}</span>
         <div className={styles.cardFooter}>
-          <a href={articleData.url} className={styles.cardBtn} target='_blank' rel='noreferrer'>
+          <a href={articleData.link} className={styles.cardBtn} target='_blank' rel='noreferrer'>
             Read Article
           </a>
           <div className={styles.iconBox}>

@@ -20,7 +20,7 @@ export const HomeArticlesContainer = ({ articles, isLoading }) => {
             articles.map((article) => (
               <HomeArticleCard
                 articleData={article}
-                key={article.name}
+                key={article.title}
                 setIsOpen={setIsOpen}
                 isOpen={isOpen}
               />
