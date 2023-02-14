@@ -57,11 +57,10 @@ export const HomeView = () => {
           }
 
           const parsedData = await response.json();
-          // console.log('parsed data', parsedData.data.finalArticles);
           setArticles(parsedData.data.finalArticles);
           setIsLoading(false);
 
-          // sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
+          sessionStorage.setItem('articles', JSON.stringify(parsedData.data.finalArticles));
         }
       } catch (e) {
         setHttpError(true);
@@ -77,7 +76,6 @@ export const HomeView = () => {
     };
   }, [setCurrentUser]);
 
-  // console.log(articles);
   let heroArticle;
   if (!isLoading) heroArticle = articles[0];
 

@@ -15,11 +15,9 @@
   @include formBox;
   overflow: hidden;
   padding: 3rem 0.3rem;
-  max-width: 18rem;
   width: 80vw;
 
   @include mobileMd {
-    width: 77vw;
     padding: 4rem 0.5rem;
   }
 
@@ -29,12 +27,12 @@
 
   @include tablet768 {
     padding: 5rem 1rem;
-    max-width: 22rem;
+    max-width: 24rem;
   }
 
   @include laptop992 {
     padding: 5rem 1rem;
-    max-width: 22rem;
+    max-width: 24rem;
   }
 
   @media screen and (min-width: 1024px) and (orientation: landscape) and (pointer: coarse) and (hover: none) {

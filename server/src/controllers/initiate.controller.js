@@ -21,8 +21,7 @@ const httpInitiate = async (req, res, next) => {
         options
       );
 
-      console.log('BANKAI', newsResponse.data);
-      return newsResponse.data;
+      return newsResponse.data.slice(0, 26);
     } catch (e) {
       console.error(e);
       return next(new AppError(e.message), 500);
