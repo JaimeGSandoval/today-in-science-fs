@@ -3,6 +3,7 @@ const AppError = require('../utils/app-error');
 
 module.exports = {
   httpAddArticle: async (req, res, next) => {
+    console.log('req body', req.body);
     const { userId, articleTitle, articleUrl, articleType, provider } = req.body;
 
     if (!userId) {

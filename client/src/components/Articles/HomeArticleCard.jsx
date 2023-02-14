@@ -13,29 +13,29 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
   const [isReadLater, setIsReadLater] = useState(false);
   const currentUserContext = useContext(UserContext);
   const { currentUser } = currentUserContext;
-  const articleDate = new Date(articleData.datePublished).toDateString();
-  const articleProvider = articleData.provider[0].name;
+  const articleDate = new Date(articleData.pubDate).toDateString();
+  const articleProvider = articleData.source;
 
   const favoriteArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.name,
-      articleUrl: articleData.url,
-      provider: articleData.provider[0].name,
+      articleTitle: articleData.title,
+      articleUrl: articleData.link,
+      provider: articleData.source,
       articleType: 'favorite',
     }),
-    [articleData.url, articleData.name, articleData.provider, currentUser]
+    [articleData.link, articleData.title, articleData.source, currentUser]
   );
 
   const readLaterArticleData = useMemo(
     () => ({
       userId: currentUser && currentUser.user_id,
-      articleTitle: articleData.name,
-      articleUrl: articleData.url,
-      provider: articleData.provider[0].name,
+      articleTitle: articleData.title,
+      articleUrl: articleData.link,
+      provider: articleData.source,
       articleType: 'read-later',
     }),
-    [articleData.url, articleData.name, articleData.provider, currentUser]
+    [articleData.link, articleData.title, articleData.source, currentUser]
   );
 
   const addArticle = useCallback(
@@ -151,11 +151,11 @@ export const HomeArticleCard = ({ articleData, isOpen, setIsOpen }) => {
     <div className={styles.articleCard}>
       <div className={styles.cardBody}>
         <span className={styles.cardProvider}>{articleProvider}</span>
-        <h3 className={styles.cardTitle}>{articleData.name}</h3>
+        <h3 className={styles.cardTitle}>{articleData.title}</h3>
         <p className={styles.cardText}>{articleData.description}</p>
         <span className={styles.cardDate}>{articleDate}</span>
         <div className={styles.cardFooter}>
-          <a href={articleData.url} className={styles.cardBtn} target='_blank' rel='noreferrer'>
+          <a href={articleData.link} className={styles.cardBtn} target='_blank' rel='noreferrer'>
             Read Article
           </a>
           <div className={styles.iconBox}>

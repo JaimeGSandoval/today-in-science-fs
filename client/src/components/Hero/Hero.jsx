@@ -10,10 +10,10 @@ export const Hero = ({ heroArticle, isLoading }) => {
   let articleDate;
   let articleProvider;
 
-  if (!isLoading) {
+  if (!isLoading && heroArticle) {
     article = heroArticle;
-    articleDate = new Date(heroArticle.datePublished).toDateString();
-    articleProvider = heroArticle.provider[0].name;
+    articleDate = new Date(heroArticle.pubDate).toDateString();
+    articleProvider = heroArticle.source;
   }
 
   return (
@@ -33,7 +33,7 @@ export const Hero = ({ heroArticle, isLoading }) => {
               </div>
 
               <div className={styles.titleContainer}>
-                <span className={styles.heroArticleTitle}>{article.name}</span>
+                <span className={styles.heroArticleTitle}>{article.title}</span>
                 <span className={styles.articleDate}>{articleDate}</span>
               </div>
 
