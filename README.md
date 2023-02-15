@@ -2,6 +2,8 @@
 
 Today in Science is a resource for articles that focus on up-to-date news and research emerging from various fields of science. 
 
+![today-in-science-fs](/client/public/og-image.png)
+
 ## Technologies Used
 
 - React.js
