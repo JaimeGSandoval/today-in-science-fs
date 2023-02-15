@@ -1,6 +1,6 @@
 # Today in Science
 
-Today in Science is a resource for articles that focus on up-to-date news and research emerging from various fields of science. 
+Today in Science is a resource for articles that focus on up-to-date news and research emerging from various fields of science that any science enthusiast would find to be informative and useful. Users can create an account and delete their account, as well as add or delete articles to and from different lists.
 
 ![today-in-science-fs](/client/public/og-image.png)
 
