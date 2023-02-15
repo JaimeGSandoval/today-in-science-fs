@@ -1,6 +1,6 @@
 # Today in Science
 
-Today in Science is a resource for articles that focus on up-to-date news and research emerging from various fields of science that any science enthusiast would find to be informative and useful. Users can create an account and delete their account, as well as add or delete articles to and from different lists.
+Today in Science is a resource for articles that focus on up-to-date news and research emerging from various fields of science that any science enthusiast would find to be informative and useful. Users can create and delete their own accounts, as well as add to and remove articles from various lists.
 
 ![today-in-science-fs](/client/public/og-image.png)
 
@@ -39,9 +39,6 @@ Try the live demo at https://todayinscience.jamessandoval.dev/
 - User can use social media accounts for creating an account and user authentication
 
 
-## Preview
-
-![productfeedback-app](/src/assets/images/demo/feedback_demo.gif)
 
 
 
