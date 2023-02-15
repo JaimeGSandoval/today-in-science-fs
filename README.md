@@ -2,6 +2,10 @@
 
 Today in Science is a resource for articles that focus on up-to-date news and research emerging from various fields of science that any science enthusiast would find to be informative and useful. Users can create and delete their own accounts, as well as add to and remove articles from various lists.
 
+## Live Demo
+
+Try the live demo at https://todayinscience.jamessandoval.dev/
+
 ![today-in-science-fs](/client/public/og-image.png)
 
 ## Technologies Used
@@ -18,9 +22,6 @@ Today in Science is a resource for articles that focus on up-to-date news and re
 - HTML5
 - AWS EC2
 
-## Live Demo
-
-Try the live demo at https://todayinscience.jamessandoval.dev/
 
 ## Features
 
