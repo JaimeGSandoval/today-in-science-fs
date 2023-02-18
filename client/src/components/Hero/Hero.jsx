@@ -39,7 +39,7 @@ export const Hero = ({ heroArticle, isLoading }) => {
 
               <div className={styles.readArticleContainer}>
                 <a
-                  href={article.url}
+                  href={article.link}
                   className={styles.readArticleLink}
                   target='_blank'
                   rel='noreferrer'
