@@ -142,7 +142,6 @@ export const ArticleCard = ({ articleData, type, setFavArticles, setReadLaterArt
           >
             Read Article
           </a>
-
           <div className={styles.iconBox}>
             <BsTrash className={styles.trashIcon} onClick={() => setIsSaved(false)} />
           </div>
