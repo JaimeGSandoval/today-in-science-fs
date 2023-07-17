@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.bafe756c.css",
-    "main.js": "/static/js/main.3bf62fe3.js",
+    "main.js": "/static/js/main.a86da8c6.js",
     "static/media/artificial-intelligence-lg.png": "/static/media/artificial-intelligence-lg.ec976801019756362a15.png",
     "static/media/artificial-intelligence-md.png": "/static/media/artificial-intelligence-md.bc4e01c5328473a3145f.png",
     "static/media/artificial-intelligence.webp": "/static/media/artificial-intelligence.6d658936714a361f9349.webp",
     "index.html": "/index.html",
     "main.bafe756c.css.map": "/static/css/main.bafe756c.css.map",
-    "main.3bf62fe3.js.map": "/static/js/main.3bf62fe3.js.map"
+    "main.a86da8c6.js.map": "/static/js/main.a86da8c6.js.map"
   },
   "entrypoints": [
     "static/css/main.bafe756c.css",
-    "static/js/main.3bf62fe3.js"
+    "static/js/main.a86da8c6.js"
   ]
 }

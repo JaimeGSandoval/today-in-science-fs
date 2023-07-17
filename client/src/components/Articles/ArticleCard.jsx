@@ -147,7 +147,6 @@ export const ArticleCard = ({ articleData, type, setFavArticles, setReadLaterArt
             <BsTrash className={styles.trashIcon} onClick={() => setIsSaved(false)} />
           </div>
         </div>
-        ;
       </div>
     </div>
   );
